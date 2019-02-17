@@ -1,0 +1,540 @@
+1	JJ and JJ
+2	JJ but JJ
+3	JJ , JJ NN(.){,2}
+4	JJR and JJR
+#5	JJ (,|and) JJ
+6	JJR and JJR
+#7	JJ
+#8	JJ
+9	NN(.){,2} (, )?(RB )?(JJ IN|VBN)
+#10	JJ
+11	JJ( , JJ){1,} and JJ
+12	^((RB )?(JJ( , | and | , and | )?)+),
+13	JJR
+14	JJR
+15	JJR
+16	be (JJR|more JJ)
+17	JJR
+18	JJR
+19	JJR
+20	more JJ
+21	(more JJ|JJR) than
+22	(so )?much (more JJ|JJR)
+23	a( little)? bit (more JJ|JJR)
+#24	(JJR and JJR|more and more)
+25	even (more JJ|JJR)
+26	a lot (more JJ|JJR)
+27	much (more JJ|JJR) NN(.){,2}
+28	slightly (more JJ|JJR)
+29	(no (more JJ|JJR)|not any (more JJ|JJR))
+30	(no|not) that much (more JJ|JJR)
+31	very JJ
+32	(really|so|quite) JJ
+33	be JJ IN
+34	too JJ
+35	too JJ IN PRP
+36	JJ NN(.){,2}
+37	JJ enough
+38	quite a JJ
+39	too JJ TO VB
+40	JJ enough TO VB
+41	rather a JJ
+42	(absolutely|extremely|incredibly|totally) JJ
+43	(as JJ .* as|so JJ .* that)
+44	JJ NN(.){,2}
+45	be JJ
+46	(main|only) NN(.){,2}
+47	be (main|only)
+48	(become|appear|feel|look|remain|seem|sound|get|go|grow|taste|smell) JJ
+49	(asleep|awake|alive|alone)
+50	JJ NN(.){,2}
+51	(make|have|get) (NN(.){,2}|PRP) JJ
+52	(something|nothing|somewhere|nowhere) JJ
+53	(real|absolute|complete)(( , JJ)+( and JJ)?)? NN
+54	(present|future|former) NN(.){,2}
+55	NN(.){,2} VBN
+56	(major|magnificent)( JJ)? NN(.){,2}
+57	best NN(.){,2}
+58	(JJS|most JJ) NN(.){,2}
+59	(JJS|most JJ) NN(.){,2} in the NN(.){,2}
+60	(JJS|most JJ) NN(.){,2} of 
+61	(JJS|most JJ) [,.!;?]
+62	(JJS|most JJ) NN(.){,2}
+63	JJS
+64	JJS
+65	PRP\$ (JJS|most JJ) NN(.){,2}
+66	(JJS|most JJ)
+67	(JJS|most JJ) NN(.){,2}
+68	most JJ
+69	(JJS|most JJ) NN(.){,2} IN
+#70	(JJS|most JJ) NN(.){,2} .*　have ever VBN
+71	one of (the|PRP\$) (JJS|most JJ) (NNS|NNPS)
+72	(JJS|most JJ) NN(.){,2} TO VB
+73	PRP\$ (JJS|most JJ) NN(.){,2}
+#74	the (JJS|most JJ)
+75	(one of (the|PRP\$) JJS|the most JJ) [,.!?;]
+76	(JJS|most JJ) NN(.){,2} TO
+77	(JJS|most JJ) possible NN(.){,2}
+78	(JJS|most JJ) NN(.){,2} (possible|ever|by far)
+79	(slightest|faintest) NN(.){,2}
+80	soon
+81	(here|there)
+82	(always|usually|sometimes|often|seldom|never)
+83	very JJ
+84	(really (love|like))|((love|like) .* very much)
+85	(yesterday|just|now|already)
+86	(usually|often|never|yearly|monthly|weekly|daily)
+87	(so|quite|too) JJ
+88	(so much|a lot)
+#89	(RB|RBR|RBS)
+90	(also|however|so)
+91	(only|just)
+92	(first|then|after|before)
+93	(maybe|perhaps)
+94	(actually|unfortunately|of course|be sorry)
+95	(recently|immediately)
+96	(near|nearby|far away|upstairs|downstairs)
+97	(a little|a bit)
+98	really really
+#99	
+100	(therefore|furthermore|otherwise)
+101	(particularly|especially)
+102	(RB|RBR|RBS) ,
+103	(probably|certainly|definitely)
+104	(surely|completely|obviously|clearly|actually|luckily|honestly|sadly|basically|obviously|hopefully)
+105	(recently|instantly|shortly|permanently|simultaneously|nowadays)
+106	(seriously|urgently|illegally)
+107	(almost|absolutely|awfully|badly|barely|completely|decidedly|deeply|enough|enormously|entirely|extremely|fairly|far|fully|greatly|hardly|highly|how|incredibly|indeed|intensely|just|least|less|little|lots|most|much|nearly|perfectly|positively|practically|pretty|purely|quite|rather|really|scarcely|simply|so|somewhat|strongly|terribly|thoroughly|too|totally|utterly|very|virtually|well) (JJ|JJR) 
+108	(absolutely|certainly|conceivably|doubtless|indeed|undeniably|likely|obviously|possibly|probably|really|surely|truly|undoubtedly|unlikely) 
+109	(simply|truly|surely|apparently|naturally|surprisingly|inevitably|literally|exceptionally|frankly|clearly|amazingly|wisely|admittedly|apparently|obviously|luckily)
+#110	(apparently|supposedly|surprisingly)
+111	very JJ
+112	very RB
+113	(really|very much|always|sometimes)
+114	(here|there)
+115	(so|really|too) JJ
+116	(so|really|too) VB.*|RB
+#117	RB CLS
+118	RB RB
+119	(VB.* .* RB)|(RB .* VB.*)
+120	(obviously|luckily|otherwise)
+#121	(quite|rather|almost) NP
+122	RB (PRP|PRP\$|NN)
+123	(almost|very|probably) .* (of|the)
+124	VB.* RB RB
+125	(slightly|a bit|much) (JJR|more JJ)
+126	RB JJ
+127	(NN(.){,2}|PRP) RB VB.*
+128	RB
+129	(NN(.){,2}|PRP) really VB.* 
+130	(soon|late) [.,!?]
+131	(there|here) [.,!?]
+132	RB JJ
+133	^RB
+134	(NN(.){,2}|PRP) (MD|VB.*)? RB VB.* 
+135	RB
+136	(a lot|so much) [.,!?]
+137	^RB
+138	^never 
+139	^hardly 
+#140	
+141	very
+142	RB
+143	RB RB
+144	(RBR|more RB)
+145	(relatively|extremely) RB
+146	RB enough ,?
+147	RB IN
+#148	
+160	than TO VB
+161	the most JJS that
+162	JJ enough TO VB
+163	the same N as
+164	rather than
+165	as if|though
+166	the best PRP could|can
+167	so JJ as TO VB
+168	as if
+175	neither .* nor
+176	
+177	not only .* but also
+178	nor
+195	^let 's not
+196	^do not
+197	let (him|her|them)
+198	^don 't let (him|her|them)
+248	after (being|having) VBN
+250	if VBN
+252	(had|should) PRP VB
+252	were PRP able TO
+253	^VBN
+254	^not VBG
+256	were PRP TO VB
+268	neither [a-z]+ nor [a-z]+
+269	both .* and
+270	and yet
+270	yet
+271	either .* or
+272	not only .* but also
+273	not only do|did PRP
+274	nor|neither V PRP
+275	^and yet
+279	once|whereas|unless
+279	provided|except that
+280	as long|soon as
+280	in order that
+280	despite the fact that
+280	due
+281	^(whatever|wherever|however|whoever)
+282	in that
+297	the JJR .* the JJR
+323	its
+324	their
+327	one 's
+348	RB (little|few) NN
+349	neither|either NN
+350	either|neither of DT NNS
+350	either|neither of PRP
+351	millions|loads|tons of
+352	many|much DT NN
+357	^will
+359	may|might
+363	BES about TO
+364	BES TO
+365,474	BES due TO
+368	BEP about TO
+369	BEP on the point of VBG
+370	BEP due TO
+373,374	will have been VBG
+375,377,379,380	will have VBN
+376	will not have VBN
+376	won't have VBN
+378	will RB have VBN
+381	^will PRP have VBN
+395	shall not
+396,397	shall
+410	BES probably|surely going to
+411	BES going to RB
+416	BES VBG
+417	BES .* VBG
+422	by the time PRP VBP|VBZ
+423	suggest|recommand|insist .* VBP|VBZ
+424	only when .* will
+430,431,433	VB|VBP|VBZ JJ .* that
+432	PRP|N BES JJ TO VB
+448	can easily|hardly|now|probably|sometimes|still
+449	can
+450,451	can't|cannot
+452	can't|cannot have VBN
+453	it can be said|concluded|argued that
+453	it can be argued|considered
+454	can RB
+455	as you can see
+455	i can't say
+455	i can tell you that
+455	as you can imagine
+455	i can say|assure that
+456	how can
+457	dare VB
+458,459	dare not VB
+458	daren't VB
+460	i dare say
+461	^dare
+462	how dare
+463	didn't dare VB
+470	BE likely|due|meant|bound|sure|certain|obliged to 
+471	BESP obvious|sure|likely|certain that
+472	much more|less likely
+472	more|less likely
+473	BESP RB likely to
+473	BESP likely to
+475	BESP meant to
+476,477	BESP supposed to
+478	BESP bound to
+479	be sure to
+480	BES sure|certain to
+481	BE obliged to
+482	BE forced to
+483	BE set to
+484	BE not JJ that
+485	BE not JJ to VB
+486	BE JJ not to VB
+493,495	have got to
+493,495	have to
+494	have to have VBN
+495	had got to
+495	had to
+496	have|has|had to have VBN
+503	may have VBN
+504	may even|only|already|never|just|sometimes
+505	may i
+506	you may know
+506	as you may have VBN
+507	may .* but
+508	may i
+509	may well
+510	may not have VBN
+511	may as well
+512	however|whatever|whoever .* it|this may be|seem
+513	it may be VBN
+522	could|might PRP
+523	might not have VBN
+524	might not have VBN
+525	might .* but
+526	might PRP
+527	^try as i might
+528	might as well
+539	must have VPN
+540	must PRP
+541	must all|never|strongly|first
+542	i|you must admit
+543	must have VBN
+544	i must say
+545	must PRP
+546	must not
+546	mustn't
+547	^must have VBN
+548	not only must PRP
+548	never|nor must PRP
+549	must not have been
+550	must RB
+551	need not
+551	needn't
+552	needn't
+553	needn't have VBN
+554	need PRP
+555	need PRP
+558	ought to
+559	ought to
+560	there ought to be
+561,563	ought to
+562	ought to have VBN
+563	ought not to
+564	oughtn't
+565	ought not to
+566	ought .* not to
+573	shall not
+574	shall
+575	if .* shall
+576	shall
+590	should|shouldn't
+591	should be VBG
+592	should be VBG
+593	should be VBG
+594	if PRP|N should
+595	^should
+599	used to
+600	use to
+601	as PRP used to
+602	used not to
+613	will you please
+614	will
+615	will
+636	would
+637	would strongly|easily|especially|actually|absolutely|gladly
+638	would undoubtedly|possibly|normally|personally|eventually|obviously|significantly|inevitably
+644	not necessarily
+645	not necessarily
+670	NNS ' N
+673	NNS '
+675	what|who|where .* BE
+676	little|no N
+682	VBG .* VBZ
+683	VBG .* VBZ
+696	NN
+697	NN
+716	could|might|should have been VBN
+717	BEP being VBN
+718	had been VBN
+719	had not been VBN
+719	hadn't been VBN
+720	BEP not VBN
+721	BES being VBN
+722	BES not being VBN
+723	have|has been VBN
+724	have|has not been VBN
+725	VBN
+726	BE sold|offered|given to
+727	BE sold|offered|given
+728	be VBN
+729	will be VBN
+730	being VBN VBP|VBZ
+731	BEs not being VBN
+732	it .* VBN that
+733	not having been VBN
+733	having been VBN
+734	IN having been VBN
+737	get PRP VBN
+738	have|has|had|having .* VBN
+739	get .* to
+740	get .* VBN
+741	get .* VBG
+742	have .* VB
+752	BEP RB VBG
+753	BEP VBG
+754	BEP always|constantly VBG
+758	had been VBG
+759	after|before PRP had been VBG
+760	had not been VBG
+761	had RB been VBG
+762	had been VBG
+763	had PRP been VBG
+769	because PRP had VBN
+770	if only PRP had VBN
+770	wish PRP had not VBN
+770	wish PRP had VBN
+771	never before had PRP VBN
+771	never had PRP VBN
+772	no sooner had PRP VBN .* than
+773	had VBN
+774	had PRP VBN
+775	had finally|recently|simply PRP
+776	had VBN
+777	had VBN
+778	had VBN
+779	had VBN
+781	if only PRP had not VBN
+782	had it not been for
+782	if it hadn't been for
+783	hardly had PRP VBN .* when
+797	did not VB
+799	as soon as PRP VBD
+799	before|if|once|since|so|until|when|while PRP VBD
+801	if PRP VBD
+802	i wondered|wanted
+803	not only did .* but also
+803	not only didn't .* but also
+805	VBD
+806	did VB
+807	i thought
+812	has|have not been VBG
+813	has|have RB not been VBG
+814	has|have been VBG
+815	not only has|have PRP been VBG
+832	still has|have not VBN
+833	has|have .* VBN \?
+834	has|have not VBN
+835	has|have VBN
+848	IN WDT
+861	BES RB VBG
+862	BES PRP|N VBG
+863	BES RB VBG
+864	BES VBG
+883	not only do|does .* but also
+884	agree|disagree|accept|advise
+886	^don't|^doesn't PRP
+887	^don't|^doesn't PRP
+888	demonstrate|illustrate|demonstrates|illustrates
+896	N of ours
+897	PP
+899	V|IN|TO ours
+900	ours V
+901	V|IN|TO theirs
+902	ours BE
+903	that .* of PP
+904	hers V
+905	V|IN|TO his	
+906	N of PP
+907	theirs V
+913	by ourselves|yourselves|themselves
+914	by itself
+915	IN ourselves|yourselves|themselves
+916	V ourselves|yourselves|themselves
+917	in itself
+918	itself
+919	ourselves|yourselves|themselves
+920	yourselves
+921	as for myself
+932	make|makes it JJ
+934	it appears|feels|looks|seems
+936	it was VBN
+953	these|those ones
+955	that|those of
+962	each|either|enough|neither|several
+963	neither|either|none of
+964	none
+965	few|many|most|others
+966	very|too|so few|many
+967	some|many of WDT
+968	a lot
+968	much
+969	many are .* WDT
+979	these|those ones
+980	none
+981	the one|ones that
+997	^anything
+998	^anything
+1001	we|us
+1002	they|them
+1003	he|she|he|she|they
+1005	one another
+1006	each .* the other|others
+1007	each .* the other|others
+1021	will PRP \?
+1022	is|isn't there \?
+1030	WRB don't|didn't
+1045	V RP IN
+1046	V RP IN
+1050	V IN
+1051	V RB IN
+1062	V RB
+1063	V RP N
+1064	V N RP
+1065	V PRP RP
+1075	needn't|daren't
+1089	V VBG
+1090	V PRP VBG
+1091	TO V 
+1091	VBG
+1092	V N VBG
+1094	would hate to V
+1101	there .* other
+1119	as long as PRP V
+1119	as long as PRP BES VBG
+1119	provided|providing PRP BES VBG
+1119	provided|providing PRP V
+1120	if .* had VBN
+1121	if VBN
+1122	if you should
+1123	should PRP VB
+1124	should PRP VB
+1125	had PRP VBN
+1126	were .* to
+1127	so long as
+1127	on condition that
+1127	in the event that 
+1128	were it not for
+1129	if it weren't
+1129	were not for
+1130	if it were to
+1131	whether or not
+1156	ask|tell .* not to
+1163	the reason that .* BE
+1163	the place which .* BE
+1164	the thing|fact|point|problem|reason BE that
+1167	what N|PRP V BE
+1169	^VBZ
+1170	not a N
+1171	WRB PRP
+1172	the JJ thing|fact|point|problem|reason is that
+1173	it BE N that
+1192	not
+1193	^never have|had i
+1194	neither .* nor
+1195	neither|none of PRP|N
+1196	none
+1197	not everyone|everything|every|all
+1198	not only V
+1199	not RB
+1201	whatsoever
+1202	not a N VBN
+1203	don't you
+1204	neither/nor do/did|BE you
+1205	in the least
+1216	could have VBN
+1217	could have VBN
+1218	could have VBN
+1219	could have VBN
+1220	could
+1221	could have VBN
+1222	couldn't have VBN
