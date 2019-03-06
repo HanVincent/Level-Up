@@ -15,18 +15,31 @@ def index():
     pass
 
 
-# post /correct data: { content: str }
+# post /profiling data: { content: str }
 @app.route('/profiling', methods=['POST'])
-def correct():
+def profiling():
     request_data = request.get_json()
-    if not request_data: return jsonify({'edit': 'Should not be empty'})
+    if not request_data: return jsonify({'result': 'Should not be empty'})
     
     content = request_data['content']
     print(content)
-        
-#     edit_line, meta = edit(content)
+    
+    sent_profiles = main_profiling(content)
 
-    return jsonify({'edit': edit_line, 'meta': meta})
+    return jsonify({'profiles': sent_profiles})
+
+
+# post /vocabuing data: { sentence: str }
+@app.route('/vocabuing', methods=['POST'])
+def vocabuing():
+    request_data = request.get_json()
+    if not request_data: return jsonify({'result': 'Should not be empty'})
+    
+    sentence = request_data['sentence']
+    
+    vocabs = main_vocabuing(sentence)
+
+    return jsonify({'vocabs': vocabs})
 
 
 if __name__ == "__main__":

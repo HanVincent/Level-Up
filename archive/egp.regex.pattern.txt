@@ -1,0 +1,1222 @@
+1	JJ and JJ
+2	JJ but JJ
+3	JJ , JJ
+4	JJR and JJR
+5	JJ (,|and) JJ
+6	JJR and JJR
+*7	(good-looking|well-known)
+*8	(up-to-date|state-of-the-art)
+9	(PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) (, )?(RB )?(JJ IN|VBN)
+*10	(open-minded|above-mentioned|well-to-do|jaw-dropping)
+11	JJ( , JJ){1,} and JJ
+12	^(((RB )?JJ( , | and | , and | )?)+),
+13	JJR
+14	JJR
+15	(JJR|more JJ|less JJ)
+16	(JJR|more JJ|less JJ)
+17	JJR
+18	JJR
+19	JJR
+20	(JJR|more JJ|less JJ)
+21	(more JJ|less JJ|JJR) than
+22	(so )?much (more JJ|less JJ|JJR)
+23	a( little)? bit (more JJ|less JJ|JJR)
+#24	(JJR and JJR|more and more|less and less)
+25	even (more JJ|less JJ|JJR)
+26	a lot (more JJ|less JJ|JJR)
+27	much (more JJ|less JJ|JJR)
+28	slightly (more JJ|less JJ|JJR)
+29	(no (more JJ|less JJ|JJR)|not any (more JJ|less JJ|JJR))
+30	(no|not) that much (more JJ|less JJ|JJR)
+31	very JJ
+*32	(really|so|quite) JJ
+33	JJ IN
+34	too JJ
+35	too JJ IN PRP
+36	JJ NN[^\n ]{,2}
+37	JJ enough
+38	quite a JJ
+39	too JJ TO VB
+40	JJ enough TO VB
+41	rather a JJ
+*42	DEGREE_RB JJ
+43	(as JJ [^,.!;:]*? as|so JJ [^,.!;:]*? that)
+44	JJ NN[^\n ]{,2}
+45	be JJ
+*46	(main|only) NN[^\n ]{,2}
+*47	be (main|only)
+*48	(become|appear|feel|look|remain|seem|sound|get|go|grow|taste|smell) JJ
+*49	(asleep|awake|alive|alone)
+#50	JJ NN[^\n ]{,2}
+*51	(make|have|get) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) JJ
+*52	(something|nothing|somewhere|nowhere) JJ
+*53	(real|absolute|complete)(( , JJ)+( and JJ)?)? NN
+54	(present|future|former) NN[^\n ]{,2}
+55	(NN[^\n ]{,2} VBN)|(VBN NN[^\n ]{,2})
+*56	DEGREE_JJ( JJ)? NN[^\n ]{,2}
+57	best NN[^\n ]{,2}
+58	(JJS|most JJ) NN[^\n ]{,2}
+59	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) in
+60	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) of 
+61	(JJS|most JJ) [,.!;?]
+62	(JJS|most JJ) NN[^\n ]{,2}
+63	JJS
+64	JJS
+65	PRP\$ (JJS|most JJ) NN[^\n ]{,2}
+66	(JJS|most JJ)
+67	(JJS|most JJ) NN[^\n ]{,2}
+68	the most JJ
+69	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) IN
+70	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) [^,.!;:]*?　have ever VBN
+71	one of (the|PRP\$) (JJS|most JJ) (NNS|NNPS)
+72	the best (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) TO VB
+73	PRP\$ (JJS|most JJ) NN[^\n ]{,2}
+74	by far the (JJS|most JJ)
+75	(one of (the|PRP\$) JJS|the most JJ) [,.!?;]
+76	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) TO
+*77	(JJS|most JJ) (possible) NN[^\n ]{,2}
+*78	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) (possible|ever|by far)
+79	(slightest|faintest) NN[^\n ]{,2}
+80	soon
+81	(here|there)
+82	(always|sometimes)
+83	very JJ
+84	(really (love|like))|((love|like) [^,.!;:]*? very much)
+85	TIME_RB
+86	FREQUENCY_RB
+*87	(so|quite|too) JJ
+88	(so much|a lot)
+#89	MANNER_RB
+*90	(also|however|so)
+*91	(only|just)
+*92	(first|then|after|before)
+93	(maybe|perhaps)
+94	(actually|unfortunately|of course|be sorry)
+95	TIME_RB
+96	PLACE_RB
+97	(a little|a bit)
+98	really really
+#99	MANNER_RB
+100	LINKING_RB
+101	FOCUS_RB
+102	RB ,
+103	CERTAINTY_RB
+*104	(surely|completely|obviously|clearly|actually|luckily|honestly|sadly|basically|obviously|hopefully)
+105	TIME_RB
+106	MANNER_RB
+107	DEGREE_RB (JJ|JJR) 
+108	CERTAINTY_RB
+109	STANCE_RB
+#110	(apparently|supposedly|surprisingly)
+111	very JJ
+112	very RB
+113	(TIME_RB|DEGREE_RB|FREQUENCY_RB)
+114	(here|there)
+115	(so|really|too) JJ
+116	(so|really|too) MANNER_RB
+117	TIME_RB
+118	(so|really|too) RB
+119	MANNER_RB
+*120	(obviously|luckily|otherwise)
+121	DEGREE_RB [^,.:!?]*? NN
+*122	DEGREE_RB (nothing|anything)
+123	DEGREE_RB [^,.!;:]*? (of|the)
+#124	VB.? DEGREE_RB RB
+*125	DEGREE_RB (JJR|more JJ|less JJ)
+126	(very|really|so|too) JJ
+127	(NN[^\n ]{,2}|PRP) RB VB.?
+128	RB
+129	really
+*130	TIME_RB (IN|CC|[,.!?;])
+*131	(there|here) (IN|CC|[,.!?;])
+132	DEGREE_RB JJ
+133	^RB
+134	(NN[^\n ]{,2}|PRP)( MD| VB.?)? RB VB.?
+135	MANNER_RB (IN|CC|[,.!?;])
+136	DEGREE_RB (IN|CC|[,.!?;])
+137	^RB
+138	^never 
+139	^hardly 
+#140	
+141	very
+142	RB (DEGREE_RB|MANNER_RB|TIME_RB)
+143	RB RB
+144	(RBR|more RB|less RB)
+*145	(relatively|extremely) RB
+146	RB enough
+147	RB IN
+148	RB RB IN
+149	be like (NN[^\n ]{,2}|PRP|PRP\$)
+150	(more JJ|less JJ|JJR) than (NN[^\n ]{,2}|PRP)( MD| VB.?)?( RB)? VB.?
+151	(more JJ|less JJ|JJR) than VBG
+152	(not)? as (JJ|RB) as
+153	rather than [^,.!;:]*? NN[^\n ]{,2}
+154	the best NN[^\n ]{,2}( that)? (NN[^\n ]{,2}|PRP) have ever VBN
+155	too JJ TO VB
+156	the same (NN[^\n ]{,2} )?as (NN[^\n ]{,2}|PRP|PRP\$)
+157	so JJ that
+*158	(see|watch|look( at)?|hear|listen to|feel|smell|feel|notice) as (if|though)
+*159	((become|appear|feel|look|remain|seem|sound|get|go|grow|taste|smell) (JJ|like))|(similar to)
+160	than (TO VB|VBN)
+161	the (most JJ|JJS) (NN[^\n ]{,2} )?(that)?
+162	JJ enough TO VB
+163	the same (NN[^\n ]{,2} )?as
+164	rather than VB
+165	as (if|though)
+166	the best PRP (could|can)
+167	so JJ as TO VB
+168	as if (VBG|TO)
+*169	(and|but|or)
+#170	
+#171	
+#172	
+#173	
+#174	
+175	neither [^,.!;:]*?( ,)? nor
+176	not only [^,.!;:]*?( ,)? but( also)?
+177	not only (have|be|do|MD) [^,.!;:]*?( ,)? but( also)?
+178	nor (have|be|do|MD)
+#179	
+180	be not
+181	do not
+182	MD
+183	have not
+184	MD not
+185	do VB
+186	^VB
+187	^VB
+188	^VB
+189	^do not VB
+190	^let PRP VB
+191	^do not VB
+192	^do VB
+193	^VB
+194	^let PRP VB
+195	^let PRP not
+196	^do not
+197	let (him|her|them)
+198	^do not let (him|her|them)
+#199
+#200
+201	let (him|her|them)
+202	^(do not) you
+203	be .* \?$
+204	(be|have) .* \?$
+205	do .* \?$
+206	MD .* \?$
+207	^(WP|WRB|WDT) [^,.!;:]*? \?$
+208	^(WP|WRB|WDT) (be|do|have|MD) not .* \?$
+209	^(WP|WRB|WDT|be|do|have|MD) not .* \?$
+210	^(WP|WRB|WDT) VB.? \?$
+211	^(WP|WRB|WDT|be|do|have|MD) .* RB .* \?$
+#212
+213	^(WP |WRB |WDT )?(be|do|have|MD) not .* RB .* \?$
+214	what a .* [,.!;:]$
+215	what a pity
+216	how JJ [,.!;:]
+217	how JJ [^,.!;:]
+218	^(be|do|have|MD) not [^,.!;:]*? \!$
+219	how (NN[^\n ]{,2}|PRP|PRP\$)
+220	how RB (NN[^\n ]{,2}|PRP|PRP\$)
+221	(NN[^\n ]{,2}|PRP) who
+222	(NN[^\n ]{,2}|PRP) who
+223	NN[^\n ]{,2}( ,)? which
+224	NN[^\n ]{,2} which
+225	(NN[^\n ]{,2}|PRP) that
+226	NN[^\n ]{,2} which
+227	NN[^\n ]{,2} which
+#228
+229	(NN[^\n ]{,2}|PRP) , who
+230	(NN[^\n ]{,2}|PRP) (who|that)
+231	(NN[^\n ]{,2}|PRP) (, )?whose
+232	NN[^\n ]{,2} where
+233	reason why
+234	NN[^\n ]{,2} when
+235	(person (who|that))|(the thing that)|((only )?one (who|that))
+236	(who|which|that) [^,.!;:]*? IN [,.!;:]$
+#237	whose
+#238
+239	, which
+240	because (NN[^\n ]{,2}|PRP|PRP\$)
+241	if (NN[^\n ]{,2}|PRP|PRP\$)
+242	(when|while) (NN[^\n ]{,2}|PRP|PRP\$)
+243	TO VB
+#244
+245	(so( that)?|in order that)
+246	(even though|even if|though|although|while if)
+247	(after|before) VBG
+248	after (being|having) VBN
+#249
+250	if VBN
+#251
+252	(^(had|should) (NN[^\n ]{,2}|PRP) VB.?)|((^were (NN[^\n ]{,2}|PRP)) [^,.!;:]*? \[,.]$)
+253	^VBN
+254	^not VBG
+255	(although|though) (VBG|VBN|JJ)
+256	were PRP TO VB
+257	(and|or|but)
+258	(and|or|but)
+259	(and|or|but)
+260	(and|or|but)
+261	(and|or|but)
+262	but
+263	(and|or|but|then)
+264	plus
+265	plus
+266	either [^,.!;:]*? or
+267	both [^,.!;:]*? and
+268	neither [^,.!;:]*? nor
+269	both [^,.!;:]*? and
+270	(and)? yet
+271	either .* or
+272	not only .* but( also)?
+273	not only (do|did)
+274	(nor|neither) (do|have|be|MD)
+275	^and yet
+276	because
+277	(if|when|so|while)
+278	(as|after|before|since|until|although|whether|so( that)?|though)
+279	(once|whereas|unless|except( that)?|provided( that)?)
+280	(as long as|as soon as|in order that|except that|despite the fact that|due|as if|as though)
+281	^(whatever|wherever|however|whoever)
+282	in that
+283	(the|a|an)
+284	(a|an) JJ
+285	a very JJ
+286	the
+287	NN[^\n ]{,2}
+288	NN[^\n ]{,2}
+289	the JJ NN[^\n ]{,2}
+290	the (JJS|most JJ) NN[^\n ]{,2}
+291	another NN[^\n ]{,2}
+292	DT NN[^\n ]{,2}
+293	DT NN[^\n ]{,2}
+294	another
+295	another
+296	the other
+297	the (more|JJR|RBR) [^,.!;:]*? , the (more|JJR|RBR) [^,.!;:]*? \.$
+298	this (NN|NNP)
+299	this NN[^\n ]{,2}
+300	this
+301	this (NN|NNP)
+#302	this
+#303	this
+#304	this
+305	that NN
+306	that
+307	that
+308	these (NNS|NNPS)
+309	these
+310	these
+311	those (NNS|NNPS)
+312	those
+313	those
+314	this NN[^\n ]{,2}
+#315	this NN[^\n ]{,2}
+316	this [^,.!;:]*? of
+#317	(that|those)
+318	PRP\$ NN[^\n ]{,2}
+319	POS
+320	(all|some|any|none) of
+321	their
+322	POS
+323	its
+324	their
+325	POS
+326	of [^,.!;:]*? POS
+327	one 's
+328	NN POS
+#329	NN[^\n ]{,2} POS
+330	NN[^\n ]{,2} POS (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) POS
+331	(some|lots of|a lot of|CD)
+332	(a|every)
+*333	(all|both|a few)
+*334	(some|any|no|more|a lot of|lots of)
+*335	(each|an|a|one)
+336	much (NN|NNP)
+337	many (NNS|NNPS)
+338	(so many|too many) NN[^\n ]{,2}
+*339	(all|some|both|many|any|each|CD) of
+*340	(several|millions of|a few of)
+341	(a little|a bit of|a little bit of)
+*342	(most|enough|plenty of|loads of)
+343	much (NN|NNP)
+344	(so much|too much) (NN|NNP)
+345	many (NNS|NNPS)
+346	(half|enough|none) of
+#347
+348	RB (little|few) NN[^\n ]{,2}
+349	(neither|either) (NN|NNP)
+350	(either|neither) of (DT )?(NNS|NNPS|PRP|PRP\$)
+351	(millions|loads|tons) of
+352	many (a|an) (NN|NNP)
+353	will
+354	will
+#355	(will|shall)
+356	will not
+357	(^(WP|WRB|WDT) (NN[^\n ]{,2} )?will)|(^will)
+358	^will [^,.!;:]*? \?$
+359	(may|might)
+360	be about to
+361	be due to
+362	be to
+363	be (just )?about to
+364	be to
+365	be (due )?to
+366	be (going|go) to
+367	would
+368	be (just )?about to
+369	be on the point of VBG
+#370	be due to
+371	will
+#372	
+373	will have been VBG
+374	will have been VBG
+375	will have VBN
+376	will not have VBN
+377	will have VBN
+378	will RB have VBN
+379	will have VBN
+380	will have VBN
+381	^will PRP have VBN
+382	will
+383	will
+384	shall
+385	will not
+386	^(will|shall) [^,.!;:]*? \?$
+387	shall PRP
+388	^will .* \?$
+389	^will .* \?$
+390	^shall .* \?$
+391	will
+392	will
+393	will
+394	shall
+395	shall not
+396	shall
+397	shall
+398	be (going|go) to
+399	be PRP (going|go) to
+400	(be (going|go) to)|(be PRP (going|go) to)
+401	be (going|go) to
+402	be not (going|go) to
+403	be (going|go) to
+404	be RB (going|go) to
+405	be (going|go) to
+406	be not (going|go) to
+407	be (going|go) to .*( but)?
+408	be (not )?(going|go) to VB
+409	be (going|go) to VB
+*410	be (probably|surely|undoubtedly) (going|go) to
+411	be (going|go) to RB VB
+#412	be VBG
+#413	be VBG
+#414	be VBG
+#415	be VBG
+#416	be VBG
+#417	be .* VBG
+418	when
+419	i hope
+420	IN CD
+421	as soon as
+422	by the time
+*423	(suggest|recommend|insist) that [^,.!;:]*? (VBP|VBZ)
+424	only when [^,.!;:]*? will
+425	i be (not )?sure
+426	it be important
+427	if
+428	it be JJ TO VB
+429	it be JJ for (NN[^\n ]{,2}|PRP) TO VB
+430	it (be|become|appear|feel|look|remain|seem|sound|get|go|grow|taste|smell) JJ
+431	it( do not)? (be|become|appear|feel|look|remain|seem|sound|get|go|grow|taste|smell) JJ
+432	(NN[^\n ]{,2}|PRP) be JJ TO VB
+433	it (be|become|appear|feel|look|remain|seem|sound|get|go|grow|taste|smell) JJ
+434	DEGREE_RB JJ
+*435	(highly|painfully) JJ
+436	can
+437	(can not|cannot|can 't)
+438	^can .* \?$
+439	can
+440	can
+441	can
+442	can
+443	can( not)?
+444	(can not|cannot|can 't) [^,.!;:]*? \?$
+445	can RB
+446	can be
+447	can you believe
+*448	can (easily|hardly|now|probably|sometimes|still)
+449	can
+450	can not
+451	can not
+452	can not have VBN
+453	it can be (said|concluded|argued|considered) that
+454	can RB
+455	(as you can see|i can not say|i can tell you that|as you can imagine|i can say that|i can assure you that)
+456	how can
+457	dare VB
+458	dare not VB
+459	dare not VB
+460	i dare say
+461	^dare [^,.!;:]*? \?$
+462	how dare
+463	did not dare VB
+464	will (not )?(PRP )?be able to
+465	MD be able to
+466	be (not )?(allowed|allow|supposed|suppose|able) to
+467	be (not )?(allowed|allow) to
+468	(was|were) (not )?(supposed|suppose) to
+469	(was|were) (not )?able to
+470	be (likely|due|meant|mean|bound|bind|sure|certain|obliged|oblige) to 
+471	be (obvious|sure|likely|certain) that
+472	(much )?(more|less) likely
+473	be (RB )?likely to
+474	be (due )?to
+475	be (not )?(RB )?(meant|mean) to
+476	be (not )?(RB )?(supposed|suppose) to
+477	be (not )?(RB )?(supposed|suppose) to
+478	be (not )?(RB )?(bound|bind) to
+479	be (not )?(RB )?sure to
+480	be (not )?(RB )?(sure|certain) to
+481	be (not )?(RB )?(obliged|oblige) to
+482	be (not )?(RB )?(forced|force) to
+483	be (not )?(RB )?set to
+484	be not (RB )?(JJ|VBN) that
+485	be not (RB )?(JJ|VBN) to VB
+486	be (RB )?(JJ|VBN) not to VB
+487	(VB|VBZ)
+488	(do|have|can) not
+489	^(WP|WRB|WDT|be|do|have|MD) [^,.!;:]*? \?$
+490	have (got )?to
+491	i have to
+492	have to
+493	you have (got )?to
+494	have to have VBN
+495	have (got )?to
+496	have to have VBN
+497	may
+498	may
+499	may not
+500	may RB
+501	may i
+502	^may i.*?\?$
+503	may have VBN
+*504	may (even|only|already|never|just|sometimes)
+505	may i
+506	(you may know|as you may have VBN)
+507	may [^,.!;:]*? (, )?but
+508	may i
+509	may well
+510	may not have VBN
+511	may as well
+512	(however|whatever|whoever) .*?(it|this) may (be|seem)
+513	it may be VBN
+514	might
+515	might
+516	might not
+517	might
+518	might VB
+519	might have VBN
+520	might have VBN
+521	as you might VB
+522	(could|might) PRP
+523	might not have VBN
+524	might not have VBN
+525	might [^,.!;:]*? (, )?but
+526	might PRP (not )?VB
+527	^try as i might
+528	might as well
+529	must
+530	must not
+531	must
+532	must [\.!]$
+533	^must VB
+534	must RB
+535	must VB
+536	must VB
+537	must VB
+538	must VB
+539	must have VBN
+540	^(WP|WRB|WDT|have|be|do|MD) .*?must .*?\?$
+541	must (all|never|strongly|first)
+542	(i|you) must admit
+543	must have VBN
+544	i must say
+545	^((WP|WRB|WDT|be) PRP must|must PRP) .*?\?$
+546	(must not|mustn 't)
+547	^must have VBN
+548	(not only|never|nor) must PRP
+549	must not have been
+550	must RB
+551	need not
+552	need not
+553	need not have VBN
+554	^need PRP .*?\?$
+555	^need PRP .*?\?$
+556	PRP ought to
+557	ought to
+558	ought to
+559	ought to
+560	there ought to be
+561	really ought to
+562	ought to have VBN
+563	ought (not )?to
+564	ought not
+565	ought not to
+566	ought PRP not to
+567	shall
+568	shall .*?\?$
+569	shall i
+570	shall .*?\?$
+571	shall
+572	^((WP|WRB|WDT|be) shall PRP|shall PRP).*?\?$
+573	shall not
+#574	shall
+575	if .*?shall
+#576	shall
+577	should
+578	should not
+579	^should PRP .*?\?$
+580	should
+581	should
+582	should not PRP \?$
+583	should have VBN
+584	should (not )?have VBN
+#585	should
+#586	should
+587	you should have VBN
+588	should (not )?have VBN
+589	you should not have( VBN)?
+590	(should|shouldn not)
+591	should (not )?be VBG
+592	should (not )?be VBG
+593	should (not )?be VBG
+594	^if (PRP|NN[^\n ]{,2}) should
+595	^should (PRP|NN[^\n ]{,2}) VB
+596	used to
+597	did not (use|used) to
+598	(used to)|(did not (use|used) to)
+599	used to [,.!;:]$
+600	^(WP|WRB|WDT) did PRP (use|used) to
+601	as PRP used to
+602	used not to
+603	will
+604	will
+605	if .*? , .*? will
+606	will not
+607	^((WP|WRB|WDT) .*? will|will) PRP .*?\?$
+608	will
+609	will
+610	^will [^,.!;:]*? \?$
+#611	will
+612	will
+613	will you( please)?
+#614	will
+#615	will
+616	would like to
+617	would like
+618	would like
+619	would
+620	would not
+621	would you like
+622	would
+623	it would be
+624	would VB
+625	would
+626	would have VBN
+627	would not have VBN
+628	^would .*?\?$
+629	would (really|probably|certainly|definitely)
+630	would
+631	would
+632	would (advise|imagine|recommend|say)
+633	would PRP .*?\?$
+634	would
+635	would
+636	would
+637	would (strongly|easily|especially|actually|absolutely|gladly)
+638	would (undoubtedly|possibly|normally|personally|eventually|obviously|significantly|inevitably)
+639	(be RB)|(MD RB VB)
+640	(maybe|perhaps)
+641	RB
+642	MD RB
+643	could PRP possibly
+644	not necessarily
+645	not necessarily
+646	^RB \.$
+647	(NN|NNP)
+#648
+#649	
+650	NN[^\n ]{,2} NN[^\n ]{,2}
+651	(NN|NNP)
+#652	
+653	JJ (, |and )?JJ NN[^\n ]{,2}
+#654	
+#655	
+656	POS
+#657	
+658	RB JJ NN[^\n ]{,2}
+659	such (a JJ (NN|NNP)|JJ (NNS|NNPS))
+#660	
+661	have (ever )?VBN
+662	NN[^\n ]{,2} POS
+663	NN[^\n ]{,2} of (NN[^\n ]{,2}|PRP|PRP\$)
+664	(a friend|friends) of
+665	NN[^\n ]{,2} of (NN[^\n ]{,2}|PRP|PRP\$)( POS)?
+666	NN[^\n ]{,2} , (DT )?NN[^\n ]{,2}
+#667	
+668	^the thing
+669	NN[^\n ]{,2} of (NN[^\n ]{,2}|PRP|PRP\$ NN[^\n ]{,2}) POS
+670	(NNS|NNPS) POS NN[^\n ]{,2}
+671	NN[^\n ]{,2} JJ IN
+672	JJ but JJ
+673	NN[^\n ]{,2} POS
+#674	
+675	^(what|who|whose|which|where|when|why|how)
+676	little or no (JJ )?NN[^\n ]{,2}
+677	NN[^\n ]{,2}
+678	NN[^\n ]{,2}
+679	NN[^\n ]{,2}
+680	VBG
+681	NN[^\n ]{,2}
+682	VBG.*? VBZ
+683	VBG.*? VBZ
+684	(NNS|NNPS)
+685	(NNS|NNPS)
+686	(NNS|NNPS)
+687	(NNS|NNPS)
+688	(NNS|NNPS) 
+689	(NN|NNP) VB
+690	(NN|NNP)
+691	(NN|NNP)
+692	(some|any|a lot of|more) (NN|NNP)
+*693	a (piece|cup|bottle) of
+694	(NN|NNP)
+695	(much|a bit of|(a )?little bit of|enough|further|plenty of|loads of)
+696	(NN|NNP)
+697	(NN|NNP)
+698	NN[^\n ]{,2}
+699	NN[^\n ]{,2}
+700	NN[^\n ]{,2}
+701	(NN[^\n ]{,2}|PRP)
+702	NN[^\n ]{,2}
+703	be VBN
+704	be VBN
+705	be VBN
+706	be VBN by
+707	(going to|have to|need to|want to) be VBN
+708	be VBN
+709	be be VBN
+710	be VBN
+711	be not VBN
+712	be VBN (DT )?NN[^\n ]{,2}
+713	be VBN by
+714	be be VBN
+715	((not )?to|MD( not)?) be VBN
+716	(could|might|should) (not )?have been VBN
+717	be be VBN
+718	had been VBN
+719	had not been VBN
+720	be not VBN
+721	be be VBN
+722	be not be VBN
+723	have (been|be) VBN
+724	have not (been|be) VBN
+725	MD be VBN
+726	be (sold|sell|offered|offer|given|give)( to)?
+727	be (sold|sell|offered|offer|given|give)
+728	MD be VBN
+729	will be VBN
+730	being VBN.*? (,|VBZ|VBP)
+731	be not (being|be) VBN
+732	it (MD|have) (be|been) VBN that
+733	(not )?having been VBN
+734	having been VBN
+#735	
+736	get VBN
+737	get PRP VBN
+738	have (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VBN
+739	get (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) to
+740	get (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VBN
+741	get (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VBG
+742	have (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VB
+743	be VBG
+744	be RB VBG
+745	be VBG
+746	be VBG
+747	be not VBG
+748	be (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VBG
+749	be RB VBG
+750	be VBG
+751	be (RB )?VBG
+752	be RB VBG
+753	be VBG
+754	be (always|constantly) VBG
+755	have been VBG
+756	have been VBG
+757	have been VBG
+758	had been VBG
+759	(after|before) PRP had been VBG
+760	had not been VBG
+761	had RB been VBG
+762	had been VBG
+763	had PRP been VBG
+764	if [^,.!;:]*? had( not)? (been|gone)
+765	had VBN
+766	had not VBN
+767	have (never|ever|just|always|already) VBN
+768	have VBN
+769	because PRP had VBN
+770	(if only|wish) PRP had (not )?VBN
+771	never (before )?had PRP VBN
+772	no sooner had PRP VBN [^,.!;:]*? than
+773	had VBN
+774	had PRP VBN
+775	had (finally|recently|simply|suddenly) VBN
+776	had VBN
+777	had VBN
+778	had VBN
+779	had VBN
+780	^had (NN[^\n ]{,2}|PRP) VBN
+781	if only PRP had not VBN
+782	(had it|if it had) not been for
+783	hardly had (NN[^\n ]{,2}|PRP) VBN [^,.!;:]*? when
+784	VBD
+785	VBD
+786	VBD
+787	did not VB
+788	did [^,.!;:]*? \?$
+789	when [^,.!;:]*? VBD
+790	VBD
+791	did not VB
+792	did [^,.!;:]*? \?$
+793	VBD
+794	if [^,.!;:]*? VBD
+795	VBD
+796	VBD
+797	did not VB
+799	as soon as PRP VBD
+799	(before|if|once|since|so|until|when|while|as soon as) PRP VBD
+800	VBD
+801	if PRP VBD
+802	i (wondered|wanted)
+803	not only did (not )?[^,.!;:]*? (, )?but( also)?
+804	^(WP |WRB |WDT )?did (not )?PRP
+805	VBD
+806	did VB
+807	i thought
+808	have (been|be) VBG
+809	have you (been|be) VBG
+810	have (been|be) VBG
+811	have (been|be) VBG
+812	have not (been|be) VBG
+813	have RB (not )?(been|be) VBG
+814	have (been|be) VBG
+815	not only have PRP (been|be) VBG
+816	have not VBN.*? for
+817	have not VBN.*? yet \.$
+818	have VBN
+819	have not VBN
+820	have you VBN.*? \?$
+821	have RB VBN
+822	have (not |never )?VBN
+823	have VBN
+824	have already VBN
+825	have (RB )?VBN
+826	have not VBN
+827	^have not [^,.!;:]*? \?$
+828	have.*? (RB )?VBN
+829	have (RB )?VBN
+830	have VBN
+831	the (JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) [^,.!;:]*? have ever
+832	still have not VBN
+833	have [^,.!;:]*? VBN \?$
+834	have not VBN
+835	have VBN
+836	(VB|VBZ)
+837	(VB|VBZ)
+838	(VB|VBZ)
+839	IN
+840	IN
+841	IN VBG
+842	^(WP|WRB|WDT)
+843	IN
+844	IN
+845	DEGREE_RB IN
+846	IN \.$
+847	IN
+848	IN (WP|WRB|WDT)
+849	(through|throughout|toward|upon|amongst|unlike)
+850	(ahead of|on account of)
+851	be VBG
+852	be VBG
+853	be not VBG
+854	^(WP|WRB|WDT)
+855	be RB VBG
+856	be VBG
+857	be VBG
+858	be VBG
+859	be VBG
+860	be VBG
+861	be RB VBG
+862	be (PRP|NN[^\n ]{,2}) VBG
+863	be RB VBG
+864	be VBG
+865	VB.?
+866	do not
+867	really VB
+868	VB
+869	if [^,.!;:]*? VB
+870	VB.?
+871	^do you know (WP|WRB|WDT)
+872	VB.?
+873	^((WP |WRB |WDT )(do |MD )?|(MD|do|be|have) )(not )?you
+874	RB VB.?
+875	VB.?
+876	(think|hope|know)
+877	(why do not PRP|if you want|if you like)
+878	(do not you think|do not you agree)
+879	^((WP |WRB |WDT )(do |MD )?|(MD|do|be|have) )(not )?
+880	VB.?
+881	(say|show)
+882	(suggest|apologize|apologise|recommend)
+883	not only do [^,.!;:]*? (, )?but( also)?
+884	(agree|disagree|accept|advise)
+#885	
+886	^do not PRP
+887	^do not PRP
+888	(demonstrate|illustrate|demonstrates|illustrates)
+889	NN[^\n ]{,2} of (PRP\$|PRP|NN[^\n ]{,2})
+890	mine
+891	yours
+892	NN[^\n ]{,2} of yours
+893	(not )?as [^,.!;:]*? as (PRP\$|PRP|NN[^\n ]{,2})
+894	yours
+#895	
+896	NN[^\n ]{,2} of ours
+897	PRP\$
+898	hers
+899	ours
+900	ours
+901	theirs
+902	ours VB.?
+903	that [^,.!;:]*? of PRP
+904	hers
+905	his
+906	NN[^\n ]{,2} of (hers|his|theirs)
+907	theirs
+908	PRP
+909	(myself|yourself|himself|herself)
+910	VB.? PRP
+911	(myself|yourself|himself|herself)
+912	(myself|yourself|himself|herself)
+913	(by ourselves|yourselves|themselves)
+914	by itself
+915	IN (ourselves|yourselves|themselves)
+916	VB.? (ourselves|yourselves|themselves)
+917	in itself
+918	itself
+919	(ourselves|yourselves|themselves)
+920	yourselves
+921	for myself
+922	it
+923	(me|you|him|her|us|them)
+924	(me|you|him|her|us|them)
+925	it be
+926	(MD|do) (i|you|we|they)
+927	be (you|it)
+928	(I|you|he|she|it|we|they)
+929	^hope
+930	it
+931	it
+932	make it JJ
+933	VB.?
+934	it (appears|feels|looks|seems)
+935	one
+936	it be VBN
+#937	
+938	this
+939	this
+940	this
+941	this
+942	that
+943	that
+944	that is
+945	that is all
+#946	this
+947	these
+948	these
+949	those
+950	those
+951	(some|one|all|any|CD) of (DT|NN[^\n ]{,2})
+952	(this|that) one
+953	(these|those) ones
+954	those
+955	(that|those) of
+956	(some|any)
+957	some
+958	any
+959	(all|both)
+960	(both|a few|another)
+961	(some|a few|any|each)
+962	(each|either|enough|neither|several)
+963	(neither|either|none) of
+964	none
+965	(few|many|most|others)
+966	(very|too|so few|many)
+967	(some|many) ((DT )?NN[^\n ]{,2} )?of
+968	(a lot|much)
+969	many are [^,.!;:]*?
+970	one
+971	one
+972	(DT|PRP\$)( JJ)? one
+973	which one
+974	(this|that) one
+975	ones
+976	(DT|PRP\$)( JJ)? ones
+977	the ones
+#978	
+979	(these|those) ones
+980	none
+981	the (one|ones) that
+*982	(everything|something|anything)
+983	everything
+*984	(someone|everyone|somebody|anybody|nobody|everybody)
+*985	(someone|everyone|somebody|anybody|nobody|everybody)
+986	not [^,.!;:]*? anything
+*987	(something|anything|nothing|everywhere|someone|everyone|somebody|anybody|nobody|everybody|everywhere|anyone) JJ
+*988	(something|anything|nothing|everywhere|someone|everyone|somebody|anybody|nobody|everybody|everywhere|anyone) to
+*989	(something|anything|nothing|everywhere|someone|everyone|somebody|anybody|nobody|everybody|everywhere|anyone) else
+990	something
+*991	(something|anything|nothing|everywhere|someone|everyone|somebody|anybody|nobody|everybody|everywhere|anyone)
+*992	(something|anything|nothing|everywhere|someone|everyone|somebody|anybody|nobody|everybody|everywhere|anyone)
+*993	RB (something|anything|nothing|everywhere|someone|everyone|somebody|anybody|nobody|everybody|everywhere|anyone)
+*994	(something|anything|nothing|everywhere|someone|everyone|somebody|anybody|nobody|everybody|everywhere|anyone)
+#995	
+#996	
+997	^anything
+998	^anything
+999	you
+1000	one
+1001	we|us
+1002	they|them
+1003	he|she|he|she|they
+1004	each other
+1005	one another
+1006	each [^,.!;:]*? (the other|others)
+1007	each [^,.!;:]*? (the other|others)
+1008	or
+1009	or
+1010	or something else
+1011	or
+1012	or
+1013	or
+1014	or
+1015	or
+1016	(do|be) (not )?(PRP|NN[^\n ]{,2})
+1017	(be|do|have|MD) PRP \?$
+1018	(be|do|have|MD) not PRP \?$
+1019	(be|do|have|MD) PRP \?$
+1020	right
+1021	(will|shall) PRP \?$
+1022	is (not )?there \?
+1023	^(what|who|whose|which|where|when|why|how) be
+1024	^(what|who|whose|which|where|when|why|how) do
+1025	^(what|who|whose|which|where|when|why|how) have
+1026	^(what|who|whose|which|where|when|why|how) be
+1027	^(what|who|whose|which|where|when|why|how) MD
+1028	why do not
+1029	^(what|who|whose|which|where|when|why|how) MD not
+1030	WRB (do|have|be|MD) not
+1031	WRB (do|have|be|MD)
+1032	^MD 
+1033	^(WRB|be) 
+1034	^MD
+1035	^do
+1036	^be (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VBG
+1037	have (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VBN
+1038	be not
+1039	(do|have) not (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP)
+1040	MD not (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP)
+1041	^(do|be|have|MD) (not )?(PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP)
+1042	^(do|be|have|MD) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) not
+1043	look forward to
+#1044	
+1045	VB.? RP IN
+1046	VB.? RP IN
+#1047	
+#1048	
+#1049	
+1050	VB.? IN
+1051	VB.? RB IN
+1052	VB.? that
+#1053	
+*1054	(tell|promise)
+*1055	(understand|realize|realise)
+*1056	(say)
+1057	VB.? RP
+1058	VB.? (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) RP
+#1059	VB.?
+#1060	
+#1061	
+#1062	VB.? RB
+1063	VB.? RP (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP)
+1064	VB.? (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) RP
+1065	VB.? PRP RP
+1066	VB.?
+1067	(be|become|appear|feel|look|remain|seem|sound|get|go|grow|taste|smell)
+1068	VB.?
+1069	MD
+1070	(have|do)
+1071	(become|appear|feel|look|remain|seem|sound|get|go|grow|taste|smell) JJ
+1072	MD VB
+1073	have (got )?to
+1074	(used|ought) to
+1075	(dare|need)( not)?
+1076	VB.? to VB
+1077	like (to VB|VBG)
+1078	would like to VB
+1079	VB.? to VB
+1080	VB.? (to VB|VBG)
+1081	would love to VB
+1082	enjoy VBG
+1083	VB.? to VB
+1084	would prefer to VB
+1085	VB.? VBG
+1086	help (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP)( to)?
+1087	VB.? PRP to VB
+1088	(make|let) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VB
+1089	VB.? VBG
+1090	VB.? (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VBG
+1091	(TO VB|VBG)
+1092	VB.? (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VBG
+*1093	(see|hear) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VB
+1094	would hate to V
+1095	there is (PRP\$ |DT )?(JJ )?(NN|NNP)
+1096	there are (PRP\$ |DT )?(JJ )?(NNS|NNPS)
+1097	there is (PRP\$ |DT )?(JJ )?(NN|NNP)
+1098	there be a lot of (PRP\$ |DT )?(JJ )?(NNS|NNPS)
+1099	there be not (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP)
+1100	there MD (not )?be
+1101	there VB.?
+1102	(be|become|appear|feel|look|remain|seem|sound|get|go|grow|taste|smell)
+1103	VB.?
+1104	(become|appear|feel|look|remain|seem|sound|get|go|grow|taste|smell)
+1105	if [^,.!;:]*? VB.?
+1106	if [^,.!;:]*? VB.?
+1107	if [^,.!;:]*? VB
+1108	if (NN[^\n ]{,2}|PRP) (want|like|prefer)
+1109	if [^,.!;:]*? VB.?
+1110	if [^,.!;:]*? VB.?
+1111	if [^,.!;:]*? VB.?
+1112	if [^,.!;:]*? VB.?
+1113	if i were you
+1114	unless
+1115	if [^,.!;:]*? VBD
+1116	if (NN[^\n ]{,2}|PRP) have not VBN
+1117	if not
+1118	if so
+1119	(unless|as long as|provided|providing|in case( that)?) PRP (VB.?|be VBG)
+1120	if [^,.!;:]*? had VBN
+1121	if VBN
+1122	if you should
+1123	should (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP|EX) VB
+1124	should (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VB
+1125	had (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VBN
+1126	were [^,.!;:]*? to
+1127	(so long as|on condition that|in the event that)
+1128	were it not for
+1129	(if it were not|were not for)
+1130	if it were to
+1131	whether or not
+1132	as you know
+1133	so
+#1134	^RB ,
+#1135	
+*1136	(moreover|in addition|besides|what is more|furthermore)
+1137	(you see|the thing is)
+1138	^RB ,
+*1139	(likewise|similarly|in the same way)
+*1140	(to begin with|for a start|in conclusion|to sum up|in summary)
+*1141	(thus|consequently|hence|therefore)
+1142	as (mentioned|shown)
+1143	say
+1144	tell (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) that
+1145	(say|tell( PRP)?) that
+1146	ask( PRP)? (if|whether)
+1147	WP|WRB|WDT 
+1148	wonder (WP|WRB|WDT)
+*1149	(feel|think|forget|answer|ask)
+*1150	(feel|think|forget|answer|ask)
+*1151	(ask|tell) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) to
+*1152	(say|tell)
+#1153	(say)
+*1154	(see|ask|say)
+*1155	(ask|say|shout)
+1156	(ask|tell) [^,.!;:]*? not to
+1157	VB.?
+*1158	(was|were) VBG
+*1159	(tell)
+#1160	
+1161	^RB
+1162	it be (RB ?)JJ that
+1163	(the reason( that)?|the place(which)?) [^,.!;:]*? be
+1164	the (thing|fact|point|problem|reason) be( that)?
+#1165	
+#1166	
+1167	what (NN[^\n ]{,2}|PRP) VB.?
+1168	^(WP|WRB|WDT)
+1169	^VBN
+1170	not a NN[^\n ]{,2}
+1171	(WP|WRB|WDT) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP)
+1172	the JJ (thing|fact|point|problem|reason) (is|was) that
+1173	it be (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP)( that| WP| WRB| WDT)
+#1174	
+1175	be not
+1176	do not VB
+1177	can not
+1178	(be|have) (not )?(VBG|VBN)
+1179	did not VB
+1180	do not VB
+1181	MD not VB
+1182	(be|do|have|MD) not
+1183	no NN[^\n ]{,2}
+1184	(any|much|many) NN[^\n ]{,2}
+1185	(be|have) not
+1186	i do not (think|believe)
+1187	^(be|MD|do) not
+1188	(be|do|MD) not
+1189	(be|do|have) not
+1190	(ever|never|yet|still)
+1191	not
+1192	not
+1193	^never have i
+1194	neither [^,.!;:]*? nor
+1195	(neither|none) of (PRP|NN[^\n ]{,2})
+1196	none
+1197	not (everyone|everything|every|all)
+1198	not only V
+1199	not RB
+#1200	
+1201	whatsoever
+1202	not a (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP)( MD be)? VBN
+1203	do not you
+1204	(neither|nor) (do|be) (NN[^\n ]{,2}|PRP)
+1205	in the least
+1206	could
+1207	could not
+1208	^could [^,.!;:]*? \?$
+1209	could not
+1210	could (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) VB
+1211	could VB
+1212	could VB
+1213	could i
+1214	could ((PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) )?VB
+1215	could ((PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) )?VB
+1216	could (not )?have VBN
+1217	could (not )?have VBN
+1218	could (not )?have VBN
+1219	could (not )?have VBN
+1220	could
+1221	could have VBN
+1222	could not have VBN
