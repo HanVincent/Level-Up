@@ -17,7 +17,7 @@ def extra_rules(no, segment):
     elif no == 17: # repeat + er
         for tk in segment:
             if tk.tag_ == 'JJR':
-                return tk.lemma_[-1] != tk.lemma_[-2] and tk.text[-3] == tk.text[-4] and tk.text.endswith('er')
+                return tk.text.endswith('er') and tk.lemma_[-1] != tk.lemma_[-2] and tk.text[-3] == tk.text[-4]
     
     elif no == 18: # ending with e + r
         for tk in segment:
