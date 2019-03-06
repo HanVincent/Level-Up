@@ -16,8 +16,8 @@ def extra_rules(no, segment):
     
     elif no == 17: # repeat + er
         for tk in segment:
-            if tk.tag_ == 'JJR':
-                return tk.text.endswith('er') and tk.lemma_[-1] != tk.lemma_[-2] and tk.text[-3] == tk.text[-4]
+            if tk.tag_ == 'JJR' and tk.text.endswith('er') and len(tk.text) > 4:
+                return tk.lemma_[-1] != tk.lemma_[-2] and tk.text[-3] == tk.text[-4]
     
     elif no == 18: # ending with e + r
         for tk in segment:
@@ -34,8 +34,8 @@ def extra_rules(no, segment):
         
     elif no == 62: # repeat + est
         for tk in segment:
-            if tk.tag_ == 'JJS':
-                return tk.text.endswith('est') and tk.lemma_[-1] != tk.lemma_[-2] and tk.text[-4] == tk.text[-5]
+            if tk.tag_ == 'JJS' and tk.text.endswith('est') and len(tk.text) > 5:
+                return tk.text[-4] == tk.text[-5] and tk.lemma_[-1] != tk.lemma_[-2]
     
     elif no == 63: # normal + est
         for tk in segment:
