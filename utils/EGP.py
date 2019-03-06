@@ -1,3 +1,4 @@
+from collections import defaultdict
 from .preprocess import normalize
 import re
 import numpy as np
@@ -16,6 +17,7 @@ class EGP:
         self.df['Example'] = self.df['Example'].apply(lambda el: '|||'.join(el.split('\n\n')))
             
         self.pat_dict = self.read_patterns('egp.regex.pattern.txt')
+        self.inverted_dict = self.invert_index(self.pat_dict)
         self.highlight_dict = self.read_highlights('egp.highlights.txt')
         self.pat_groups = self.group_patterns()
         
@@ -75,6 +77,17 @@ class EGP:
 
         return sent_dict
     
+
+    def invert_index(self, pat_dict):
+        re_token = re.compile(r'\w+')
+        
+        inverted_dict = defaultdict(set)
+        for number, regex in pat_dict.items():
+            for tk in re_token.findall(regex.pattern):
+                inverted_dict[tk].add(number)
+
+        return inverted_dict
+        
     
     def read_patterns(self, filename='egp.regex.pattern.txt'):
         adv_dict = {}

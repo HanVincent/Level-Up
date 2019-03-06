@@ -35,7 +35,7 @@ def extra_rules(no, segment):
     elif no == 62: # repeat + est
         for tk in segment:
             if tk.tag_ == 'JJS':
-                return tk.lemma_[-1] != tk.lemma_[-2] and tk.text[-4] == tk.text[-5] and tk.text.endswith('est')
+                return tk.text.endswith('est') and tk.lemma_[-1] != tk.lemma_[-2] and tk.text[-4] == tk.text[-5]
     
     elif no == 63: # normal + est
         for tk in segment:

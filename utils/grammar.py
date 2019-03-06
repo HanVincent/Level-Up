@@ -81,6 +81,7 @@ def remove_overlap(parse, gets):
     return new_gets
 
 
+# inverted index 於此使用
 def iterate_pats(parse, pat_groups):      
     gets = []
     for i, group in enumerate(pat_groups):
