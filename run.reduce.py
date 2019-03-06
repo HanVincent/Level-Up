@@ -8,7 +8,7 @@ import json
 
 
 def parse_input(line):
-    word, pid = line.strip.rsplit(maxsplit=1)
+    word, pid = line.strip().rsplit(maxsplit=1)
     return word, int(pid)
 
 
