@@ -19,6 +19,7 @@ class EGP:
         self.pat_dict = self.read_patterns('egp.regex.pattern.txt')
         self.inverted_dict = self.invert_index(self.pat_dict)
         self.highlight_dict = self.read_highlights('egp.highlights.txt')
+        self.word_pattern_counter = self.read_word_pattern('egp_stat_10k.jsonl')
         self.pat_groups = self.group_patterns()
         
     
@@ -41,6 +42,12 @@ class EGP:
     def get_highlight(self, no):
         return self.highlight_dict[no]
     
+    def get_possible(self, word):
+        if word not in self.word_pattern_counter:
+            return None
+
+        no, count = self.word_pattern_counter[word][0]
+        return no
     
     def get_patterns(self):
         return self.pat_dict
@@ -127,6 +134,15 @@ class EGP:
         return highlight_dict
         
         
+    def read_word_pattern(self, file='egp_stat_10k.jsonl'):
+        import jsonlines
+
+        with jsonlines.open(file) as reader:
+            word_pattern_counter = {obj['word']: obj['counter'] for obj in reader}
+        
+        return word_pattern_counter
+    
+    
     # TODO: refactor later
     def group_patterns(self):
         from .config import level_table

@@ -1,12 +1,10 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
+# In[ ]:
 
 
 #!/usr/bin/env python
-# get_ipython().run_line_magic('load_ext', 'autoreload')
-# get_ipython().run_line_magic('autoreload', '2')
 
 
 from math import log
@@ -33,21 +31,23 @@ nlp = spacy.load('en_core_web_lg')
 nlp.tokenizer = custom_tokenizer(nlp)
 
 
-# In[2]:
+# In[ ]:
 
 
-from utils.preprocess import *
-from utils.grammar import *
+from nltk.tokenize.treebank import TreebankWordDetokenizer
+
+from utils.preprocess import normalize
+from utils.grammar import get_lemma, Egp, iterate_all_patterns, iterate_all_gets
 
 
-# In[3]:
+# In[ ]:
 
 
 from utils.Dictionary import Dictionary
 Dict = Dictionary()
 
 
-# In[4]:
+# In[ ]:
 
 
 # only used for testing
@@ -82,17 +82,17 @@ def main_profiling(content):
     for sent in nlp(content).sents:
         parse = nlp(normalize(sent.text))
         
-        # 1. find non-overlapped matches
-        gets = iterate_pats(parse, pat_groups) # match patterns in groups
+        # 1. find less-overlapped patterns and patterns for non-matching words
+        gets, scratches = iterate_all_patterns(parse, pat_groups) # match patterns in groups
         # print(gets)
         # if not gets: continue # non-match
         
         # 2. recommend related higher pattern in the same group
-        recs  = recommend_pats(gets, pat_groups)
+        recs  = iterate_all_gets(gets, pat_groups)
         # print(recs)
-        
-        sent_profiles.append({'sent': sent.text, 'parse': ' '.join([tk.text for tk in parse]), 
-                              'gets': gets, 'recs': recs })
+        sent_profiles.append({'sent': sent.text, 
+                              'parse': ' '.join([tk.text for tk in parse]), 
+                              'scratches': scratches, 'gets': gets, 'recs': recs })
 
     return sent_profiles
 
@@ -127,9 +127,19 @@ pat_groups = Egp.get_group_patterns()
 # In[ ]:
 
 
-# group_gets = iterate_pats(nlp("long"), pat_groups)
+no = Egp.get_possible("a")
+print(no)
+print(pat_dict[no].pattern)
+print(Egp.get_statement(no))
+print(Egp.get_highlight(no))
 
-# # group_recs  = recommend_pats(group_gets, pat_groups) # recommend patterns in same group
+
+# In[ ]:
+
+
+group_gets, scratches = iterate_all_patterns(nlp("He's a book."), pat_groups)
+
+# # group_recs  = iterate_all_gets(group_gets, pat_groups) # recommend patterns in same group
 
 
 # In[ ]:
@@ -153,9 +163,9 @@ pat_groups = Egp.get_group_patterns()
                 
 #             # main process
 #             print(sent)
-#             group_gets = iterate_pats(parse, pat_groups) # match patterns in groups
+#             group_gets = iterate_all_patterns(parse, pat_groups) # match patterns in groups
 #             print(group_gets)
-#             group_recs  = recommend_pats(group_gets, pat_groups) # recommend patterns in same group
+#             group_recs  = iterate_all_gets(group_gets, pat_groups) # recommend patterns in same group
 #             print(group_recs)
 
 
@@ -216,7 +226,7 @@ def vocabuing():
 
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=1315)
+    app.run(host='0.0.0.0', port=1316)
 
 
 # In[ ]:

@@ -41,7 +41,7 @@ def iterate_match(no, parse, pat, tags):
 
 
 re_token = re.compile('\w+|[,.:;!?]')
-def match_pat(parse, no, pat):
+def match_pattern(parse, no, pat):
     matches = []
     
     stopwords = re_token.findall(pat.pattern)
@@ -61,9 +61,9 @@ def match_pat(parse, no, pat):
     return uniq_matches
 
 
-# find all less overlap and return dict type
+# find all except exact overlap
 def remove_overlap(parse, gets):
-    overlap = np.asarray([False] * len(parse))
+    overlap_marker = np.asarray([False] * len(parse))
     overlap_level = np.asarray([None] * len(parse))
     
     gets = sorted(gets, key=lambda get: len(get['ngram'].split(' ')), reverse=True)
@@ -73,48 +73,67 @@ def remove_overlap(parse, gets):
     for get in gets:
         start, end = get['range']
         # ngram is not all overlapped
-        if not all(overlap[start:end]) or all(overlap_level[start:end] == get['level']) : 
-            overlap[start:end] = True
+        if not all(overlap_marker[start:end]) or all(overlap_level[start:end] == get['level']) : 
+            overlap_marker[start:end] = True
             overlap_level[start:end] = get['level']
             new_gets.append(get)
 
-    return new_gets
+    return new_gets, overlap_marker
 
 
 # inverted index 於此使用
-def iterate_pats(parse, pat_groups):      
+def iterate_all_patterns(parse, pat_groups):    
+    
+    ### Iterate all patterns to match
     gets = []
     for i, group in enumerate(pat_groups):
         for each in group:
             no, level, pat = each['no'], each['level'], each['pat']
 
             # 1. if match pattern
-            matches = match_pat(parse, no, pat)
+            matches = match_pattern(parse, no, pat)
             if not matches: continue
             
             for (start, end) in matches:
                 ngram = ' '.join([el.text for el in parse[start:end]])
                 gets.append({'group': i, 'no': no, 'level': level, 'range': (start, end), 'ngram': ngram})
  
-    gets = remove_overlap(parse, gets)
+    ### Remove exact overlap
+    gets, overlap_marker = remove_overlap(parse, gets)
     
+    ### Add non-matching pattern suggestion
+    scratches = []
+    indices = np.where(overlap_marker==False)[0] # get non-recommended token index
+    for index in indices:
+        no = Egp.get_possible(parse[index].text)
+        if not no: continue
+            
+        scratches.append({'no': no, 'level': Egp.get_level(no), 'ngram': parse[index].text,
+                          'category': Egp.get_category(no), 'subcategory': Egp.get_subcategory(no),
+                          'statement': Egp.get_statement(no), 'highlight': Egp.get_highlight(no)})
+    
+    ### Re-trieve wanting info
     gets = [{'no': get['no'], 'group': get['group'], 'level': get['level'], 'ngram': get['ngram'], 
              'category': Egp.get_category(get['no']), 'subcategory': Egp.get_subcategory(get['no']),
              'statement': Egp.get_statement(get['no'])} for get in gets]
 
-    return gets
+    return gets, scratches
 
 
-### Recommend
+def recommend_patterns(level, pat_group):
+    rec = filter(lambda el: level_table[level] < level_table[el['level']], pat_group)
+    
+    return [{'no': el['no'], 'level': el['level'], 
+             'category': Egp.get_category(el['no']), 'subcategory': Egp.get_subcategory(el['no']),
+             'statement': Egp.get_statement(el['no']), 'highlight': Egp.get_highlight(el['no'])} 
+            for el in rec]
 
-def recommend_pats(gets, pat_groups):
+
+def iterate_all_gets(gets, pat_groups):
     recs = []
     for get in gets:
         group, level = get['group'], get['level']
-
-        rec = filter(lambda el: level_table[level] < level_table[el['level']], pat_groups[group])
-        recs.append( [{'no': el['no'], 'level': el['level'], 
-                       'category': Egp.get_category(el['no']), 'subcategory': Egp.get_subcategory(el['no']),
-                       'statement': Egp.get_statement(el['no']), 'highlight': Egp.get_highlight(el['no'])} for el in rec] )
+        recs.append(recommend_patterns(level, pat_groups[group]))
         
     return recs
+
