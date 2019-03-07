@@ -10,10 +10,12 @@ Egp = EGP()
 
 def get_lemma(tk, stopwords):
     lemma = tk.lower_ if tk.lemma_ == '-PRON-' else tk.lemma_
-    
-    if lemma in stopwords: return lemma
-    else: return tk.tag_
-    
+
+    if lemma in stopwords:
+        return lemma
+    else:
+        return tk.tag_
+
 
 # return the index of start token and end token
 def align(re_match, tags):
@@ -21,21 +23,23 @@ def align(re_match, tags):
 
     length = 0
     for i, token in enumerate(tags.split(' ')):
-        if length >= start: break
-            
-        length += len(token) + 1 # space len
-            
+        if length >= start:
+            break
+
+        length += len(token) + 1  # space len
+
     match_len = len(re_match.group().split(' '))
     return (i, i+match_len)
-    
+
 
 def iterate_match(no, parse, pat, tags):
     matches = []
     for match in pat.finditer(tags):
         start, end = align(match, tags)
-        
-        is_match = extra_rules(no, parse[start:end]) # extra rule
-        if is_match: matches.append((start, end))
+
+        is_match = extra_rules(no, parse[start:end])  # extra rule
+        if is_match:
+            matches.append((start, end))
 
     return matches
 
@@ -43,16 +47,16 @@ def iterate_match(no, parse, pat, tags):
 re_token = re.compile('\w+|[,.:;!?]')
 def match_pattern(parse, no, pat):
     matches = []
-    
+
     stopwords = re_token.findall(pat.pattern)
-    norm_tags  = ' '.join([tk.tag_ if tk.norm_ not in stopwords else tk.norm_ for tk in parse])
-    lemma_tags  = ' '.join([get_lemma(tk, stopwords) for tk in parse])
+    norm_tags = ' '.join([tk.tag_ if tk.norm_ not in stopwords else tk.norm_ for tk in parse])
+    lemma_tags = ' '.join([get_lemma(tk, stopwords) for tk in parse])
     origin_tags = ' '.join([tk.tag_ if tk.text not in stopwords else tk.text for tk in parse])
 
     matches.extend(iterate_match(no, parse, pat, norm_tags))
     matches.extend(iterate_match(no, parse, pat, lemma_tags))
     matches.extend(iterate_match(no, parse, pat, origin_tags))
-    
+
     # unique and in order
     uniq_matches = []
     for match in matches:
@@ -65,7 +69,7 @@ def match_pattern(parse, no, pat):
 def remove_overlap(parse, gets):
     overlap_marker = np.asarray([False] * len(parse))
     overlap_level = np.asarray([None] * len(parse))
-    
+
     gets = sorted(gets, key=lambda get: len(get['ngram'].split(' ')), reverse=True)
     gets = sorted(gets, key=lambda get: level_table[get['level']], reverse=True)
 
@@ -83,7 +87,6 @@ def remove_overlap(parse, gets):
 
 # inverted index 於此使用
 def iterate_all_patterns(parse, pat_groups):    
-    
     ### Iterate all patterns to match
     gets = []
     for i, group in enumerate(pat_groups):
@@ -136,4 +139,3 @@ def iterate_all_gets(gets, pat_groups):
         recs.append(recommend_patterns(level, pat_groups[group]))
         
     return recs
-

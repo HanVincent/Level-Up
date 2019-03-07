@@ -39,6 +39,7 @@ from pprint import pprint
 
 _do_print_debug_info = False
 
+
 def _print_table(rows):
     col_widths = [max(len(s) for s in col) for col in zip(*rows)]
     fmt = ' '.join('%%-%ds' % width for width in col_widths)
@@ -48,11 +49,13 @@ def _print_table(rows):
         # print(list(map(hex, map(ord, list(fmt % tuple(row))))))
         print(fmt % tuple(row))
 
+
 def _start_end(arrow):
     start, end = arrow['from'].i, arrow['to'].i
     mn = min(start, end)
     mx = max(start, end)
     return start, end, mn, mx
+
 
 def print_parse_info(nlp, sent):
     """ Print the dependency tree of `sent` (sentence), along with the lemmas
@@ -93,7 +96,7 @@ def print_parse_info(nlp, sent):
                 continue
             o_start, o_end, o_mn, o_mx = _start_end(other)
             if ((start == o_start and mn <= o_end <= mx) or
-                (start != o_start and mn <= o_start <= mx)):
+               (start != o_start and mn <= o_start <= mx)):
                 num_deps += 1
                 if _do_print_debug_info:
                     print('%d is over %d' % (i, j))
@@ -168,13 +171,13 @@ def print_parse_info(nlp, sent):
 
         num_arrows_left -= 1
 
-    arr_chars = {'ew'  : u'─',
-                 'ns'  : u'│',
-                 'en'  : u'└',
-                 'es'  : u'┌',
-                 'enw' : u'┴',
+    arr_chars = {'ew': u'─',
+                 'ns': u'│',
+                 'en': u'└',
+                 'es': u'┌',
+                 'enw': u'┴',
                  'ensw': u'┼',
-                 'esw' : u'┬'}
+                 'esw': u'┬'}
 
     # Convert the character lists into strings.
     max_len = max(len(line) for line in lines)

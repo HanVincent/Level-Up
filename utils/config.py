@@ -1,6 +1,6 @@
-level_table = {"A1": 1, "A2": 2, "B1": 3, "B2": 4, "C1": 5, "C2": 6 }
+level_table = {"A1": 1, "A2": 2, "B1": 3, "B2": 4, "C1": 5, "C2": 6}
 
-tab_table = { '': '',
+tab_table = {'': '',
              'adjective': 'ADJ',
              'adv': 'ADV',
              'adverb': 'ADV',
@@ -15,4 +15,4 @@ tab_table = { '': '',
              'ordinal number': 'JJ',
              'preposition': 'ADP',
              'pronoun': 'NOUN',
-             'verb': 'VERB' }
+             'verb': 'VERB'}
