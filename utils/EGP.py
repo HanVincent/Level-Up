@@ -22,8 +22,9 @@ class EGP:
         self.pat_dict = self.read_patterns('egp.regex.pattern.txt')
         self.inverted_dict = self.invert_index(self.pat_dict)
         self.highlight_dict = self.read_highlights('egp.highlights.txt')
-        self.word_pattern_counter = self.read_word_pattern('egp_stat_10k.jsonl')
         self.pat_groups = self.group_patterns()
+        self.word_pattern_counter = self.read_word_pattern()
+        
 
     def save_csv(self):
         self.df.to_csv('egp.new.csv')
@@ -43,13 +44,11 @@ class EGP:
     def get_highlight(self, no):
         return self.highlight_dict[no]
     
-    def get_possible(self, word):
-        if word not in self.word_pattern_counter:
-            return None
-
-        no, count = self.word_pattern_counter[word][0]
-        return no
+    def pattern_exist(self, index):
+        return index in self.pat_dict
     
+    def get_pattern(self, index):
+        return self.pat_dict[index]
     
     def get_patterns(self):
         return self.pat_dict
@@ -96,6 +95,13 @@ class EGP:
 
         return inverted_dict
 
+    def get_possible(self, word):
+        if word not in self.word_pattern_counter:
+            return None
+
+        no, count = self.word_pattern_counter[word][0]
+        return no
+    
     def read_patterns(self, filename='egp.regex.pattern.txt'):
         adv_dict = {}
         for line in open('dict.lexicon.txt', 'r', encoding='utf8'):
@@ -136,7 +142,7 @@ class EGP:
         return highlight_dict
 
         
-    def read_word_pattern(self, file='egp_stat_10k.jsonl'):
+    def read_word_pattern(self, file='/home/nlplab/jjc/English_Grammar_Profile/egp_stat.jsonl'):
         import jsonlines
 
         with jsonlines.open(file) as reader:
@@ -145,23 +151,9 @@ class EGP:
         return word_pattern_counter
     
     
-    # TODO: refactor later
     def group_patterns(self):
         from .config import level_table
 
-        prev = 0
-        pat_groups = [[]]
+        category_groups = self.df.groupby(['Category', 'Subcategory'])
+        return category_groups.groups
 
-        for no, pat in self.pat_dict.items():
-            level = self.get_level(no)
-
-            # create new group
-            if level_table[level] < prev:
-                pat_groups.append([])
-
-            # update old group
-            pat_groups[-1].append({'no': no, 'level': level, 'pat': pat})
-
-            prev = level_table[level]
-
-        return pat_groups
