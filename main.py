@@ -1,15 +1,12 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[ ]:
+# In[1]:
 
 
 #!/usr/bin/env python
-
-
-from math import log
-from itertools import groupby
-from collections import defaultdict, Counter
+# %load_ext autoreload
+# %autoreload 2
 
 import spacy
 from spacy.tokenizer import Tokenizer
@@ -31,70 +28,92 @@ nlp = spacy.load('en_core_web_lg')
 nlp.tokenizer = custom_tokenizer(nlp)
 
 
-# In[ ]:
+# In[35]:
 
 
 from nltk.tokenize.treebank import TreebankWordDetokenizer
 
 from utils.preprocess import normalize
-from utils.grammar import get_lemma, Egp, iterate_all_patterns, iterate_all_gets
+from utils.grammar import generate_candidates, iterate_all_patterns, iterate_all_gets
+from utils.vocabulary import level_vocab
+from utils.extract import clean_content
 
 
-# In[ ]:
+# ##### http://weedyc.pixnet.net/blog/post/26181706-%E8%8B%B1%E6%96%87%E6%96%87%E6%B3%95%E8%BC%95%E9%AC%86%E5%AD%B8%EF%BC%9A%E4%BA%94%E5%A4%A7%E5%9F%BA%E6%9C%AC%E5%8F%A5%E5%9E%8B
+# 
+# 1. 主詞 + 動詞 S. V.
+# 2. 主詞 + 動詞 + 受詞 S. V. O.
+# 3. 主詞 + 動詞 + 補語 S. V. C.
+# 4. 主詞 + 動詞 + 受詞 + 受詞 S. V. O1 O2
+# 5. 主詞 + 動詞 + 受詞 + 補語 S. V. O. C.
+
+# In[3]:
 
 
-from utils.Dictionary import Dictionary
-Dict = Dictionary()
+from utils.explacy import print_parse_info
+# print_parse_info(nlp, 'Unlike many approaches to GEC, this approach does NOT require annotated training data and mainly depends on a monolingual language model')
 
 
-# In[ ]:
+# In[4]:
 
 
-# only used for testing
-import re
-re_token = re.compile('\w+|[,.:;!?]')
-def is_match(parse, pat):
-    ### rule to catch
-    stopwords = re_token.findall(pat.pattern)
-    norm_tags  = ' '.join([tk.tag_ if tk.norm_ not in stopwords else tk.norm_ for tk in parse])
-    lemma_tags  = ' '.join([get_lemma(tk, stopwords) for tk in parse])
-    origin_tags = ' '.join([tk.tag_ if tk.text not in stopwords else tk.text for tk in parse])
+# # approach 1
 
-    return pat.search(norm_tags) or pat.search(lemma_tags) or pat.search(origin_tags)
-    
+# # root
+# SENTENCE_PATTERNS = {
+#     'SV': ['nsubj', 'punct'],
+#     'SVO': ['nsubj', 'dobj', 'punct'],
+#     'SVC': ['nsubj', 'attr', 'acomp', 'punct'],
+#     'SVOO': ['nsubj', 'dative', 'dobj', 'punct'],
+#     'SVOC': ['nsubj', 'ccomp', 'dobj', 'oprd', 'punct']
+# }
+# SENTENCE_PATTERNS = SENTENCE_PATTERNS.items()
+
+ 
+# def get_first(root):
+#     candidates = {}
+#     for pattern, deps in SENTENCE_PATTERNS:
+#         sent = [root] + [child for child in root.children if child.dep_ in deps]
+#         candidates[pattern] = sorted(sent, key=lambda x: x.i)
+        
+#     return max(candidates.items(), key=lambda el: len(el[1]))
+
+# get_first(get_root(parse))
 
 
-# In[ ]:
-
-
-def level_vocab(parse):
-    annotate = [(tk.text, Dict.lookup(tk.lemma_)) for tk in parse]
-    return annotate
-
-
-# In[ ]:
+# In[5]:
 
 
 def main_profiling(content):
-    # content = normalize(content)
-    
-    sent_profiles = []
-    for sent in nlp(content).sents:
-        parse = nlp(normalize(sent.text))
+    sentence_profiles = []
+    for sent in nlp(content, disable=['ner']).sents:
+        # 0. parse sentence
+        parse = nlp(normalize(sent.text), disable=['ner'])
         
-        # 1. find less-overlapped patterns and patterns for non-matching words
-        gets, scratches = iterate_all_patterns(parse, pat_groups) # match patterns in groups
-        # print(gets)
-        # if not gets: continue # non-match
+        # 1. generate possible sentences
+        parses = generate_candidates(parse)
         
-        # 2. recommend related higher pattern in the same group
-        recs  = iterate_all_gets(gets, pat_groups)
-        # print(recs)
-        sent_profiles.append({'sent': sent.text, 
-                              'parse': ' '.join([tk.text for tk in parse]), 
-                              'scratches': scratches, 'gets': gets, 'recs': recs })
+        # 2. find patterns for each candidate
+        gets = [get for parse in parses for get in iterate_all_patterns(parse)]
 
-    return sent_profiles
+        # 3. remove duplicate
+        uniq_gets = []
+        [uniq_gets.append(get) for get in gets if get not in uniq_gets]
+        gets = uniq_gets
+        # print(uniq_gets)
+        
+        ########
+        # 4. recommend related higher pattern in the same group
+        # recs = iterate_all_gets(gets)
+        recs = []
+        # print(recs)
+        
+        # 5. return
+        sentence_profiles.append({'sent': sent.text, 
+                                  'parse': [tk.text for tk in parse],
+                                  'gets': gets, 'recs': recs })
+
+    return sentence_profiles
 
 
 def main_vocabuing(sentence):
@@ -108,77 +127,17 @@ def main_vocabuing(sentence):
         
 
 
-# In[ ]:
+# In[11]:
 
 
-pat_dict  = Egp.get_patterns()
-sent_dict = Egp.get_examples()
+# no = Egp.get_possible("a")
 
-### TEMP
-# delete = [no for no in pat_dict] # no < 1020 or no > 1050
-# for no in delete: del pat_dict[no]
-delete = [no for no in sent_dict if no not in pat_dict]
-for no in delete: del sent_dict[no]
-###
+group_gets = iterate_all_patterns(nlp("He is nice and friendly."))
 
-pat_groups = Egp.get_group_patterns()
+# # group_recs  = iterate_all_gets(group_gets) # recommend patterns in same group
 
 
-# In[ ]:
-
-
-no = Egp.get_possible("a")
-print(no)
-print(pat_dict[no].pattern)
-print(Egp.get_statement(no))
-print(Egp.get_highlight(no))
-
-
-# In[ ]:
-
-
-group_gets, scratches = iterate_all_patterns(nlp("He's a book."), pat_groups)
-
-# # group_recs  = iterate_all_gets(group_gets, pat_groups) # recommend patterns in same group
-
-
-# In[ ]:
-
-
-# %%time
-
-# if __name__ == '__main__':
-#     for no, entry in sent_dict.items():
-#         level = entry['level']
-#         sents = entry['sents']
-        
-#         # if no not in patterns_number: continue
-
-#         for origin_level, sent in sents:
-# #             parse = nlp(sent)
-# #             if is_match(parse, pat_dict[no]):
-# #                 pass
-# #             else:
-# #                 print(no, pat_dict[no].pattern, sent)
-                
-#             # main process
-#             print(sent)
-#             group_gets = iterate_all_patterns(parse, pat_groups) # match patterns in groups
-#             print(group_gets)
-#             group_recs  = iterate_all_gets(group_gets, pat_groups) # recommend patterns in same group
-#             print(group_recs)
-
-
-# In[ ]:
-
-
-# doc = nlp("it is the biggest and oldest museum in libya . … it is the biggest and <w> oldest museum </w> in libya .")
-# for a in doc:
-#     print(a.text, a.lemma_, a.norm_, a.tag_, a.pos_, a.i)
-# doc.text
-
-
-# In[ ]:
+# In[8]:
 
 
 #!/usr/bin/env python
@@ -195,18 +154,21 @@ CORS(app)
 
 @app.route('/')
 def index():
-    pass
+    return render_template('index.html')
 
 
-# post /profiling data: { content: str }
+# post /profiling data: { content: str , access: str}
 @app.route('/profiling', methods=['POST'])
 def profiling():
     request_data = request.get_json()
     if not request_data: return jsonify({'result': 'Should not be empty'})
-    
-    content = request_data['content']
+
+    if request_data['access'] == 'url':
+        content = clean_content(request_data['content']) # url
+    else:
+        content = request_data['content']
+        
     print(content)
-    
     sent_profiles = main_profiling(content)
 
     return jsonify({'profiles': sent_profiles})
@@ -229,26 +191,20 @@ if __name__ == "__main__":
     app.run(host='0.0.0.0', port=1316)
 
 
-# In[ ]:
-
-
-
-
-
-# In[ ]:
+# In[10]:
 
 
 # egs = []
 
 # for index, entry in Egp.get_examples().items():
-#     if index not in pat_dict: continue
+#     if index not in Egp.get_patterns(): continue
         
 #     eg = []
 #     for sent in entry['sents']:
 #         level, sent = sent
 #         parse = nlp(normalize(sent))
     
-#         matches = match_pat(parse, index, pat_dict[index])
+#         matches = match_pat(parse, index, Egp.get_patterns()[index])
 #         if not matches: continue
             
 #         sent = []
