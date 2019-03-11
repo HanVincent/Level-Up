@@ -23,15 +23,21 @@ function closure() {
 
 $(document).ready(() => {
     const request = closure();
+    const urlInput = $('#url-input');
     const contentBlock = $('#content-block');
     const showcase = $('#showcase');
     const grammarDiv = $('#main-grammar');
     const vocabDiv = $('#main-vocab');
 
 
-    $('#url-addon').click(e => {
+    $('#btn-url-search').click(e => {
         e.preventDefault();
         
+        const url = urlInput.val().trim();
+        console.log(url);
+        if (url) {
+            request("/profiling", { 'content': url, 'access': 'url' }).done(main);
+        }
     });
     
     $('#btn-submit').click(e => {
@@ -39,7 +45,7 @@ $(document).ready(() => {
 
         const content = contentBlock.text().trim();
         if (content) {
-            request("/profiling", { 'content': content }).done(main);
+            request("/profiling", { 'content': content, 'access': 'text'}).done(main);
         }
     });
 

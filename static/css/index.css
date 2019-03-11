@@ -9,6 +9,10 @@
     --adv-color: #dfbbf925;
 }
 
+textarea:focus, textarea.form-control:focus, input.form-control:focus, input:focus, .form-control:focus, [contenteditable].form-control:focus {
+  box-shadow: inset 0 -1px 0 #ddd;
+}
+
 .badge {
     font-family: 'Courier New', Courier;
     color: white;
