@@ -40,6 +40,7 @@ div.main-content:empty+div.no-content {
 
 .card-header {
     background-color: transparent;
+    border-bottom: none;
 }
 
 #nav-tabContent {

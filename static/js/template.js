@@ -29,7 +29,7 @@ function uniq(elements) {
 function buildGrammarTable(profile) {
     const { gets, recs } = profile;
 
-    const table = uniq(gets).reduce((getsPrev, get, i) => {
+    const table = uniq(gets).filter(get => window.checkedGrammar.includes(get.level)).reduce((getsPrev, get, i) => {
         const recsList = recs[i] || [];
         const recRows = recsList.reduce((recsPrev, rec) =>
             recsPrev + `
@@ -80,7 +80,7 @@ function buildGrammarTable(profile) {
 }
 
 function buildVocabTable(vocabs) {
-    const table = vocabs.filter(vocab => vocab.level).reduce((prev, vocab, i) => {
+    const table = vocabs.filter(vocab => vocab.level).filter(vocab => window.checkedVocab.includes(vocab.level)).reduce((prev, vocab, i) => {
         // const recsList = recs[i] || [];
         // const recRows = recsList.reduce((recsPrev, rec) =>
         //     recsPrev + `

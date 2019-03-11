@@ -29,6 +29,11 @@ $(document).ready(() => {
     const vocabDiv = $('#main-vocab');
 
 
+    $('#url-addon').click(e => {
+        e.preventDefault();
+        
+    });
+    
     $('#btn-submit').click(e => {
         e.preventDefault();
 
@@ -54,6 +59,13 @@ $(document).ready(() => {
         select.addRange(range);
         document.execCommand('copy');
         alert("Contents copied to clipboard.");
+    });
+    
+    $('#btn-update-setting').click(e => {
+        updateSetting();
+        
+        renderGrammar(window.profiles[window.sentenceIndex]);
+        renderVocab(window.vocabs);
     });
 
     $('#nav-grammar-tab').on('click', function (e) {
@@ -82,6 +94,11 @@ $(document).ready(() => {
         }
     });
 
+    function updateSetting() {
+        window.checkedGrammar = $("input[name='grammar-setting']:checked").map(function() {return this.value}).toArray();
+        window.checkedVocab = $("input[name='vocab-setting']:checked").map(function() {return this.value}).toArray();
+    }
+    
     function main(response) {
         const profiles = response.profiles;
         if (profiles.length === 0) return;
@@ -97,12 +114,15 @@ $(document).ready(() => {
 
     function flow(profileIndex) {
         const profile = window.profiles[profileIndex];
-
-        // render grammar table
-        renderGrammar(profile);
-
+        window.sentenceIndex = profileIndex;
+        
+        updateSetting();
+        
         // render showcase
         renderShowcase(profile);
+        
+        // render grammar table
+        renderGrammar(profile);
 
         // render vocabulary section
         if (profile.sent) {

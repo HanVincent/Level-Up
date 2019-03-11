@@ -21,26 +21,34 @@
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <!-- <a class="navbar-brand" href="#">Navbar</a> -->
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#">Home
-                        <span class="sr-only">(current)</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Features</a>
-                </li>
-            </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+      <a class="navbar-brand" href="#">Ian</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          
+        <ul class="navbar-nav">
+          <li class="nav-item active">
+            <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#">Feature</a>
+          </li>
+        </ul>
+          
+        <div class="input-group input-group-sm mx-2 my-2 my-lg-0 w-50">
+          <input type="text" class="form-control" placeholder="URL" aria-label="URL-addon" aria-describedby="URL-addon">
+          <div class="input-group-append">
+            <button class="btn btn-primary" type="button" id="url-addon">Go</button>
+          </div>
         </div>
+          
+      </div>
     </nav>
 
+    
     <section class="row h-auto">
         <div class="col-5 border-right h-75">
 
@@ -77,6 +85,9 @@
                             </button>
                             <button id="btn-copy" class="btn btn-outline-secondary mr-1">
                                 <i class="fas fa-copy"></i>
+                            </button>
+                            <button id="btn-setting" class="btn btn-outline-secondary mr-1" data-toggle="modal" data-target="#setting-modal">
+                                <i class="fas fa-cog"></i>
                             </button>
                             <button id="btn-submit" class="btn btn-primary ml-1">
                                 <i class="fas fa-search"></i>
@@ -130,6 +141,82 @@
 
         </div>
     </section>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="setting-modal" tabindex="-1" role="dialog" aria-labelledby="setting-modal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="setting-modal-title">Settings</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
+              <form class="form-group">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-a1" value="A1" checked>
+                  <label class="form-check-label" for="grammar-checkbox-a1">A1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-a2" value="A2" checked>
+                  <label class="form-check-label" for="grammar-checkbox-a2">A2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-b1" value="B1" checked>
+                  <label class="form-check-label" for="grammar-checkbox-b1">B1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-b2" value="B2" checked>
+                  <label class="form-check-label" for="grammar-checkbox-b2">B2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-c1" value="C1" checked>
+                  <label class="form-check-label" for="grammar-checkbox-c1">C1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-c2" value="C2" checked>
+                  <label class="form-check-label" for="grammar-checkbox-c2">C2</label>
+                </div>
+              </form>
+              
+              <form class="form-group">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-a1" value="A1" checked>
+                  <label class="form-check-label" for="vocab-checkbox-a1">A1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-a2" value="A2" checked>
+                  <label class="form-check-label" for="vocab-checkbox-a2">A2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-b1" value="B1" checked>
+                  <label class="form-check-label" for="vocab-checkbox-b1">B1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-b2" value="B2" checked>
+                  <label class="form-check-label" for="vocab-checkbox-b2">B2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-c1" value="C1" checked>
+                  <label class="form-check-label" for="vocab-checkbox-c1">C1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-c2" value="C2" checked>
+                  <label class="form-check-label" for="vocab-checkbox-c2">C2</label>
+                </div>
+              </form>
+          </div>
+            
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" id="btn-update-setting" data-dismiss="modal">Save</button>
+          </div>
+            
+        </div>
+      </div>
+    </div>
 </body>
 
 </html>
