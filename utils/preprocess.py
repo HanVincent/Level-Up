@@ -20,6 +20,7 @@ def recover_i(sent):
 
 
 def normalize(sent):
+    sent = sent.strip()
     sent = sent.lower()
 
     sent = recover_abbr(sent)

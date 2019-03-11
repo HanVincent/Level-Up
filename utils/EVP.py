@@ -5,7 +5,7 @@ from .config import level_table
 
 # ### Just lookup dictionary directly (ignore POS)
 
-class Dictionary:
+class EVP:
 
     def __init__(self):
         self.vocab_level = {}

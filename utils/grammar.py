@@ -69,8 +69,10 @@ def iterate_all_patterns(parse, pat_groups=Egp.get_group_patterns()):
             
             for (start, end, match) in matches:
                 indices = [tk.i for tk in parse[start:end]]
+                ngram   = ' '.join([tk.text for tk in parse[start:end]])
                 gets.append({'no': no, 'level': Egp.get_level(no), 
-                             'category': category, 'indices': indices, 'match': match, 
+                             'indices': indices, 'ngram': ngram, 'match': match, 
+                             'category': category, 
                              'subcategory': Egp.get_subcategory(no), 
                              'statement': Egp.get_statement(no)})
                 

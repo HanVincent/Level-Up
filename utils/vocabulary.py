@@ -1,8 +1,8 @@
-from .Dictionary import Dictionary
+from .EVP import EVP
 
-Dict = Dictionary()
+Evp = EVP()
 
 def level_vocab(parse):
-    annotate = [{'token': tk.text, 'level': Dict.lookup(tk.lemma_)} 
+    annotate = [{'token': tk.text, 'level': Evp.lookup(tk.lemma_)} 
                 for tk in parse]
     return annotate
