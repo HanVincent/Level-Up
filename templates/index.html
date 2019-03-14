@@ -4,24 +4,16 @@
 
     <title>Grammar-Ian</title>
     <meta charset='utf8'>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
+    
     <link rel="stylesheet"
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" />
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-    <script src="https://use.fontawesome.com/releases/v5.0.0/js/solid.js"></script>
-    <script src="https://use.fontawesome.com/releases/v5.0.0/js/fontawesome.js"></script>
-
-    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/template.js') }}"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"></link>
-
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/multi-select.css') }}"></link>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-warning">
+    <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #e3f2fd;">
       <a class="navbar-brand" href="#">Ian</a>
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -38,12 +30,17 @@
           </li>
         </ul>
           
-        <form class="input-group input-group-sm mx-2 my-2 my-lg-0 w-50">
-          <input type="text" class="form-control" id="url-input" placeholder="URL" aria-label="URL-addon" aria-describedby="URL-addon">
+        <form class="input-group input-group-sm mr-auto mx-2 my-2 my-lg-0 w-50">
+          <input type="text" class="form-control" id="url-input" placeholder="URL" aria-label="URL-addon" aria-describedby="URL-addon"
+                 value="https://blogs.scientificamerican.com/observations/ais-big-challenge1/">
           <div class="input-group-append">
             <button class="btn btn-primary" type="submit" id="btn-url-search">Go</button>
           </div>
         </form>
+          
+        <button id="btn-description" class="btn btn-sm btn-link" data-toggle="modal" data-target="#description-modal">
+            <i class="fas fa-question"></i>
+        </button>
           
       </div>
     </nav>
@@ -103,7 +100,6 @@
 
             <div class="row mx-3 my-4">
                 <div class="col">
-                    <div id="overlay" class="fa-2x d-none"><i id="loading" class="fas fa-spinner fa-spin"></i></div>
                     <nav class="mb-3">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-grammar-tab" data-toggle="tab"
@@ -142,7 +138,45 @@
         </div>
     </section>
     
-    <!-- Modal -->
+    <!-- Loading -->
+    <div id="overlay" class="fa-2x d-none"><i id="loading" class="fas fa-spinner fa-spin"></i></div>
+    
+    <!-- Description Modal -->
+    <div class="modal fade" id="description-modal" tabindex="-1" role="dialog" aria-labelledby="description-modal" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="description-modal-title">CEFR Levels</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+            
+          <div class="modal-body">
+            <table class="table">
+                <thead>
+                    <tr><th>Level</th><th>Explanation</th></tr>
+                </thead>
+                <tbody>
+                    <tr><th><span class="badge C2">C2</span></th><td>Mastery or proficiency</td></tr>
+                    <tr><th><span class="badge C1">C1</span></th><td>Effective operational proficiency or advanced</td></tr>
+                    <tr><th><span class="badge B2">B2</span></th><td>Vantage or upper intermediate</td></tr>
+                    <tr><th><span class="badge B1">B1</span></th><td>Threshold or intermediate</td></tr>
+                    <tr><th><span class="badge A2">A2</span></th><td>Waystage or elementary</td></tr>
+                    <tr><th><span class="badge A1">A1</span></th><td>Breakthrough or beginner</td></tr>
+                </tbody>
+            </table>
+          </div>
+            
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          </div>
+            
+        </div>
+      </div>
+    </div>
+    
+    <!-- Setting Modal -->
     <div class="modal fade" id="setting-modal" tabindex="-1" role="dialog" aria-labelledby="setting-modal" aria-hidden="true">
       <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -152,8 +186,8 @@
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
-          <div class="modal-body">
             
+          <div class="modal-body">
               <form class="form-group">
                 <p>Grammar Level:</p>
                 <div class="form-check form-check-inline">
@@ -211,6 +245,16 @@
                   <label class="form-check-label" for="vocab-checkbox-c2">C2</label>
                 </div>
               </form>
+              
+              <hr>
+              
+              <p>Category Selection:</p>
+              <select multiple="multiple" id="category-select" name="category-select[]">
+                  <option value='ADJECTIVES' selected>Adjectives</option>
+                  <option value='ADVERBS' selected>Adverbs</option>
+                  <option value='CLAUSES' selected>Clauses</option>
+              </select>
+
           </div>
             
           <div class="modal-footer">
@@ -221,6 +265,20 @@
         </div>
       </div>
     </div>
+    
+    
+    
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.0/js/solid.js"></script>
+    <script src="https://use.fontawesome.com/releases/v5.0.0/js/fontawesome.js"></script>
+
+    <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/template.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.multi-select.js') }}"></script>
+    
 </body>
 
 </html>

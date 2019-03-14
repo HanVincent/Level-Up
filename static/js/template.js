@@ -29,24 +29,22 @@ function uniq(elements) {
 function buildGrammarTable(profile) {
     const { gets, recs } = profile;
 
-    const table = uniq(gets).filter(get => window.checkedGrammar.includes(get.level)).reduce((getsPrev, get, i) => {
-        const recsList = recs[i] || [];
-        const recRows = recsList.reduce((recsPrev, rec) =>
-            recsPrev + `
+    const table = uniq(gets).filter(get => window.checkedGrammar.includes(get.level) && window.checkedCategory.has(get.category)).reduce((getsPrev, get, i) => {
+        const recRow =  recs[i]? `
             <ul class="pl-4 pb-1">
                 <li>
-                    <span class="badge ${rec.level}" data-toggle="tooltip" data-placement="top" title="${rec.category} ${rec.subcategory}">
-                        ${rec.level}
+                    <span class="badge ${recs[i].level}" data-toggle="tooltip" data-placement="top" title="${recs[i].category} ${recs[i].subcategory}">
+                        ${recs[i].level}
                     </span>
-                    ${rec.statement} 
-                    <number>${rec.no}</number>
+                    ${recs[i].statement} 
+                    <number>${recs[i].no}</number>
 
                     <div class="px-2 py-1 mt-2 text-monospace bg-light">
-                        <small>${rec.highlight}</small>
+                        <small>${recs[i].example}</small>
                     </div>
                 </li>
-            </ul>`, '');
-
+            </ul>` : '<tr>No recommend</tr>'
+        
         return getsPrev + `
         <div class="card border-right-0 border-left-0" data-indices="${get.indices.join(',')}" data-level="${get.level}">
             <div class="card-header ${get.category} row no-gutters align-items-center p-2" id="card-head-${i}">
@@ -68,7 +66,7 @@ function buildGrammarTable(profile) {
         
             <div id="collapse-get-${i}" class="collapse" aria-labelledby="card-head-${i}" data-parent="#accordionGets">
                 <div class="card-body p-2">
-                    ${!!recRows ? recRows : '<tr>No recommend</tr>'}
+                    ${recRow}
                 </div>
             </div>
         </div>`}, '');

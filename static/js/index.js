@@ -39,6 +39,7 @@ $(document).ready(() => {
             request("/profiling", { 'content': url, 'access': 'url' }).done(main);
         }
     });
+
     
     $('#btn-submit').click(e => {
         e.preventDefault();
@@ -67,7 +68,13 @@ $(document).ready(() => {
         alert("Contents copied to clipboard.");
     });
     
+    $('#btn-setting').click(e => {
+        e.preventDefault();
+    });
+    
     $('#btn-update-setting').click(e => {
+        e.preventDefault();
+        
         updateSetting();
         
         renderGrammar(window.profiles[window.sentenceIndex]);
@@ -92,6 +99,21 @@ $(document).ready(() => {
         }).join(' '));
     });
 
+    window.checkedCategory = new Set();
+    $('#category-select').multiSelect({
+        afterInit: function(){
+            this.$element.find(":selected").each(function() {
+                window.checkedCategory.add(this.value);
+            });
+        },
+        afterSelect: function(values){
+            window.checkedCategory.add(values[0]); // if not option group
+        },
+        afterDeselect: function(values){
+            window.checkedCategory.delete(values[0]); // if not option group
+        }
+    }); // init
+    
     contentBlock.click(e => {
         e.preventDefault();
 
