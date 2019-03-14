@@ -45,7 +45,7 @@
 51	make (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) JJ
 52	PRONOUN JJ
 54	(present|future|former) NN[^\n ]{,2}
-55	(NN[^\n ]{,2} VBN)|(VBN NN[^\n ]{,2})
+55	(NN[^\n ]{,2} VBN)
 56	DEGREE_JJ( JJ)? NN[^\n ]{,2}
 57	my best friend
 59	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) in 

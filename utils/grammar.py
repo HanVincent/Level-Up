@@ -14,7 +14,8 @@ def get_root(parse):
 
 
 def get_lemma(tk, stopwords):
-    lemma = tk.lower_ if tk.lemma_ == '-PRON-' else tk.lemma_
+    lemma = tk.text.lower() if tk.lemma_ == '-PRON-' else tk.lemma_
+    # lemma = tk.lower_ if tk.lemma_ == '-PRON-' else tk.lemma_
     return lemma if lemma in stopwords else tk.tag_
 
 
@@ -79,6 +80,33 @@ def iterate_all_patterns(parse, pat_groups=Egp.get_group_patterns()):
     return gets
 
 
+# find all except exact overlap
+def remove_overlap(parse, gets):
+    overlap_marker = np.asarray([False] * len(parse))
+    overlap_level = np.asarray([None] * len(parse))
+
+    # remove duplicate gets
+    uniq_gets = []
+    [uniq_gets.append(get) for get in gets if get not in uniq_gets]
+    gets = uniq_gets
+        
+    # sort by level first and then length of ngram
+    gets = sorted(gets, key=lambda get: len(get['ngram'].split(' ')), reverse=True)
+    gets = sorted(gets, key=lambda get: level_table[get['level']], reverse=True)
+
+    new_gets = []
+    for get in gets:
+        # ngram is not all overlapped or the level is same
+        if not all([overlap_marker[index] for index in get['indices']]) \
+            or all([overlap_level[index] == get['level'] for index in get['indices']]):
+            for index in get['indices']:
+                overlap_marker[index] = True
+                overlap_level[index] = True
+                new_gets.append(get)
+
+    return new_gets
+
+
 def generate_candidates(parse):
     root = get_root(parse)
     layer = [root] # start with root
@@ -101,19 +129,18 @@ def generate_candidates(parse):
 # Recommend grammar rules
 ############################################################
 
-def recommend_patterns(level, pat_group):
-    rec = filter(lambda el: level_table[level] < level_table[el['level']], pat_group)
+def recommend_patterns(get):
+    rec_no, rec_sentence = Egp.get_recommend(get['no'], get['ngram'])
     
-    return [{'no': el['no'], 'level': el['level'], 
-             'category': Egp.get_category(el['no']), 'subcategory': Egp.get_subcategory(el['no']),
-             'statement': Egp.get_statement(el['no']), 'highlight': Egp.get_highlight(el['no'])} 
-            for el in rec]
+    if rec_no:
+        rec_no = int(rec_no)
+        return {'no': rec_no, 'level': Egp.get_level(rec_no), 
+                'category': Egp.get_category(rec_no), 'subcategory': Egp.get_subcategory(rec_no),
+                'statement': Egp.get_statement(rec_no), 'example': rec_sentence }
+    else: 
+        return None
 
-
-def iterate_all_gets(gets, pat_groups=Egp.get_group_patterns()):
-    recs = []
-    for get in gets:
-        group, level = get['group'], get['level']
-        recs.append(recommend_patterns(level, pat_groups[group]))
+def iterate_all_gets(gets):
+    recs = [recommend_patterns(get) for get in gets]
         
     return recs

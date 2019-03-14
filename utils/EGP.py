@@ -1,6 +1,6 @@
-from collections import defaultdict
+from collections import defaultdict, Counter
 from .preprocess import normalize
-import re
+import re, json
 import numpy as np
 import pandas as pd
 
@@ -20,9 +20,14 @@ class EGP:
         self.df['Example'] = self.df['Example'].apply(lambda el: '|||'.join(el.split('\n\n')))
 
         self.pat_dict = self.read_patterns('egp.regex.pattern.txt')
-        self.inverted_dict = self.invert_index(self.pat_dict)
-        self.highlight_dict = self.read_highlights('egp.highlights.txt')
         self.pat_groups = self.group_patterns()
+        self.recommend_flow = self.read_recommend_flow('egp.recommend.txt')
+        
+        self.counters, self.sentences = self.read_counters()
+        ### 
+        
+        self.highlight_dict = self.read_highlights('egp.highlights.txt')
+        self.inverted_dict = self.invert_index(self.pat_dict)
         self.word_pattern_counter = self.read_word_pattern()
         
 
@@ -56,6 +61,85 @@ class EGP:
     def get_group_patterns(self):
         return self.pat_groups
 
+    def get_recommend(self, no: int, ngram: str):
+        numbers = self.recommend_flow[str(no)] # string num -> get str set
+        tokens = set(ngram.split(' '))
+        
+        max_no, max_key, max_value = None, '', 0
+        for num in numbers:
+            if self.get_level(int(num)) > self.get_level(no) and num in self.counters:
+                key = max( self.counters[num].keys(), key=lambda key: len(set(key.split(' ')) & set(tokens)) )
+                value = self.counters[num][key]
+
+                if value > max_value:
+                    max_key, max_value = key, value
+                    max_no = num
+                
+        if max_no:
+            return (max_no, self.sentences[max_no][max_key][0]) # return (max_no, max_key)
+        else:
+            return (None, '')
+    
+    
+    def read_patterns(self, filename='egp.regex.pattern.txt'):
+        adv_dict = {}
+        for line in open('dict.lexicon.txt', 'r', encoding='utf8'):
+            key, vocabs = line.strip().split('\t')
+            if key in adv_dict: continue
+
+            adv_dict[key] = vocabs.replace(',', '|')
+
+        keys = adv_dict.keys()
+
+        pat_dict = {}
+        for line in open(filename, 'r', encoding='utf8'):
+            if line.startswith('#'):
+                continue
+            if line.startswith('*'):
+                line = line[1:]
+
+            try:
+                no, pat = line.strip().split('\t')
+            except Exception:
+                print("Exception:", line)
+
+            for key in keys:
+                if key in pat:
+                    pat = pat.replace(key, '(' + adv_dict[key] + ')')
+
+            pat_dict[int(no)] = re.compile(pat)
+
+        return pat_dict
+
+    def group_patterns(self):
+        from .config import level_table
+
+        category_groups = self.df.groupby(['Category', 'Subcategory'])
+        return category_groups.groups
+
+    def read_recommend_flow(self, file='egp.recommend.txt'):
+        flow = defaultdict(set)
+        for line in open(file, 'r', encoding='utf8'):
+            heads, tails = line.split('\t')
+            for head in heads.split(','):
+                flow[head] |= set(tails.strip().split(','))
+                
+        return flow
+    
+    def read_counters(self):
+        with open('tmp_counters.json', 'r', encoding='utf8') as f:
+            counters = json.load(f)
+            
+        for no in counters:
+            counters[no] = Counter(counters[no])
+
+        with open('tmp_sentences.json', 'r', encoding='utf8') as f:
+            sentences = json.load(f)
+        
+        return counters, sentences
+    
+    ###############
+    
     # refactor
     def get_examples(self):
         re_parentheses = re.compile('\((?P<info>.*)\)?')
@@ -102,37 +186,6 @@ class EGP:
         no, count = self.word_pattern_counter[word][0]
         return no
     
-    def read_patterns(self, filename='egp.regex.pattern.txt'):
-        adv_dict = {}
-        for line in open('dict.lexicon.txt', 'r', encoding='utf8'):
-            key, vocabs = line.strip().split('\t')
-            if key in adv_dict:
-                print("NO")
-
-            adv_dict[key] = vocabs.replace(',', '|')
-
-        keys = adv_dict.keys()
-
-        pat_dict = {}
-        for line in open(filename, 'r', encoding='utf8'):
-            if line.startswith('#'):
-                continue
-            if line.startswith('*'):
-                line = line[1:]
-
-            try:
-                no, pat = line.strip().split('\t')
-            except Exception:
-                print("Exception:", line)
-
-            for key in keys:
-                if key in pat:
-                    pat = pat.replace(key, '(' + adv_dict[key] + ')')
-
-            pat_dict[int(no)] = re.compile(pat)
-
-        return pat_dict
-
     def read_highlights(self, file='egp.highlights.txt'):
         highlight_dict = {}
         for line in open(file, 'r', encoding='utf8'):
@@ -150,10 +203,3 @@ class EGP:
         
         return word_pattern_counter
     
-    
-    def group_patterns(self):
-        from .config import level_table
-
-        category_groups = self.df.groupby(['Category', 'Subcategory'])
-        return category_groups.groups
-

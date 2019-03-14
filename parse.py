@@ -15,7 +15,7 @@ if __name__ == '__main__':
                 
                 children = ','.join([str(child.i) for child in token.children])
                 if token.dep_ == 'ROOT':
-                    print(token.i, token.text, token.lemma_, token.pos_, token.tag_, token.dep_, -1, children, sep='\t')
+                    print(token.i, token.text, token.lemma_, token.norm_, token.pos_, token.tag_, token.dep_, -1, children, sep='\t')
                 else:
-                    print(token.i, token.text, token.lemma_, token.pos_, token.tag_, token.dep_, token.head.i, children, sep='\t')
+                    print(token.i, token.text, token.lemma_, token.norm_, token.pos_, token.tag_, token.dep_, token.head.i, children, sep='\t')
             print()

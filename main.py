@@ -1,13 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-# In[1]:
-
-
-#!/usr/bin/env python
-# %load_ext autoreload
-# %autoreload 2
-
 import spacy
 from spacy.tokenizer import Tokenizer
 from spacy.util import compile_prefix_regex, compile_infix_regex, compile_suffix_regex
@@ -28,13 +21,13 @@ nlp = spacy.load('en_core_web_lg')
 nlp.tokenizer = custom_tokenizer(nlp)
 
 
-# In[35]:
+# In[135]:
 
 
 from nltk.tokenize.treebank import TreebankWordDetokenizer
 
 from utils.preprocess import normalize
-from utils.grammar import generate_candidates, iterate_all_patterns, iterate_all_gets
+from utils.grammar import generate_candidates, iterate_all_patterns, iterate_all_gets, remove_overlap
 from utils.vocabulary import level_vocab
 from utils.extract import clean_content
 
@@ -47,14 +40,14 @@ from utils.extract import clean_content
 # 4. 主詞 + 動詞 + 受詞 + 受詞 S. V. O1 O2
 # 5. 主詞 + 動詞 + 受詞 + 補語 S. V. O. C.
 
-# In[3]:
+# In[ ]:
 
 
 from utils.explacy import print_parse_info
 # print_parse_info(nlp, 'Unlike many approaches to GEC, this approach does NOT require annotated training data and mainly depends on a monolingual language model')
 
 
-# In[4]:
+# In[ ]:
 
 
 # # approach 1
@@ -81,7 +74,7 @@ from utils.explacy import print_parse_info
 # get_first(get_root(parse))
 
 
-# In[5]:
+# In[126]:
 
 
 def main_profiling(content):
@@ -97,16 +90,10 @@ def main_profiling(content):
         gets = [get for parse in parses for get in iterate_all_patterns(parse)]
 
         # 3. remove duplicate
-        uniq_gets = []
-        [uniq_gets.append(get) for get in gets if get not in uniq_gets]
-        gets = uniq_gets
-        # print(uniq_gets)
+        gets = remove_overlap(parse, gets)
         
-        ########
         # 4. recommend related higher pattern in the same group
-        # recs = iterate_all_gets(gets)
-        recs = []
-        # print(recs)
+        recs = iterate_all_gets(gets)
         
         # 5. return
         sentence_profiles.append({'sent': sent.text, 
@@ -127,17 +114,17 @@ def main_vocabuing(sentence):
         
 
 
-# In[11]:
+# In[132]:
 
 
 # no = Egp.get_possible("a")
 
 group_gets = iterate_all_patterns(nlp("He is nice and friendly."))
 
-# # group_recs  = iterate_all_gets(group_gets) # recommend patterns in same group
+group_recs  = iterate_all_gets(group_gets) # recommend patterns in same group
 
 
-# In[8]:
+# In[ ]:
 
 
 #!/usr/bin/env python
@@ -191,7 +178,7 @@ if __name__ == "__main__":
     app.run(host='0.0.0.0', port=1316)
 
 
-# In[10]:
+# In[ ]:
 
 
 # egs = []
@@ -229,10 +216,4 @@ if __name__ == "__main__":
 # with open('egp.highlights.txt', 'w', encoding='utf8') as ws:
 #     for line in egs:
 #         print(*line, sep='\t', file=ws)
-
-
-# In[ ]:
-
-
-
 
