@@ -28,7 +28,7 @@ $(document).ready(() => {
     const showcase = $('#showcase');
     const grammarDiv = $('#main-grammar');
     const vocabDiv = $('#main-vocab');
-
+    const multiSelect = $('#category-select');
 
     $('#btn-url-search').click(e => {
         e.preventDefault();
@@ -99,20 +99,16 @@ $(document).ready(() => {
         }).join(' '));
     });
 
-    window.checkedCategory = new Set();
-    $('#category-select').multiSelect({
-        afterInit: function(){
-            this.$element.find(":selected").each(function() {
-                window.checkedCategory.add(this.value);
-            });
-        },
-        afterSelect: function(values){
-            window.checkedCategory.add(values[0]); // if not option group
-        },
-        afterDeselect: function(values){
-            window.checkedCategory.delete(values[0]); // if not option group
-        }
-    }); // init
+    window.checkedCategory = ['ADJECTIVES', 'ADVERBS', 'CLAUSES']; // default selected
+    multiSelect.selectpicker('val', window.checkedCategory);
+    multiSelect.on('changed.bs.select', function (e, clickedIndex, isSelected, previousValue) {
+        window.checkedCategory = multiSelect.val();
+                
+        updateSetting();
+        
+        renderGrammar(window.profiles[window.sentenceIndex]);
+        renderVocab(window.vocabs);
+    });
     
     contentBlock.click(e => {
         e.preventDefault();

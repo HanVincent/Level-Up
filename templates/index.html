@@ -9,7 +9,8 @@
         href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.1/css/bootstrap.min.css" />
 
     <link rel="stylesheet" href="{{ url_for('static', filename='css/index.css') }}"></link>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/multi-select.css') }}"></link>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-select.min.css') }}"></link>
+
 </head>
 
 <body>
@@ -83,9 +84,6 @@
                             <button id="btn-copy" class="btn btn-outline-secondary mr-1">
                                 <i class="fas fa-copy"></i>
                             </button>
-                            <button id="btn-setting" class="btn btn-outline-secondary mr-1" data-toggle="modal" data-target="#setting-modal">
-                                <i class="fas fa-cog"></i>
-                            </button>
                             <button id="btn-submit" class="btn btn-primary ml-1">
                                 <i class="fas fa-search"></i>
                             </button>
@@ -103,10 +101,20 @@
                     <nav class="mb-3">
                         <div class="nav nav-tabs" id="nav-tab" role="tablist">
                             <a class="nav-item nav-link active" id="nav-grammar-tab" data-toggle="tab"
-                                href="#nav-grammar" role="tab" aria-controls="nav-grammar"
-                                aria-selected="true">Grammar</a>
-                            <a class="nav-item nav-link" id="nav-vocab-tab" data-toggle="tab" href="#nav-vocab"
+                                href="#nav-grammar" role="tab" aria-controls="nav-grammar" aria-selected="true">Grammar</a>
+                            <a class="nav-item nav-link mr-auto" id="nav-vocab-tab" data-toggle="tab" href="#nav-vocab"
                                 role="tab" aria-controls="nav-vocab" aria-selected="false">Vocabulary</a>
+                         
+                    
+                            <select class="selectpicker" multiple id="category-select" name="category-select[]" data-actions-box="true">
+                                <option value='ADJECTIVES'>Adjectives</option>
+                                <option value='ADVERBS'>Adverbs</option>
+                                <option value='CLAUSES'>Clauses</option>
+                            </select>
+
+                            <button id="btn-setting" class="ml-1 text-secondary btn btn-link" data-toggle="modal" data-target="#setting-modal">
+                                <i class="fas fa-cog"></i>
+                            </button>
                         </div>
                     </nav>
 
@@ -188,31 +196,32 @@
           </div>
             
           <div class="modal-body">
+              
               <form class="form-group">
                 <p>Grammar Level:</p>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-a1" value="A1" checked>
-                  <label class="form-check-label" for="grammar-checkbox-a1">A1</label>
+                    <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-a1" value="A1" checked>
+                    <label class="form-check-label" for="grammar-checkbox-a1">A1</label>
                 </div>
                 <div class="form-check form-check-inline">
                   <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-a2" value="A2" checked>
                   <label class="form-check-label" for="grammar-checkbox-a2">A2</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-b1" value="B1" checked>
-                  <label class="form-check-label" for="grammar-checkbox-b1">B1</label>
+                    <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-b1" value="B1" checked>
+                    <label class="form-check-label" for="grammar-checkbox-b1">B1</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-b2" value="B2" checked>
-                  <label class="form-check-label" for="grammar-checkbox-b2">B2</label>
+                    <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-b2" value="B2" checked>
+                    <label class="form-check-label" for="grammar-checkbox-b2">B2</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-c1" value="C1" checked>
-                  <label class="form-check-label" for="grammar-checkbox-c1">C1</label>
+                    <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-c1" value="C1" checked>
+                    <label class="form-check-label" for="grammar-checkbox-c1">C1</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-c2" value="C2" checked>
-                  <label class="form-check-label" for="grammar-checkbox-c2">C2</label>
+                    <input class="form-check-input" name="grammar-setting" type="checkbox" id="grammar-checkbox-c2" value="C2" checked>
+                    <label class="form-check-label" for="grammar-checkbox-c2">C2</label>
                 </div>
               </form>
 
@@ -221,40 +230,31 @@
               <form class="form-group">
                   <p>Vocabulary Level:</p>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-a1" value="A1" checked>
-                  <label class="form-check-label" for="vocab-checkbox-a1">A1</label>
+                    <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-a1" value="A1" checked>
+                    <label class="form-check-label" for="vocab-checkbox-a1">A1</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-a2" value="A2" checked>
-                  <label class="form-check-label" for="vocab-checkbox-a2">A2</label>
+                    <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-a2" value="A2" checked>
+                    <label class="form-check-label" for="vocab-checkbox-a2">A2</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-b1" value="B1" checked>
-                  <label class="form-check-label" for="vocab-checkbox-b1">B1</label>
+                    <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-b1" value="B1" checked>
+                    <label class="form-check-label" for="vocab-checkbox-b1">B1</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-b2" value="B2" checked>
-                  <label class="form-check-label" for="vocab-checkbox-b2">B2</label>
+                    <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-b2" value="B2" checked>
+                    <label class="form-check-label" for="vocab-checkbox-b2">B2</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-c1" value="C1" checked>
-                  <label class="form-check-label" for="vocab-checkbox-c1">C1</label>
+                    <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-c1" value="C1" checked>
+                    <label class="form-check-label" for="vocab-checkbox-c1">C1</label>
                 </div>
                 <div class="form-check form-check-inline">
-                  <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-c2" value="C2" checked>
-                  <label class="form-check-label" for="vocab-checkbox-c2">C2</label>
+                    <input class="form-check-input" name="vocab-setting" type="checkbox" id="vocab-checkbox-c2" value="C2" checked>
+                    <label class="form-check-label" for="vocab-checkbox-c2">C2</label>
                 </div>
               </form>
               
-              <hr>
-              
-              <p>Category Selection:</p>
-              <select multiple="multiple" id="category-select" name="category-select[]">
-                  <option value='ADJECTIVES' selected>Adjectives</option>
-                  <option value='ADVERBS' selected>Adverbs</option>
-                  <option value='CLAUSES' selected>Clauses</option>
-              </select>
-
           </div>
             
           <div class="modal-footer">
@@ -277,7 +277,8 @@
 
     <script type="text/javascript" src="{{ url_for('static', filename='js/index.js') }}"></script>
     <script type="text/javascript" src="{{ url_for('static', filename='js/template.js') }}"></script>
-    <script type="text/javascript" src="{{ url_for('static', filename='js/jquery.multi-select.js') }}"></script>
+    <script type="text/javascript" src="{{ url_for('static', filename='js/bootstrap-select.min.js') }}"></script>
+
     
 </body>
 

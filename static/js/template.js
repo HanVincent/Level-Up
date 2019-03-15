@@ -29,7 +29,7 @@ function uniq(elements) {
 function buildGrammarTable(profile) {
     const { gets, recs } = profile;
 
-    const table = uniq(gets).filter(get => window.checkedGrammar.includes(get.level) && window.checkedCategory.has(get.category)).reduce((getsPrev, get, i) => {
+    const table = uniq(gets).filter(get => window.checkedGrammar.includes(get.level) && window.checkedCategory.includes(get.category)).reduce((getsPrev, get, i) => {
         const recRow =  recs[i]? `
             <ul class="pl-4 pb-1">
                 <li>

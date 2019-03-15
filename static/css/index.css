@@ -17,6 +17,32 @@ textarea:focus, textarea.form-control:focus, button.btn:focus, input:focus, inpu
   box-shadow: none; !important
 }
 
+input[type="checkbox"] {
+    appearance: none; 
+    -webkit-appearance: none;
+    outline: none;
+    display:none
+}
+ 
+input[type="checkbox"]:checked + .form-check-label {
+    background-color: #e3f2fd;
+}
+
+input[type="checkbox"]:checked:hover + .form-check-label {
+    background-color: #a9d7f9;
+}
+
+label {
+    border: 1px solid #e3f2fd;
+    padding: 3px 15px;
+    cursor: pointer;
+}
+
+label:hover {
+    background: #eee;
+}
+
+
 .input-group-append .btn{
     z-index: 0;
 }
