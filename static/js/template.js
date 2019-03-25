@@ -26,6 +26,34 @@ function uniq(elements) {
     return newGets
 }
 
+function buildSuggestTable(suggestions) {
+    
+    const template = suggestions.reduce((prev, curr) => {
+        return prev + `<div class="row">
+                            <div class="col-9">
+                                <span class="badge ${curr.level}" data-toggle="tooltip" data-placement="top" title="${curr.category} ${curr.subcategory}">
+                                    ${curr.level}
+                                </span>
+                                ${curr.pattern} ${curr.no}
+                              <div class="progress mt-2" style="height: 5px;">
+                                <div class="progress-bar" role="progressbar" style="width: ${'50%'};"></div>
+                              </div>
+                            </div>
+                            <div class="col-1 text-right">${'50%'}</div>
+                            <div class="col-1 text-right">${curr.count}</div>
+                            <div class="col-1"></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-3">${curr.ngram}</div>
+                            <div class="col-9">${curr.sentence}</div>
+                        </div>`;
+            
+            curr.join(' ');
+    }, '');
+    
+    return template;
+}
+
 function buildGrammarTable(profile) {
     const { gets, recs } = profile;
 

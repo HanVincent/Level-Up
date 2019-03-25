@@ -26,6 +26,7 @@ $(document).ready(() => {
     const urlInput = $('#url-input');
     const contentBlock = $('#content-block');
     const showcase = $('#showcase');
+    const suggestDiv = $('#main-suggest');
     const grammarDiv = $('#main-grammar');
     const vocabDiv = $('#main-vocab');
     const multiSelect = $('#category-select');
@@ -39,7 +40,6 @@ $(document).ready(() => {
             request("/profiling", { 'content': url, 'access': 'url' }).done(main);
         }
     });
-
     
     $('#btn-submit').click(e => {
         e.preventDefault();
@@ -110,6 +110,12 @@ $(document).ready(() => {
         renderVocab(window.vocabs);
     });
     
+    contentBlock.on('input', e => {
+        const content = contentBlock.text().trim();
+        
+        request("/suggesting", { 'content': content }).done(renderSuggest);
+    });
+    
     contentBlock.click(e => {
         e.preventDefault();
 
@@ -155,6 +161,16 @@ $(document).ready(() => {
                     window.vocabs = response.vocabs;
                     renderVocab(response.vocabs);
                 });
+        }
+    }
+    
+    function renderSuggest(response) {
+        const suggestions = response.suggest;
+        if (!suggestions || suggestions.length == 0) {
+            suggestDiv.html('');            
+        } else {
+            const suggestTable = buildSuggestTable(suggestions);
+            suggestDiv.html(suggestTable);   
         }
     }
 
