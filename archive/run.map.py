@@ -15,17 +15,21 @@ import spacy
 import re
 import os
 
-
 def custom_tokenizer(nlp):
-    infix_re = re.compile(r'''[.\,\?\:\;\...\‘\’\`\“\”\"\'~]''')
+    import re
+    
+#     infix_re  = re.compile(r'''[\,\?\:\;\...\‘\’\`\“\”\"\'~]''')
+    infix_re = compile_prefix_regex(nlp.Defaults.infixes)
     prefix_re = compile_prefix_regex(nlp.Defaults.prefixes)
     suffix_re = compile_suffix_regex(nlp.Defaults.suffixes)
 
-    return Tokenizer(nlp.vocab,
-                     prefix_search=prefix_re.search,
-                     suffix_search=suffix_re.search,
-                     infix_finditer=infix_re.finditer,
-                     token_match=None)
+    return Tokenizer(nlp.vocab, prefix_search=prefix_re.search,
+                                suffix_search=suffix_re.search,
+                                infix_finditer=infix_re.finditer,
+                                token_match=None)
+
+nlp = spacy.load('en_core_web_lg') 
+nlp.tokenizer = custom_tokenizer(nlp)
 
 
 def is_match(parse, pat):

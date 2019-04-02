@@ -1,0 +1,46 @@
+-LRB-	PUNCT	)
+-RRB-	PUNCT	(
+AFX		
+CC	CONJ	conj
+CD	NUMBER	num
+DT	DET	det
+EX	THERE	there
+FW	FW	fw
+HYPH	PUNCT	-
+IN	PREP	prep
+JJ	ADJ	adj
+JJR	ADJ	adj
+JJS	ADJ	adj
+MD	AUX	aux
+NIL		
+NN	NOUN	n
+NNP	NOUN	n
+NNPS	NOUN	n
+NNS	NOUN	n
+PDT	PREDET	predet
+POS	POSS	poss
+PRP	PRON	pron
+PRP$	POSS	poss
+RB	ADV	adv
+RBR	ADV	adv
+RBS	ADV	adv
+RP	ADV	adv
+SP		
+TO	TO	to
+UH	INTJ	intj
+VB	VERB	v
+VBD	VERB	v
+VBG	V-ING	v-ing
+VBN	VPP	v-ed
+VBP	VERB	v
+VBZ	VERB	v
+WDT	WH	wh
+WP	WH	wh
+WP$	WH	wh
+WRB	WH	wh
+ADD		
+GW		
+XX		
+BES	BE	be
+HVS	HAVE	have
+_SP		
