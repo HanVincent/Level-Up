@@ -10,7 +10,7 @@ class EVP:
     def __init__(self):
         self.vocab_level = {}
 
-        for line in open('./data/dict.slim.txt', 'r', encoding='utf8'):
+        for line in open('./data/cambridge.dict.slim.txt', 'r', encoding='utf8'):
             vocab, level, poss, gw, href = line.split('\t')
 
             if (vocab not in self.vocab_level or

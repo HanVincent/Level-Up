@@ -43,15 +43,3 @@ def clean_content(url):
     text = soup.get_text()
 
     return text
-#     soup = BeautifulSoup(doc, 'html.parser')
-#     soup = _remove_all_attrs(soup)
-#     soup = [sub for sub in soup.find_all(['p', 'h2', 'h3']) if sub.h2 == None and sub.h3 == None]
-
-#     for sub_content in soup:
-#         tag = sub_content.name
-
-#         sub_content = re.sub('<p>|</p>|<h2>|</h2>|<h3>|</h3>', '', str(sub_content))
-#         # new_content += [[tag, list(filter(None, sentence_tokenize(sub_content)))]]
-#         new_content.append(sub_content.replace('\n', ' '))
-        
-#     return ' '.join(new_content)

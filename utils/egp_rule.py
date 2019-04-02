@@ -52,7 +52,5 @@ def extra_rules(no, segment):
             if tk.tag_ == 'JJS':
                 return tk.lemma_.endswith('e') and tk.text.endswith('er')
     
-    
-    
     else:
         return True

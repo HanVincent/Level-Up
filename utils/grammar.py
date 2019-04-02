@@ -58,9 +58,9 @@ def match_pattern(parse, no):
 
 
 # Iterate all patterns to match
-def iterate_all_patterns(parse, pat_groups=Egp.get_group_patterns()): 
+def iterate_all_patterns(parse, pat_groups=Egp.pattern_groups): 
     gets = []
-    for (category, subcategory), group in Egp.group_patterns().items():
+    for (category, subcategory), group in Egp.pattern_groups.items():
         for no in group:
             if not Egp.pattern_exist(no): continue
 
@@ -97,12 +97,11 @@ def remove_overlap(parse, gets):
     new_gets = []
     for get in gets:
         # ngram is not all overlapped or the level is same
-        if not all([overlap_marker[index] for index in get['indices']]) \
-            or all([overlap_level[index] == get['level'] for index in get['indices']]):
+        if not (all([overlap_marker[index] for index in get['indices']]) or all([overlap_level[index] == get['level'] for index in get['indices']])):
             for index in get['indices']:
                 overlap_marker[index] = True
                 overlap_level[index] = True
-                new_gets.append(get)
+            new_gets.append(get)
 
     return new_gets
 
@@ -130,7 +129,7 @@ def generate_candidates(parse):
 ############################################################
 
 def recommend_patterns(get):
-    rec_no, rec_sentence = Egp.get_recommend(get['no'], get['ngram'])
+    rec_no, rec_sentence = Egp.get_recommend(get['no'], get['match'], get['ngram'])
     
     if rec_no:
         rec_no = int(rec_no)
@@ -139,6 +138,7 @@ def recommend_patterns(get):
                 'statement': Egp.get_statement(rec_no), 'example': rec_sentence }
     else: 
         return None
+
 
 def iterate_all_gets(gets):
     recs = [recommend_patterns(get) for get in gets]
