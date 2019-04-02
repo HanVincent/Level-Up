@@ -1,26 +1,5 @@
 'use strict';
 
-function closure() {
-    const overlay = $('#overlay');
-
-    return function (endpoint, obj) {
-        return $.ajax({
-            type: "POST",
-            headers: {
-                'Access-Control-Allow-Origin': '*',
-                'Content-Type': 'application/json'
-            },
-            url: endpoint,
-            contentType: 'application/json; charset=UTF-8',
-            data: JSON.stringify(obj),
-            dataType: "json",
-            success: console.info,
-            beforeSend: () => { overlay.removeClass('d-none'); },
-            complete: () => { overlay.addClass('d-none');; }
-        });
-    }
-}
-
 $(document).ready(() => {
     const request = closure();
     const urlInput = $('#url-input');
@@ -92,11 +71,7 @@ $(document).ready(() => {
         e.preventDefault()
         if (!window.vocabs) return;
 
-        // change showcase text
-        showcase.html(vocabs.map((vocab) => {
-            return !!vocab.level ?
-                `<span class="highlight px-1 ${vocab.level}" data-toggle="tooltip" data-placement="top" title="${vocab.level}">${vocab.token}</span>` : vocab.token;
-        }).join(' '));
+        showcase.html(showcase.text());
     });
 
     window.checkedCategory = ['ADJECTIVES', 'ADVERBS', 'CLAUSES']; // default selected
@@ -110,11 +85,10 @@ $(document).ready(() => {
         renderVocab(window.vocabs);
     });
     
-    contentBlock.on('input', e => {
+    contentBlock.on('input', debounce(function() {
         const content = contentBlock.text().trim();
-        
         request("/suggesting", { 'content': content }).done(renderSuggest);
-    });
+    }, 500));
     
     contentBlock.click(e => {
         e.preventDefault();
@@ -124,10 +98,12 @@ $(document).ready(() => {
         }
     });
 
+    
     function updateSetting() {
         window.checkedGrammar = $("input[name='grammar-setting']:checked").map(function() {return this.value}).toArray();
         window.checkedVocab = $("input[name='vocab-setting']:checked").map(function() {return this.value}).toArray();
     }
+    
     
     function main(response) {
         const profiles = response.profiles;
@@ -135,7 +111,7 @@ $(document).ready(() => {
 
         const sentences = buildSentences(profiles);
         contentBlock.html(sentences);
-
+        
         window.profiles = profiles; // NOT GOOD
 
         // First profile
@@ -158,13 +134,15 @@ $(document).ready(() => {
         if (profile.sent) {
             request("/vocabuing", { 'sentence': profile.sent })
                 .done(response => {
-                    window.vocabs = response.vocabs;
-                    renderVocab(response.vocabs);
+                    window.vocabs = response.vocabs.map((token, i) => Object.assign(token, {index: i}));
+                    renderVocab(window.vocabs);
                 });
         }
     }
     
     function renderSuggest(response) {
+        $('#nav-suggest-tab').tab('show');
+        
         const suggestions = response.suggest;
         if (!suggestions || suggestions.length == 0) {
             suggestDiv.html('');            
@@ -179,10 +157,11 @@ $(document).ready(() => {
     }
 
     function renderGrammar(profile) {
-        const grammarTable = buildGrammarTable(profile);
-        grammarDiv.html(grammarTable);
+        $('#nav-grammar-tab').tab('show');
+        
+        grammarDiv.html(buildGrammarTable(profile));
 
-        $('.accordion > .card').hover((e) => {
+        $('#accordionGets > .card').hover((e) => {
             const indices = e.currentTarget.dataset.indices.split(',').map(el => parseInt(el));
             const level = e.currentTarget.dataset.level;
 
@@ -201,6 +180,17 @@ $(document).ready(() => {
     function renderVocab(vocabs) {
         vocabDiv.html(buildVocabTable(vocabs));
 
+        $('#accordionVocabs > .card').hover((e) => {
+            const index = parseInt(e.currentTarget.dataset.index);
+            const level = e.currentTarget.dataset.level;
+
+            const tokens = vocabs.map((token, i) => i == index? 
+                                      `<span class="highlight px-1 ${level}">${token.token}</span>` : token.token);
+            showcase.html(tokens.join(' '));
+        }, (e) => {
+            showcase.html(showcase.text());
+        });
+        
         $(() => { $('[data-toggle="tooltip"]').tooltip() }); // initiate
     }
 })

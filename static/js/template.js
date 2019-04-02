@@ -11,41 +11,48 @@ function buildSentences(profiles) {
 }
 
 // TODO: refactor
-function uniq(elements) {
+function uniq(gets, recs) {
     const cacheTable = {};
     const newGets = [];
     let i = 0;
-    for (let el of elements) {
-        if (cacheTable.hasOwnProperty(el.no)) {
-            newGets[cacheTable[el.no]].indices.push(...el.indices);
+    gets.forEach((get, index) => {
+        if (cacheTable.hasOwnProperty(get.no)) {
+            newGets[cacheTable[get.no]].indices.push(...get.indices);
         } else {
-            newGets.push(el);
-            cacheTable[el.no] = i++;
+            newGets.push(Object.assign(get, {rec: recs[index]}));
+            cacheTable[get.no] = i++;
         }
-    }
+    })
     return newGets
 }
 
 function buildSuggestTable(suggestions) {
     
-    const template = suggestions.reduce((prev, curr) => {
-        return prev + `<div class="row">
-                            <div class="col-9">
-                                <span class="badge ${curr.level}" data-toggle="tooltip" data-placement="top" title="${curr.category} ${curr.subcategory}">
-                                    ${curr.level}
-                                </span>
-                                ${curr.pattern} ${curr.no}
-                              <div class="progress mt-2" style="height: 5px;">
-                                <div class="progress-bar" role="progressbar" style="width: ${'50%'};"></div>
-                              </div>
+    const template = suggestions.sort((a, b) => b.lm - a.lm).reduce((prev, curr) => {
+        const lis = curr.ngrams.reduce((prev_li, ngram) => {
+            return prev_li + `<li><i>${ngram}</i></li>`
+        }, '');
+        
+        return prev + `<div>
+                            <div class="row font-weight-bold">
+                                <div class="col-8">
+                                    <span class="badge ${curr.level}">
+                                        ${curr.level}
+                                    </span>
+                                    <span>[${curr.pos}] ${curr.pattern}</span>
+                                    <number>${curr.no}</number>
+                                </div>
+                                <div class="col-4 text-right">
+                                    <span class="text-info">${(curr.lm * 100).toFixed(2)} %</span>
+                                </div>
                             </div>
-                            <div class="col-1 text-right">${'50%'}</div>
-                            <div class="col-1 text-right">${curr.count}</div>
-                            <div class="col-1"></div>
-                        </div>
-                        <div class="row">
-                            <div class="col-3">${curr.ngram}</div>
-                            <div class="col-9">${curr.sentence}</div>
+
+                            <ul>${lis}</ul>
+
+                            <div class="row d-none">
+                                <div class="col-2"></div>
+                                <div class="col-10">${curr.sentence}</div>
+                            </div>
                         </div>`;
             
             curr.join(' ');
@@ -57,18 +64,18 @@ function buildSuggestTable(suggestions) {
 function buildGrammarTable(profile) {
     const { gets, recs } = profile;
 
-    const table = uniq(gets).filter(get => window.checkedGrammar.includes(get.level) && window.checkedCategory.includes(get.category)).reduce((getsPrev, get, i) => {
-        const recRow =  recs[i]? `
+    const table = uniq(gets, recs).filter(get => window.checkedGrammar.includes(get.level) && window.checkedCategory.includes(get.category)).reduce((getsPrev, get, i) => {
+        const recRow =  get.rec? `
             <ul class="pl-4 pb-1">
                 <li>
-                    <span class="badge ${recs[i].level}" data-toggle="tooltip" data-placement="top" title="${recs[i].category} ${recs[i].subcategory}">
-                        ${recs[i].level}
+                    <span class="badge ${get.rec.level}" data-toggle="tooltip" data-placement="top" title="${get.rec.category} ${get.rec.subcategory}">
+                        ${get.rec.level}
                     </span>
-                    ${recs[i].statement} 
-                    <number>${recs[i].no}</number>
+                    ${get.rec.statement} 
+                    <number>${get.rec.no}</number>
 
                     <div class="px-2 py-1 mt-2 text-monospace bg-light">
-                        <small>${recs[i].example}</small>
+                        <small>${get.rec.example}</small>
                     </div>
                 </li>
             </ul>` : '<tr>No recommend</tr>'
@@ -106,26 +113,9 @@ function buildGrammarTable(profile) {
 }
 
 function buildVocabTable(vocabs) {
-    const table = vocabs.filter(vocab => vocab.level).filter(vocab => window.checkedVocab.includes(vocab.level)).reduce((prev, vocab, i) => {
-        // const recsList = recs[i] || [];
-        // const recRows = recsList.reduce((recsPrev, rec) =>
-        //     recsPrev + `
-        //     <ul class="pl-4 pb-1">
-        //         <li>
-        //             <span class="badge ${rec.level}" data-toggle="tooltip" data-placement="top" title="${rec.category} ${rec.subcategory}">
-        //                 ${rec.level}
-        //             </span>
-        //             ${rec.statement} 
-        //             <number>${rec.no}</number>
-
-        //             <div class="px-2 py-1 mt-2 text-monospace bg-light">
-        //                 <small>${rec.highlight}</small>
-        //             </div>
-        //         </li>
-        //     </ul>`, '');
-
+    const table = vocabs.filter(vocab => vocab.level && window.checkedVocab.includes(vocab.level)).reduce((prev, vocab, i) => {
         return prev + `
-        <div class="card border-right-0 border-left-0" data-level="${vocab.level}">
+        <div class="card border-right-0 border-left-0" data-index="${vocab.index}"  data-level="${vocab.level}">
             <div class="card-header row no-gutters align-items-center p-2" id="card-head-${i}">
                 <div class="col-1">
                     <span class="badge ${vocab.level}">
