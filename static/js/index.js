@@ -1,7 +1,9 @@
 'use strict';
 
 $(document).ready(() => {
-    const request = closure();
+    const overlaySuggest = $('#overlay-suggest');
+    const overlayGrammar = $('#overlay-grammar');
+    const overlayVocab = $('#overlay-vocab');
     const urlInput = $('#url-input');
     const contentBlock = $('#content-block');
     const showcase = $('#showcase');
@@ -16,7 +18,7 @@ $(document).ready(() => {
         const url = urlInput.val().trim();
         console.log(url);
         if (url) {
-            request("/profiling", { 'content': url, 'access': 'url' }).done(main);
+            request("/profiling", { 'content': url, 'access': 'url' }, overlayGrammar).done(main);
         }
     });
     
@@ -25,7 +27,7 @@ $(document).ready(() => {
 
         const content = contentBlock.text().trim();
         if (content) {
-            request("/profiling", { 'content': content, 'access': 'text'}).done(main);
+            request("/profiling", { 'content': content, 'access': 'text'}, overlayGrammar).done(main);
         }
     });
 
@@ -44,7 +46,9 @@ $(document).ready(() => {
         select.removeAllRanges();
         select.addRange(range);
         document.execCommand('copy');
-        alert("Contents copied to clipboard.");
+
+        $(e.currentTarget).tooltip('show');
+        setTimeout(() => {$(e.currentTarget).tooltip('hide')}, 1500);
     });
     
     $('#btn-setting').click(e => {
@@ -87,7 +91,7 @@ $(document).ready(() => {
     
     contentBlock.on('input', debounce(function() {
         const content = contentBlock.text().trim();
-        request("/suggesting", { 'content': content }).done(renderSuggest);
+        request("/suggesting", { 'content': content }, overlaySuggest).done(renderSuggest);
     }, 500));
     
     contentBlock.click(e => {
@@ -132,7 +136,7 @@ $(document).ready(() => {
 
         // render vocabulary section
         if (profile.sent) {
-            request("/vocabuing", { 'sentence': profile.sent })
+            request("/vocabuing", { 'sentence': profile.sent }, overlayVocab)
                 .done(response => {
                     window.vocabs = response.vocabs.map((token, i) => Object.assign(token, {index: i}));
                     renderVocab(window.vocabs);
@@ -150,6 +154,9 @@ $(document).ready(() => {
             const suggestTable = buildSuggestTable(suggestions);
             suggestDiv.html(suggestTable);   
         }
+        
+        Example.initExampleBtns();
+        $(() => { $('[data-toggle="tooltip"]').tooltip() }); // initiate
     }
 
     function renderShowcase(profile) {

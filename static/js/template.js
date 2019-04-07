@@ -27,32 +27,31 @@ function uniq(gets, recs) {
 }
 
 function buildSuggestTable(suggestions) {
-    
-    const template = suggestions.sort((a, b) => b.lm - a.lm).reduce((prev, curr) => {
-        const lis = curr.ngrams.reduce((prev_li, ngram) => {
-            return prev_li + `<li><i>${ngram}</i></li>`
+    const suggests = suggestions.collocations.concat(suggestions.patterns)
+    const template = suggests.reduce((prev, curr) => {
+        const lis = curr.ngrams.reduce((prev_li, ngram, i) => {
+            return prev_li + `<li>
+                <i>${ngram}</i>
+                <a href="#" class="small btn-sentence float-right" 
+                        data-no="${curr.no}" data-index="${i}" data-ngram="${ngram}">Show</a>
+                <ul id="ngram-${curr.no}-${i}" style="display: none;"
+                        data-fetched="false" data-hide="true"></ul>
+            </li>`
         }, '');
         
         return prev + `<div>
                             <div class="row font-weight-bold">
-                                <div class="col-8">
+                                <div class="col">
                                     <span class="badge ${curr.level}">
                                         ${curr.level}
                                     </span>
                                     <span>[${curr.pos}] ${curr.pattern}</span>
+                                    <span class="help-tip" data-toggle="tooltip" data-placement="top" title="${curr.statement}"></span>
                                     <number>${curr.no}</number>
-                                </div>
-                                <div class="col-4 text-right">
-                                    <span class="text-info">${(curr.lm * 100).toFixed(2)} %</span>
                                 </div>
                             </div>
 
                             <ul>${lis}</ul>
-
-                            <div class="row d-none">
-                                <div class="col-2"></div>
-                                <div class="col-10">${curr.sentence}</div>
-                            </div>
                         </div>`;
             
             curr.join(' ');
@@ -106,14 +105,15 @@ function buildGrammarTable(profile) {
             </div>
         </div>`}, '');
 
-    return `
-    <div class="accordion" id="accordionGets">
-        ${table}
-    </div>`
+    return table? `<div class="accordion" id="accordionGets">${table}</div>` : '';
 }
 
 function buildVocabTable(vocabs) {
     const table = vocabs.filter(vocab => vocab.level && window.checkedVocab.includes(vocab.level)).reduce((prev, vocab, i) => {
+        const recRow =  vocab.recs.length > 0? vocab.recs.reduce((p, rec, j) => {
+            return p + `<div class="d-inline-block mr-3"><span class="badge ${rec.level}">${rec.level}</span> ${rec.vocab}</div>`
+        }, '') : '<div>No recommend</div>'
+                
         return prev + `
         <div class="card border-right-0 border-left-0" data-index="${vocab.index}"  data-level="${vocab.level}">
             <div class="card-header row no-gutters align-items-center p-2" id="card-head-${i}">
@@ -131,14 +131,13 @@ function buildVocabTable(vocabs) {
             </div>
         
             <div id="collapse-vocab-${i}" class="collapse" aria-labelledby="card-head-${i}" data-parent="#accordionVocabs">
-                <div class="card-body p-2">
-                    <tr>No recommend</tr>
+                <div class="card-body row px-2 pt-0 pb-3">
+                    <div class="col-1"></div>
+                    <div class="col-10">${recRow}</div>
+                    <div class="col-1"></div>
                 </div>
             </div>
         </div>`}, '');
 
-    return `
-    <div class="accordion" id="accordionVocabs">
-        ${table}
-    </div>`
+    return table? `<div class="accordion" id="accordionVocabs">${table}</div>` : '';
 }

@@ -52,6 +52,21 @@ label:hover {
     color: white;
 }
 
+.help-tip{
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    font-size: 14px;
+    line-height: 26px;
+    cursor: default;
+}
+
+.help-tip:before{
+    content:'?';
+    font-weight: bold;
+    color: #BCDBEA;
+}
+
 div.main-content+div.no-content {
     display: none;
 }
@@ -83,6 +98,7 @@ div.main-content:empty+div.no-content {
 
 #nav-tabContent {
     overflow: auto;
+    box-shadow: 0px 2px 2px lightgrey;
 }
 
 number {
@@ -99,7 +115,7 @@ number {
     overflow: auto;
 }
 
-#overlay {
+.overlay {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -108,7 +124,7 @@ number {
     bottom: 0;
     right: 0;
     background: rgb(255, 255, 255);
-    opacity: 0.5;
+    opacity: 0.7;
     z-index: 9;
 }
 
