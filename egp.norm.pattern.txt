@@ -1,0 +1,118 @@
+1	adj. and adj.
+2	adj. but adj.
+3	adj. , adj. n.
+4	adj. and adj.
+5	be adj. , adj. and adj.
+7	compound-adj.
+9	phrase-adj.
+11	adj. , adj. and adj.
+12	adj. , cl.
+13	adj.
+14	adj.
+15	adj. n.
+16	be adj.
+17	adj.
+18	adj.
+19	adj.
+20	more adj.
+21	(more/less) adj. than
+22	much (more/less) adj.
+23	a bit (more/less) adj.
+24	become/get adj and adj. (more and more/less and less)
+25	even (more/less) adj.
+26	a lot (more/less) adj.
+27	much (more/less) adj.
+28	slightly (more/less) adj.
+29	no/not any (more/less) adj.
+30	no/not that much (more/less) adj.
+31	very gradable-adj.
+32	degree-adv. gradable-adj.
+33	phrase-adj.
+34	too gradable-adj.
+35	too adj. prep. someone
+36	adv./adj. adj. n.
+37	adj. enough
+38	quite a adj.
+39	too adj. to v.
+40	adj. enough to v.
+41	rather a adj.
+43	as adj. as / so adj. that
+44	adj. n.
+45	be adj.
+46	limiting-adj. n.
+48	linking-v. adj.
+49	prefix with 'a' adj.
+51	make n. adj.
+52	pronoun adj.
+53	degree-adj. n.
+54	time-adj. n.
+55	n. v-ed.
+57	my best friend
+58	adj. n. prep.
+59	adj. n. in
+60	adj. n. of
+61	(one of the) adj.
+62	adj. n.
+63	adj.
+64	adj.
+65	my/your adj. n.
+66	adj
+67	the adj. n.
+68	the most adj. n.
+70	the best n. have ever v-ed.
+71	one of the (most) adj. n.
+72	the best n. to v.
+73	det. (most) adj. n.
+74	by far the (JJS|most JJ)
+76	(most) adj. n. to
+77	(most) adj. post-modifier. n.
+78	(most) adj. n. post-modifier.
+79	slightest/faintest n.
+80	see you soon / get well soon
+81	place-adv.
+82	frequency-adv.
+83	very adj.
+84	(really) love/like n. (very much)
+85	time-adv.
+87	degree-adv. adj.
+88	degree-adv.
+89	manner-adv.
+90	linking-adv.
+91	focus-adv.
+93	certainty-adv.
+94	stance-adv.
+98	really really
+102	sequence-adv.
+110	distance-adv.
+111	very adj.
+112	very time-adv.
+113	time-adv. / degree-adv.
+114	here/there
+115	degree-adv. gradable-adj.
+116	manner-adv. v. / v. manner-adv.
+117	time-adv. / sequence-adv.
+118	degree-adv. adv.
+120	stance-adv.
+121	degree-adv. n.
+122	degree-adv. pronoun.
+123	degree-adv. det.
+125	degree-adv. (more/less) adj.
+126	degree-adv. adj.
+127	n. frequency-adv. v.
+129	really
+130	time-adv. <end>
+131	place-adv. <end>
+133	<start> adv.
+134	S. + (aux. v. / modal v.) + adv. + v.
+135	manner-adv. <end>
+136	degree-adv. <end>
+137	<start> certainty-adv./stance-adv./sequence-adv.
+138	Never inversion-clause
+139	Hardly inversion-clause
+140	distance-adv.
+141	very time-adv./degree-adv.
+142	adv. adv.
+144	(more/less) adv.
+146	adv. enough
+147	adv. prep.
+148	adv. adv. prep.

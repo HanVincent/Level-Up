@@ -1,12 +1,12 @@
 1	JJ and JJ
 2	JJ but JJ
-3	JJ , JJ
+3	JJ , JJ NN[^\n ]{,2}
 4	JJR and JJR
-5	(JJ , )+JJ (,|and) JJ
+5	be (JJ , )+JJ (,|and) JJ
+7	JJ
 9	(PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) (, )?(RB )?(JJ IN|VBN)
-10	JJ
 11	JJ( , JJ){1,} and JJ
-12	^(((RB )?JJ( , | and | , and | )?)+),
+12	^((RB )?JJ) ,
 13	JJR
 14	JJR
 15	(JJR|more JJ|less JJ) NN[^\n ]{,2}
@@ -25,9 +25,10 @@
 28	slightly (more JJ|less JJ|JJR)
 29	(no (more JJ|less JJ|JJR)|not any (more JJ|less JJ|JJR))
 30	(no|not) that much (more JJ|less JJ|JJR)
-31	very GRADABLE_JJ
-33	JJ_IN
-34	too GRADABLE_JJ
+31	very JJ
+32	RB JJ
+33	JJ IN
+34	too JJ
 35	too JJ IN PRP
 36	(RB|JJ) JJ NN[^\n ]{,2}
 37	JJ enough
@@ -35,22 +36,22 @@
 39	too JJ TO VB
 40	JJ enough TO VB
 41	rather a JJ
-42	DEGREE_RB GRADABLE_JJ
 43	(as JJ [^,.!;:]*? as|so JJ [^,.!;:]*? that)
-46	LIMITING_JJ NN[^\n ]{,2}
-47	be JJ
-48	LINKING_VB JJ
-49	PREFIX_JJ
-50	JJ NN[^\n ]{,2}
+44	JJ NN[^\n ]{,2}
+45	be JJ
+46	JJ NN[^\n ]{,2}
+48	VB[^\n ]{,1} JJ
+49	JJ
 51	make (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) JJ
 52	PRONOUN JJ
+53	JJ( JJ)? NN[^\n ]{,2}
 54	(present|future|former) NN[^\n ]{,2}
 55	(NN[^\n ]{,2} VBN)
-56	DEGREE_JJ( JJ)? NN[^\n ]{,2}
 57	my best friend
-59	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) in 
-60	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) of 
-61	(JJS|most JJ) [,.!;?]
+58	(JJS|most JJ) (NN[^\n ]{,2}|PRP) IN
+59	(JJS|most JJ) (NN[^\n ]{,2}|PRP) in 
+60	(JJS|most JJ) (NN[^\n ]{,2}|PRP) of 
+61	(one of (the|PRP\$) )?(JJS|most JJ) [,.!?;]
 62	JJS NN[^\n ]{,2}
 63	JJS
 64	JJS
@@ -58,63 +59,60 @@
 66	JJS
 67	the JJS NN[^\n ]{,2}
 68	the most JJ NN[^\n ]{,2}
-69	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) IN
-70	the best (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) [^,.!;:]*?　have ever VBN
+70	the best (NN[^\n ]{,2}|PRP) [^,.!;:]*?　have ever VBN
 71	one of the (JJS|most JJ) (NNS|NNPS)
-72	the best (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) TO VB
+72	the best (NN[^\n ]{,2}|PRP) TO VB
 73	DETERMINER (JJS|most JJ) NN[^\n ]{,2}
 74	by far the (JJS|most JJ)
-75	(one of (the|PRP\$) JJS|the most JJ) [,.!?;]
 76	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) TO
 77	(JJS|most JJ) (possible) NN[^\n ]{,2}
 78	(JJS|most JJ) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) (possible|ever|by far)
 79	(slightest|faintest) NN[^\n ]{,2}
 80	(see you soon|get well soon)
+81	RB
+82	RB
 83	very JJ
 84	(really (love|like))|((love|like) (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) very much)
-86	FREQUENCY_RB
-92	LINKING_RB
-96	PLACE_RB
-97	DEGREE_RB
+85	RB
+87	RB (JJ|JJR)
+88	RB
+89	RB
+90	RB
+91	RB
+93	RB
+94	RB
 98	really really
-100	LINKING_RB
-101	FOCUS_RB
-102	SEQUENCE_RB
-105	TIME_RB
-106	MANNER_RB
-107	DEGREE_RB (JJ|JJR) 
-108	CERTAINTY_RB
-109	STANCE_RB
-110	DISTANCE_RB
+102	RB
+110	RB
 111	very JJ
-112	very TIME_RB
-113	TIME_RB|DEGREE_RB
+112	very RB
+113	RB
 114	here|there
-115	DEGREE_RB GRADABLE_JJ
-117	TIME_RB|SEQUENCE_RB
-119	(MANNER_RB VB.?)|(VB.? MANNER_RB)
-120	STANCE_RB
-121	DEGREE_RB (PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP)
-122	DEGREE_RB PRONOUN
-123	DEGREE_RB DETERMINER
-124	DEGREE_RB RB
-125	DEGREE_RB (JJR|more JJ|less JJ)
-127	(NN[^\n ]{,2}|PRP) FREQUENCY_RB VB.?
+115	RB JJ
+116	(RB VB[^\n ]{,1})|(VB[^\n ]{,1} RB)
+117	RB
+118	RB RB
+120	RB
+121	RB (NN[^\n ]{,2}|PRP)
+122	RB PRONOUN
+123	RB DETERMINER
+125	RB (JJR|more JJ|less JJ)
+126	RB JJ
+127	(NN[^\n ]{,2}|PRP) RB VB[^\n ]{,1}
 129	really
-130	TIME_RB (IN|CC|[,.!?;])
-131	PLACE_RB (IN|CC|[,.!?;])
-132	DEGREE_RB JJ
+130	RB [,.!?;]
+131	RB [,.!?;]
 133	^RB
-134	(NN[^\n ]{,2}|PRP)( (MD|be|do|have)( not)?)? RB VB.?
-135	MANNER_RB (IN|CC|[,.!?;])
-136	DEGREE_RB (IN|CC|[,.!?;])
-137	^(CERTAINTY_RB|STANCE_RB|SEQUENCE_RB)
+134	(NN[^\n ]{,2}|PRP)( (MD|be|do|have)( not)?)? RB VB[^\n ]{,1}
+135	RB [,.!?;]
+136	RB [,.!?;]
+137	^RB
 138	^never (have|be|do|MD)
 139	^hardly (have|be|do|MD)
-140	DISTANCE_RB
-141	very (TIME_RB|DEGREE_RB)
+140	RB
+141	very RB
+142	RB RB
 144	(RBR|more RB|less RB)
-145	RB RB
 146	RB enough
 147	RB IN
 148	RB RB IN
