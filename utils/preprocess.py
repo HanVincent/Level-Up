@@ -29,3 +29,15 @@ def normalize(sent):
     sent = sent.capitalize()
 
     return sent
+
+
+def duplicate_sent(sent):
+    sent = sent.replace('\\', '')
+    tokens = []
+    for token in sent.split():
+        tokens.append(token.split('/') if '/' in token else [token])
+
+    composes = product(*tokens)
+    sents = [' '.join(compose) for compose in composes]
+    
+    return sents
