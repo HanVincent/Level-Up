@@ -1,11 +1,11 @@
 from utils.config import level_table
 from utils.egp_rule import extra_rules
-from utils.EGP import EGP
+from utils.EGP import Egp
+from utils.BNC import Bnc
 
 import re
 import numpy as np
 
-Egp = EGP()
 re_token = re.compile('\w+|[,.:;!?]')
 
 
@@ -14,8 +14,8 @@ def get_root(parse):
 
 
 def get_lemma(tk, stopwords):
-    lemma = tk.text.lower() if tk.lemma_ == '-PRON-' else tk.lemma_
-    # lemma = tk.lower_ if tk.lemma_ == '-PRON-' else tk.lemma_
+    lemma = tk.text if tk.lemma_ == '-PRON-' else tk.lemma_
+    lemma = lemma.lower()
     return lemma if lemma in stopwords else tk.tag_
 
 
@@ -38,8 +38,12 @@ def check_matches(no, parse, tags):
     for match in Egp.get_pattern(no).finditer(tags):
         start, end = align(match, tags)
 
-        if extra_rules(no, parse[start:end]): # extra rule
-            matches.append((start, end, match.group()))
+        try:
+            if extra_rules(no, parse[start:end]): # extra rule
+                matches.append((start, end, match.group()))
+        except:
+            print([tk.text for tk in parse])
+            print(no, start, end)
 
     return matches
 
@@ -50,7 +54,7 @@ def match_pattern(parse, no):
     
     lemma_tags = ' '.join([get_lemma(tk, stopwords) for tk in parse])
     origin_tags = ' '.join([tk.tag_ if tk.text not in stopwords else tk.text for tk in parse])
-
+    
     matches.extend(check_matches(no, parse, lemma_tags))
     matches.extend(check_matches(no, parse, origin_tags))
 
@@ -97,7 +101,7 @@ def remove_overlap(parse, gets):
     new_gets = []
     for get in gets:
         # ngram is not all overlapped or the level is same
-        if not (all([overlap_marker[index] for index in get['indices']]) or all([overlap_level[index] == get['level'] for index in get['indices']])):
+        if not (all([overlap_marker[index] for index in get['indices']])) and not (all([overlap_level[index] == get['level'] for index in get['indices']])):
             for index in get['indices']:
                 overlap_marker[index] = True
                 overlap_level[index] = True
@@ -127,12 +131,31 @@ def generate_candidates(parse):
 ############################################################
 # Recommend grammar rules
 ############################################################
+from textdistance import LCSSeq
+lcs = LCSSeq()
 
 def recommend_patterns(get):
-    rec_no, rec_sentence = Egp.get_recommend(get['no'], get['match'], get['ngram'])
+    no, match, ngram = get['no'], get['match'], get['ngram']
     
+    candidates = Egp.pattern_groups[(Egp.get_category(no), Egp.get_subcategory(no))]
+
+    candidates = filter(lambda can: level_table[Egp.get_level(can)] - level_table[Egp.get_level(no)] > 0, candidates) # only get level higher by 1
+    candidates = filter(lambda can: can in Bnc.number_groups, candidates) # filter non-exist
+
+    ### recommend algo
+    match, ngram = match.split(' '), ngram.split(' ')
+    rec_no, max_key, max_value = None, '', 0
+    for num in candidates:
+        key = max( Bnc.number_groups[num].keys(), key=lambda key_match: lcs.similarity(match, key_match.split(' ')) )
+        value = Bnc.number_groups[num][key]
+
+        if value > max_value:
+            max_key, max_value = key, value
+            rec_no = num
+
     if rec_no:
-        rec_no = int(rec_no)
+        first_ngram = list(Bnc.ngrams[(max_key, rec_no)].keys())[0]
+        rec_sentence = Bnc.sentences[ first_ngram ][0]
         return {'no': rec_no, 'level': Egp.get_level(rec_no), 
                 'category': Egp.get_category(rec_no), 'subcategory': Egp.get_subcategory(rec_no),
                 'statement': Egp.get_statement(rec_no), 'example': rec_sentence }
