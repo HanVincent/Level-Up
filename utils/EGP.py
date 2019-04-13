@@ -8,7 +8,7 @@ import pandas as pd
 
 class EGP:
     '''#	SuperCategory	SubCategory	Level	Lexical Range	guideword	Can-do statement	Example'''
-    def __init__(self, filename='English_Grammar_Profile.csv'):
+    def __init__(self, filename='data/English_Grammar_Profile.csv'):
         column_names = ["Index", "Category", "Subcategory", "Level",
                         "Guideword", "Statement", "Example"]
         self.df = pd.read_csv(filename,
@@ -22,15 +22,15 @@ class EGP:
         
         self.pattern_groups = self.df.groupby(['Category', 'Subcategory']).groups
         
-        self.pat_dict, self.lexicon = self.read_patterns('egp.regex.pattern.txt')
+        self.pat_dict, self.lexicon = self.read_patterns('data/egp.regex.pattern.txt')
         
         self.norm_pat_dict = {}
-        for line in open('egp.norm.pattern.txt', 'r', encoding='utf8'):
+        for line in open('data/egp.norm.pattern.txt', 'r', encoding='utf8'):
             no, norm_pattern = line.strip().split('\t')
             self.norm_pat_dict[int(no)] = norm_pattern
     
 
-    def read_patterns(self, filename='egp.regex.pattern.txt'):
+    def read_patterns(self, filename):
         adv_dict = {}
         for line in open('data/lexicon.txt', 'r', encoding='utf8'):
             key, vocabs = line.strip().split('\t')
@@ -43,6 +43,7 @@ class EGP:
         pat_dict = {}
         for line in open(filename, 'r', encoding='utf8'):
             no, pat = line.strip().split('\t')
+            if no.startswith('#'): continue
 
             for key in keys:
                 if key in pat:

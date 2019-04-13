@@ -1,4 +1,4 @@
-import spacy
+import spacy, en_core_web_lg
 from spacy.tokenizer import Tokenizer
 from spacy.util import compile_prefix_regex, compile_infix_regex, compile_suffix_regex
 
@@ -14,5 +14,7 @@ def custom_tokenizer(nlp):
                                 infix_finditer=infix_re.finditer,
                                 token_match=None)
 
+
+# nlp = en_core_web_lg.load()
 nlp = spacy.load('en_core_web_lg') 
 nlp.tokenizer = custom_tokenizer(nlp)

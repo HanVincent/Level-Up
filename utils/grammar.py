@@ -1,3 +1,4 @@
+from collections import defaultdict
 from utils.config import level_table
 from utils.egp_rule import extra_rules
 from utils.EGP import Egp
@@ -99,6 +100,7 @@ def remove_overlap(parse, gets):
     gets = sorted(gets, key=lambda get: level_table[get['level']], reverse=True)
 
     new_gets = []
+    
     for get in gets:
         # ngram is not all overlapped or the level is same
         if not (all([overlap_marker[index] for index in get['indices']])) and not (all([overlap_level[index] == get['level'] for index in get['indices']])):
@@ -131,9 +133,6 @@ def generate_candidates(parse):
 ############################################################
 # Recommend grammar rules
 ############################################################
-from textdistance import LCSSeq
-lcs = LCSSeq()
-
 def recommend_patterns(get):
     no, match, ngram = get['no'], get['match'], get['ngram']
     
@@ -142,20 +141,26 @@ def recommend_patterns(get):
     candidates = filter(lambda can: level_table[Egp.get_level(can)] - level_table[Egp.get_level(no)] > 0, candidates) # only get level higher by 1
     candidates = filter(lambda can: can in Bnc.number_groups, candidates) # filter non-exist
 
-    ### recommend algo
-    match, ngram = match.split(' '), ngram.split(' ')
-    rec_no, max_key, max_value = None, '', 0
+    # find related rules that contains related ngrams
+    related_rules = defaultdict(list)
     for num in candidates:
-        key = max( Bnc.number_groups[num].keys(), key=lambda key_match: lcs.similarity(match, key_match.split(' ')) )
-        value = Bnc.number_groups[num][key]
+        for pattern in Bnc.number_groups[num].keys():
+            for token in ngram.split(' '):
+                if token in '.,:!?-\'"': continue
+                    
+                ngrams = Bnc.ngram_groups[(pattern, num)][token] # set
+                if ngrams:
+                    related_rules[num].extend(list(ngrams))
 
-        if value > max_value:
-            max_key, max_value = key, value
-            rec_no = num
-
-    if rec_no:
-        first_ngram = list(Bnc.ngrams[(max_key, rec_no)].keys())[0]
-        rec_sentence = Bnc.sentences[ first_ngram ][0]
+    # 找 ngram 相近才對
+    if len(related_rules) > 0:
+        for num, ngrams in related_rules.items():
+            ngram = ngrams[0]
+            if len(Bnc.sentences[ngram]) > 0:
+                rec_no = num
+                rec_sentence = Bnc.sentences[ngram][0]
+                break
+        
         return {'no': rec_no, 'level': Egp.get_level(rec_no), 
                 'category': Egp.get_category(rec_no), 'subcategory': Egp.get_subcategory(rec_no),
                 'statement': Egp.get_statement(rec_no), 'example': rec_sentence }
@@ -163,7 +168,7 @@ def recommend_patterns(get):
         return None
 
 
-def iterate_all_gets(gets):
+def iterate_all_gets(parse, gets):
     recs = [recommend_patterns(get) for get in gets]
         
     return recs

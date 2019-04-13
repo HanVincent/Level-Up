@@ -8,8 +8,8 @@ import fileinput
 for line in fileinput.input():
     tokens = normalize(line).split()
 
-    for n in range(1, 8):
-        ngram_count = Counter(list(combinations(tokens, n)))
+    for n in range(1, 6):
+        ngram_count = Counter(combinations(tokens, n))
         for ngram, count in ngram_count.items():
             ngram = sorted(ngram)
-            print('{}\t{}'.format(' '.join(ngram), count))
+            print(' '.join(ngram), count, sep='\t')

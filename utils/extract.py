@@ -1,5 +1,4 @@
 import re
-import nltk
 import requests
 from bs4 import BeautifulSoup 
 from readability import Document
@@ -39,7 +38,7 @@ def clean_content(url):
     response = requests.get(url)
     # doc = remove_sometag(Document(response.text).summary())
     doc = Document(response.text).summary()
-    soup = BeautifulSoup(doc)
+    soup = BeautifulSoup(doc, features="lxml")
     text = soup.get_text()
 
     return text

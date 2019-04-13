@@ -9,21 +9,35 @@ from utils.grammar import generate_candidates, iterate_all_patterns, iterate_all
 from utils.vocabulary import level_vocab
 
 
-# In[3]:
+# In[80]:
 
 
 def main_suggesting(content):
     content = content.strip()
-
     if not content: return None # empty content
-    if len(content.split(' ')) < 2: return None
+    # if len(content.split(' ')) < 2: return None
 
+    # get sentences
+    sentences = list(nlp(content, disable=['ner']).sents)
+    last_sent = sentences[-1]
+    
     # normalize
-    content = normalize(content)
-    last_sent = list(nlp(content, disable=['ner']).sents)[-1]
-    last_word = last_sent[-1]
+    content = normalize(last_sent.text)
+    parse = nlp(content, disable=['ner'])
 
-    return auto_suggest(last_word.text, last_word.tag_, last_sent.text.rsplit(' ', maxsplit=1)[0])
+    # 1. generate possible sentences
+    parses = generate_candidates(parse)
+    
+    # 2. find patterns for each candidate
+    gets = [get for parse in parses for get in iterate_all_patterns(parse)]
+
+    # 3. remove duplicate
+    gets = remove_overlap(parse, gets)
+
+    # 4. recommend related higher pattern in the same group
+    get, sugs = auto_suggest(parse, gets)
+    
+    return get, sugs
 
     
 def main_profiling(content):
@@ -42,7 +56,7 @@ def main_profiling(content):
         gets = remove_overlap(parse, gets)
         
         # 4. recommend related higher pattern in the same group
-        recs = iterate_all_gets(gets)
+        recs = iterate_all_gets(parse, gets)
         
         # 5. return
         sentence_profiles.append({'sent': sent.text, 
@@ -57,7 +71,6 @@ def main_vocabuing(sentence):
     vocabs = level_vocab(parse)
     
     return vocabs
-
 
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
@@ -83,9 +96,9 @@ def suggesting():
     if not request_data: return jsonify({'result': 'Should not be empty'})
 
     content = request_data['content']
-    suggestions = main_suggesting(content)
+    get, suggestions = main_suggesting(content)
 
-    return jsonify({'suggest': suggestions})
+    return jsonify({'get': get, 'suggestions': suggestions})
 
 
 @app.route('/examples', methods=['POST'])
@@ -96,7 +109,7 @@ def examples():
     ngram = request_data['ngram']
     sentences = suggest_sentences(ngram)
 
-    return jsonify({'examples': sentences})
+    return jsonify({'ngram': ngram, 'examples': sentences})
 
 
 # post /profiling data: { content: str , access: str}
@@ -131,71 +144,4 @@ def vocabuing():
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0', port=1316)
-
-
-# In[ ]:
-
-
-# egs = []
-
-# for index, entry in Egp.get_examples().items():
-#     if index not in Egp.get_patterns(): continue
-        
-#     eg = []
-#     for sent in entry['sents']:
-#         level, sent = sent
-#         parse = nlp(normalize(sent))
-    
-#         matches = match_pat(parse, index, Egp.get_patterns()[index])
-#         if not matches: continue
-            
-#         sent = []
-#         for tk in parse:
-#             starts = [match[0] for match in matches]
-#             ends = [match[1] for match in matches]                
-
-#             if tk.i in starts:
-#                 sent.extend(['<w>', tk.text])
-#             elif tk.i in ends:
-#                 sent.extend(['</w>', tk.text])
-#             else:
-#                 sent.append(tk.text)
-        
-#         sent = ['I' if tk == 'i' else tk for tk in sent]
-#         sent = ' '.join(sent)
-#         eg.append(sent)
-
-#     if not eg: egs.append((index, entry['sents'][0][1]))
-#     else:      egs.append((index, eg[0]))
-        
-# with open('egp.highlights.txt', 'w', encoding='utf8') as ws:
-#     for line in egs:
-#         print(*line, sep='\t', file=ws)
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-
-
-
-# In[ ]:
-
-
-# print(parse)
-
-# for sent in generate_candidates(parse):
-#     print(' '.join([tk.text for tk in sent]))
-
-
-# In[ ]:
-
-
-
 

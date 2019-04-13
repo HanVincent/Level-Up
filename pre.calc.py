@@ -2,14 +2,11 @@
 # coding: utf-8
 
 from utils.parser import nlp
-
+from utils.grammar import generate_candidates, iterate_all_patterns, remove_overlap
+from collections import defaultdict, Counter
 import gzip, pickle
 
-from utils.grammar import generate_candidates, iterate_all_patterns, remove_overlap
-
-
-# In[ ]:
-
+name = 'new.recommend.prune.pickle'  
 
 class DotDict(dict):
     
@@ -49,8 +46,6 @@ class Parse(list):
         self.extend([DotDict(token, self) for token in tokens])
 
 
-# In[ ]:
-
 
 from itertools import product
 import json
@@ -80,16 +75,7 @@ def find_values(id, json_repr):
     return results
 
 
-# In[ ]:
-
-
 fs = gzip.open('bnc.parse.txt.gz', 'rt', encoding='utf8')
-
-
-# In[ ]:
-
-
-from collections import defaultdict, Counter
 
 counts = Counter()
 ngrams = defaultdict(Counter)
@@ -101,10 +87,11 @@ for i, entry in enumerate(fs):
 #     parse = nlp(sentence, disable=['ner'])
 
     # 1. generate possible sentences
-    parses = generate_candidates(parse)
+#     parses = generate_candidates(parse)
 
     # 2. find patterns for each candidate
-    gets = [get for parse in parses for get in iterate_all_patterns(parse)]
+#     gets = [get for parse in parses for get in iterate_all_patterns(parse)]
+    gets = iterate_all_patterns(parse)
 
     # 3. remove duplicate
     gets = remove_overlap(parse, gets)
@@ -115,8 +102,8 @@ for i, entry in enumerate(fs):
         ngrams[(get['match'], get['no'])][get['ngram']] += 1
 
     # for sentences
-    gets = iterate_all_patterns(parses[-1])
-    gets = remove_overlap(parse, gets)
+#     gets = iterate_all_patterns(parses[-1])
+#     gets = remove_overlap(parse, gets)
     for get in gets:
         text = ' '.join([ '<w>' + tk.text + '</w>' if i in get['indices'] else tk.text for i, tk in enumerate(parse)])
         sentences[ get['ngram'] ].append(text)
@@ -124,13 +111,35 @@ for i, entry in enumerate(fs):
         
     if i % 20000 == 0:
         print(i)
-        with open('new.recommend2.pickle', 'wb') as handle:
+        with open(name, 'wb') as handle:
             pickle.dump({ 'counts': counts, 'ngrams': ngrams, 'sentences': sentences }, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
-
-# In[ ]:
-
-
-with open('new.recommend2.pickle', 'wb') as handle:
+with open(name, 'wb') as handle:
     pickle.dump({ 'counts': counts, 'ngrams': ngrams, 'sentences': sentences }, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
+
+# Clean sentences
+        
+HiFreWords = open('data/HiFreWords', 'r').read().split('\t')
+
+def clean(sents):
+    def score(tks):
+        return sum([t in HiFreWords for t in tks]) / len(tks)
+
+    sents = map(lambda sent: (sent, sent.replace('<w>', '').replace('</w>', '').split()), sents)
+    sents = sorted(sents, key=lambda each: score(each[1]), reverse=True)
+    
+    less_sents = [sent for sent in sents if len(sent[1]) >= 10 and len(sent[1]) <= 25]
+    if len(less_sents) > 0:
+        sents = less_sents
+    sents = [sent[0] for sent in sents]
+    return sents
+
+
+for ngram in sentences:
+    new_sents = clean(sentences[ngram])
+    sentences[ngram] = new_sents
+    
+    
+with open(name, 'wb') as handle:
+    pickle.dump({ 'counts': counts, 'ngrams': ngrams, 'sentences': sentences }, handle, protocol=pickle.HIGHEST_PROTOCOL)

@@ -36,7 +36,7 @@
 39	too JJ TO VB
 40	JJ enough TO VB
 41	rather a JJ
-43	(as JJ [^,.!;:]*? as|so JJ [^,.!;:]*? that)
+43	(as JJ [^,.!;:]*? ?as|so JJ [^,.!;:]*? ?that)
 44	JJ NN[^\n ]{,2}
 45	be JJ
 46	JJ NN[^\n ]{,2}
@@ -51,7 +51,7 @@
 58	(JJS|most JJ) (NN[^\n ]{,2}|PRP) IN
 59	(JJS|most JJ) (NN[^\n ]{,2}|PRP) in 
 60	(JJS|most JJ) (NN[^\n ]{,2}|PRP) of 
-61	(one of (the|PRP\$) )?(JJS|most JJ) [,.!?;]
+61	(one of )?(the|PRP\$) (JJS|most JJ) [,.!?;]
 62	JJS NN[^\n ]{,2}
 63	JJS
 64	JJS
@@ -93,7 +93,7 @@
 117	RB
 118	RB RB
 120	RB
-121	RB (NN[^\n ]{,2}|PRP)
+121	RB a (JJ )?NN[^\n ]{,2}
 122	RB PRONOUN
 123	RB DETERMINER
 125	RB (JJR|more JJ|less JJ)
