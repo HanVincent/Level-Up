@@ -26,7 +26,7 @@ def normalize(sent):
     sent = recover_abbr(sent)
     sent = remove_multispace(sent)
     sent = recover_i(sent)
-    sent = sent.capitalize()
+    # sent = sent.capitalize()
 
     return sent
 
