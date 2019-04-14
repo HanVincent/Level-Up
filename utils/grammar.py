@@ -100,7 +100,6 @@ def remove_overlap(parse, gets):
     gets = sorted(gets, key=lambda get: level_table[get['level']], reverse=True)
 
     new_gets = []
-    
     for get in gets:
         # ngram is not all overlapped or the level is same
         if not (all([overlap_marker[index] for index in get['indices']])) and not (all([overlap_level[index] == get['level'] for index in get['indices']])):
@@ -109,6 +108,10 @@ def remove_overlap(parse, gets):
                 overlap_level[index] = True
             new_gets.append(get)
 
+    # sort by category & subcategory
+    new_gets = sorted(new_gets, key=lambda get: get['subcategory'])
+    new_gets = sorted(new_gets, key=lambda get: get['category'])
+    
     return new_gets
 
 
@@ -152,7 +155,7 @@ def recommend_patterns(get):
                 if ngrams:
                     related_rules[num].extend(list(ngrams))
 
-    # 找 ngram 相近才對
+    # Should find similar ngram
     if len(related_rules) > 0:
         for num, ngrams in related_rules.items():
             ngram = ngrams[0]

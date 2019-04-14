@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 # coding: utf-8
 
-
-
 from collections import Counter, defaultdict
 from utils.config import tag2pos_table, level_table
 from utils.EGP import Egp
@@ -11,9 +9,6 @@ from utils.BNC import Bnc
 import kenlm
 
 model = kenlm.Model('/home/nlplab/jjc/gec/lm/coca.prune.bin')
-
-
-# In[157]:
 
 
 def lm(last_sent, ngram):
