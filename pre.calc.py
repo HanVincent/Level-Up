@@ -82,18 +82,10 @@ ngrams = defaultdict(Counter)
 sentences = defaultdict(list)
 
 for i, entry in enumerate(fs):
-# for i, sentence in enumerate(dict_sentences):
     parse = Parse(entry)
-#     parse = nlp(sentence, disable=['ner'])
-
-    # 1. generate possible sentences
-#     parses = generate_candidates(parse)
-
-    # 2. find patterns for each candidate
-#     gets = [get for parse in parses for get in iterate_all_patterns(parse)]
+    
     gets = iterate_all_patterns(parse)
 
-    # 3. remove duplicate
     gets = remove_overlap(parse, gets)
 
     text = ' '.join([tk.text for tk in parse])
@@ -101,14 +93,9 @@ for i, entry in enumerate(fs):
         counts[(get['match'], get['no'])] += 1
         ngrams[(get['match'], get['no'])][get['ngram']] += 1
 
-    # for sentences
-#     gets = iterate_all_patterns(parses[-1])
-#     gets = remove_overlap(parse, gets)
-    for get in gets:
         text = ' '.join([ '<w>' + tk.text + '</w>' if i in get['indices'] else tk.text for i, tk in enumerate(parse)])
         sentences[ get['ngram'] ].append(text)
 
-        
     if i % 20000 == 0:
         print(i)
         with open(name, 'wb') as handle:
@@ -118,7 +105,7 @@ with open(name, 'wb') as handle:
     pickle.dump({ 'counts': counts, 'ngrams': ngrams, 'sentences': sentences }, handle, protocol=pickle.HIGHEST_PROTOCOL)
 
 
-# Clean sentences
+### Clean sentences
         
 HiFreWords = open('data/HiFreWords', 'r').read().split('\t')
 
