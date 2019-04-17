@@ -51,10 +51,10 @@ const VocabularyTable = {
                          data-target="#collapse-vocab-${i}"><i class="fas fa-plus"></i>
                  </button>`;
             
-            const recRow = vocab.recs.length > 0? vocab.recs.map((rec) => {
-                `<div class="d-inline-block mr-3">
-                    <span class="badge ${rec.level}">${rec.level}</span> ${rec.vocab}
-                </div>`
+            const recRow = vocab.recs.length > 0? vocab.recs.map(rec => {
+                return `<div class="d-inline-block mr-3">
+                            <span class="badge ${rec.level}">${rec.level}</span> ${rec.vocab}
+                        </div>`
             }).join('') : '<div>No recommend</div>'
 
             return `<div class="card border-right-0 border-left-0 ${getLevelCategory(vocab.level)}-visible" 
