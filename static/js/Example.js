@@ -45,6 +45,6 @@ const Example = {
     });
   },
   render: function(ngramstr, examples) {
-      return examples.map((example) => `<li>${capitalize(example)}</li>`).join('')
+      return examples.map((example) => `<li class="m-1">${capitalize(example)}</li>`).join('')
   }
 };

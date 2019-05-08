@@ -109,7 +109,7 @@ def remove_overlap(parse, gets):
             new_gets.append(get)
 
     # sort by category & subcategory
-    new_gets = sorted(new_gets, key=lambda get: get['subcategory'])
+    new_gets = sorted(new_gets, key=lambda get: level_table[get['level']], reverse=True)
     new_gets = sorted(new_gets, key=lambda get: get['category'])
     
     return new_gets
@@ -141,7 +141,10 @@ def recommend_patterns(get):
     
     candidates = Egp.pattern_groups[(Egp.get_category(no), Egp.get_subcategory(no))]
 
-    candidates = filter(lambda can: level_table[Egp.get_level(can)] - level_table[Egp.get_level(no)] > 0, candidates) # only get level higher by 1
+    ### manually
+    candidates = filter(lambda can: can not in [46], candidates)
+    
+    candidates = filter(lambda can: level_table[Egp.get_level(can)] - level_table[Egp.get_level(no)] > 0, candidates) # get elements with higher level
     candidates = filter(lambda can: can in Bnc.number_groups, candidates) # filter non-exist
 
     # find related rules that contains related ngrams
@@ -155,7 +158,7 @@ def recommend_patterns(get):
                 if ngrams:
                     related_rules[num].extend(list(ngrams))
 
-    # Should find similar ngram
+    # Only get the first element, TODO: should find similar ngram
     if len(related_rules) > 0:
         for num, ngrams in related_rules.items():
             ngram = ngrams[0]

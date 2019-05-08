@@ -91,6 +91,10 @@ div.main-content:empty+div.no-content {
     background-color: rgb(252, 239, 138);
 }
 
+.btn-ngrams:hover {
+    background-color: #f3f6f9;
+}
+
 .card-header {
     background-color: transparent;
     border-bottom: none;

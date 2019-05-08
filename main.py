@@ -14,7 +14,7 @@ from utils.vocabulary import level_vocab
 
 def main_suggesting(content):
     content = content.strip()
-    if not content: return None # empty content
+    if not content: return None, [] # empty content
     # if len(content.split(' ')) < 2: return None
 
     # get sentences

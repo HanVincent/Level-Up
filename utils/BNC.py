@@ -6,7 +6,7 @@ import pickle
 class BNC:
 
     def __init__(self):
-        with open('recommend.prune.pickle', 'rb') as handle:
+        with open('coca.recommend.prune.pickle', 'rb') as handle:
             info = pickle.load(handle)
             self.counts, self.ngrams, self.sentences = info['counts'], info['ngrams'], info['sentences']
             

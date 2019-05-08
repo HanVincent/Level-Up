@@ -3,13 +3,11 @@
 
 from collections import defaultdict
 from utils.config import level_table
-from utils.preprocess import duplicate_sent
-import requests
 
 class EVP:
 
     def __init__(self):
-        self.api = "http://140.114.89.224:7777/word_sense"
+#         self.api = "http://140.114.89.224:7777/word_sense"
         self.vocab_level = {}
         self.vocab_pos = defaultdict(set)
 
@@ -38,10 +36,11 @@ class EVP:
         return self.vocab_level[vocab]
 
 
-    def lookup_by_sense(self, sentence, word):
-        r = requests.post(self.api, json={ 'Sentence': sentence, 'MainWord': word })
+#     import requests
+#     def lookup_by_sense(self, sentence, word):
+#         r = requests.post(self.api, json={ 'Sentence': sentence, 'MainWord': word })
         
-        return r.json()
+#         return r.json()
 
     
 Evp = EVP()

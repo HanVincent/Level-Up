@@ -8,15 +8,6 @@ def level_vocab(sent):
     annotate = [{'token': tk.text, 'level': Evp.get_level(tk.lemma_), 'recs': recommend_vocabs(tk.lemma_)} for tk in sent]
     return annotate
 
-#     annotate = []
-#     for tk in sent.split(' '):
-#         try:
-#             annotate.append({ 'token': tk, 'level': Evp.lookup_by_sense(sent, tk) })
-#         except:
-#             annotate.append({ 'token': tk, 'level': None })
-
-#     return annotate
-
 
 def recommend_vocabs(vocab):
     if Evp.vocab_exists(vocab):

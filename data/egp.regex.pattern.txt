@@ -4,7 +4,7 @@
 4	JJR and JJR
 5	be (JJ , )+JJ (,|and) JJ
 7	JJ
-9	(PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) (, )?(RB )?(JJ IN|VBN)
+#9	(PRP\$ |DT )?(JJ )?(NN[^\n ]{,2}|PRP) (, )?(RB )?(JJ IN|VBN)
 11	JJ( , JJ){1,} and JJ
 12	^((RB )?JJ) ,
 13	JJR
@@ -46,19 +46,19 @@
 52	PRONOUN JJ
 53	JJ( JJ)? NN[^\n ]{,2}
 54	(present|future|former) NN[^\n ]{,2}
-55	(NN[^\n ]{,2} VBN)
+55	NN[^\n ]{,2} VBN
 57	my best friend
 58	(JJS|most JJ) (NN[^\n ]{,2}|PRP) IN
 59	(JJS|most JJ) (NN[^\n ]{,2}|PRP) in 
 60	(JJS|most JJ) (NN[^\n ]{,2}|PRP) of 
-61	(one of )?(the|PRP\$) (JJS|most JJ) [,.!?;]
-62	JJS NN[^\n ]{,2}
+61	(one of )?(the|PRP\$) (JJS|most JJ) [,.!?;]$
+62	JJS
 63	JJS
 64	JJS
 65	(my|your) (JJS|most JJ) NN[^\n ]{,2}
 66	JJS
 67	the JJS NN[^\n ]{,2}
-68	the most JJ NN[^\n ]{,2}
+68	the most JJ
 70	the best (NN[^\n ]{,2}|PRP) [^,.!;:]*?　have ever VBN
 71	one of the (JJS|most JJ) (NNS|NNPS)
 72	the best (NN[^\n ]{,2}|PRP) TO VB
@@ -100,12 +100,12 @@
 126	RB JJ
 127	(NN[^\n ]{,2}|PRP) RB VB[^\n ]{,1}
 129	really
-130	RB [,.!?;]
-131	RB [,.!?;]
+130	RB [,.!?;]$
+131	RB [,.!?;]$
 133	^RB
 134	(NN[^\n ]{,2}|PRP)( (MD|be|do|have)( not)?)? RB VB[^\n ]{,1}
-135	RB [,.!?;]
-136	RB [,.!?;]
+135	RB [,.!?;]$
+136	RB [,.!?;]$
 137	^RB
 138	^never (have|be|do|MD)
 139	^hardly (have|be|do|MD)

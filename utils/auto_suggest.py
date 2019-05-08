@@ -29,10 +29,9 @@ def normalize_tag(tag):
 
 # In[169]:
 
-
 def suggest_patterns(related_patterns, text_sent, headword, pos, top_k=1):
     # not containing related ngram patterns
-    related_patterns = filter(lambda ptn: ptn[1] not in [12] and headword in Bnc.ngram_groups[ptn], related_patterns)
+    related_patterns = filter(lambda ptn: ptn[1] not in [9, 12] and headword in Bnc.ngram_groups[ptn], related_patterns)
 
     # group patterns by number
     pattern_groups = defaultdict(list)
@@ -49,10 +48,13 @@ def suggest_patterns(related_patterns, text_sent, headword, pos, top_k=1):
         scores = sorted(scores, key=lambda x: x[2], reverse=True)[:10]
 
         if len(scores) > 0:
-            ngram = max(scores, key=lambda x: x[1])[0]
+            scores = sorted(scores, key=lambda x: x[1], reverse=True)[:5]
+            ngrams = [score[0] for score in scores]
+            ngram = ngrams[0]
+            # ngram = max(scores, key=lambda x: x[1])[0]
+            lm_score = sum(score[2] for score in scores) / len(scores)
             targets.append({'no': no, 'level': Egp.get_level(no), 'pos': normalize_tag(pos), 
-                            'lm': sum(score[2] for score in scores) / len(scores),
-                            'pattern': Egp.get_norm_pattern(no), 'ngram': ngram,
+                            'lm': lm_score, 'pattern': Egp.get_norm_pattern(no), 'ngrams': ngrams, 'ngram': ngram, 
                             'category': Egp.get_category(no), 'subcategory': Egp.get_subcategory(no),
                             'statement': Egp.get_statement(no) } )
     
@@ -62,8 +64,9 @@ def suggest_patterns(related_patterns, text_sent, headword, pos, top_k=1):
     return targets
 
 
+
 def suggest_sentences(ngram):
-    return Bnc.sentences[ngram][:3]
+    return Bnc.sentences[ngram][:1]
 
 
 # In[174]:
@@ -72,11 +75,14 @@ def suggest_sentences(ngram):
 # from utils.grammar import iterate_all_patterns
 
 def auto_suggest(parse_sent, gets):
-    headword, pos = parse_sent[-1].text, parse_sent[-1].tag_
+    last_word, last_index = parse_sent[-1], len(parse_sent) - 1
+    if last_word.is_punct and len(parse_sent) > 1:
+        last_word, last_index = parse_sent[-2], len(parse_sent) - 2
+        
+    headword, pos = last_word.text, last_word.tag_
     text_sent = parse_sent.text.rsplit(' ', maxsplit=1)[0] # to text
     
     # get max get
-    last_index = len(parse_sent) - 1
     gets = [get for get in gets if last_index in get['indices']]
     get = None
     
@@ -85,6 +91,7 @@ def auto_suggest(parse_sent, gets):
         get = max(gets, key=lambda get: level_table[get['level']])
         get['pattern'] = Egp.get_norm_pattern(get['no'])
         related_patterns = filter(lambda ptn: level_table[Egp.get_level(ptn[1])] > level_table[get['level']] and get['no'] != ptn[1], related_patterns)
+        # related_patterns = filter(lambda ptn: get['no'] != ptn[1], related_patterns)
     
     patterns = suggest_patterns(related_patterns, text_sent, headword, pos)
     

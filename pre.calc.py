@@ -11,7 +11,9 @@ name = 'new.recommend.prune.pickle'
 class DotDict(dict):
     
     def __init__(self, token, doc):
+        
         index, text, lemma, norm, pos, tag, dep, head, children = token.split('|')
+#         index, text, lemma, pos, tag, dep, head, children = token.split('|')
         children = children.strip()
 
         self.i = int(index)
@@ -41,6 +43,7 @@ class Parse(list):
 
     def __init__(self, entry):
         tokens = [token for token in entry.strip().split('\t') if token]
+#         
         text, tokens = tokens[0], tokens[1:]
         
         self.extend([DotDict(token, self) for token in tokens])
@@ -75,6 +78,7 @@ def find_values(id, json_repr):
     return results
 
 
+# fs = gzip.open('coca.parse.txt.gz', 'rt', encoding='utf8')
 fs = gzip.open('bnc.parse.txt.gz', 'rt', encoding='utf8')
 
 counts = Counter()
@@ -82,7 +86,11 @@ ngrams = defaultdict(Counter)
 sentences = defaultdict(list)
 
 for i, entry in enumerate(fs):
-    parse = Parse(entry)
+    try:
+        parse = Parse(entry)
+    except:
+        print(entry)
+        continue
     
     gets = iterate_all_patterns(parse)
 

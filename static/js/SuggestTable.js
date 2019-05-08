@@ -11,6 +11,10 @@ const SuggestTable = {
             SuggestTable.getSuggestions(content);
 
         }, 500));
+        
+        // TODO: remove
+        const content = $('#content-block')[0].innerText.replace(/(\s+)|(&nbsp;)/g," ").trim();
+        SuggestTable.getSuggestions(content);
     },
     getSuggestions: function(content, url=SuggestTable.API){
         $.ajax({
@@ -30,10 +34,18 @@ const SuggestTable = {
                 SuggestTable.panel.html(SuggestTable.render(response.get, response.suggestions)); 
             }
         }).always(function() {
-            $(() => { $('[data-toggle="tooltip"]').tooltip() }); // initiate
-            SuggestTable.overlay.addClass('d-none');
             initVisible();
+            $(() => { $('[data-toggle="tooltip"]').tooltip() }); // initiate
+            
+            $('.btn-ngrams').on('click', function(){
+                const ngramsBtn = $(this);
+                const index = ngramsBtn.data('index');
+                const ngramsRow = $('#ngrams-' + index);
+
+                ngramsRow.toggle();
+              });
             Example.initExampleBtns();
+            SuggestTable.overlay.addClass('d-none');
         })
     },
     buildDetect: function(get) {
@@ -56,28 +68,38 @@ const SuggestTable = {
             .map((curr, i) => {
                 const tooltipBadge = `<h6 class='m-0'>${curr.category}</h6>
                                       <p class='m-0'>${curr.subcategory}</p>`;
-                const tooltipHelp = `<h5 class='m-0'>${curr.pattern}</h5><hr> 
-                                     <p class='m-0'>${curr.statement}</p>`;
+                const tooltipHelp = `<p class='m-0'>${curr.statement}</p>`;
 
-                return `<div class="row ${getLevelCategory(curr.level)}-visible">
-                            <div class="col mb-1">
-                                <span class="badge ${curr.level}" data-toggle="tooltip" 
-                                      data-placement="top" data-html=true
-                                      title="${tooltipBadge}">${curr.level}</span>
+                const ngramsSec = curr.ngrams.map((ngram, j) => `
+                    <li>
+                        <span>${ngram}</span>
+                        <a href="#" class="small btn-sentence float-right" 
+                           data-no="${curr.no}" data-index="${j}" data-ngram="${ngram}">
+                           Show</a>
+                    </li>
 
-                                <span class="help-tip" data-toggle="tooltip" data-placement="top" 
-                                      data-html=true title="${tooltipHelp}"></span>
+                    <ul id="ngram-${curr.no}-${j}" style="display: none;" 
+                        class="px-4 py-1 my-2 bg-light"
+                        data-fetched="false" data-hide="true"></ul>
+                `).join('');
+            
+                return `<div class="${getLevelCategory(curr.level)}-visible">
+                            <div class="row btn-ngrams hoverable" 
+                                 data-index="${i}" data-no="${curr.no}">
+                                <div class="col mb-1">
+                                    <span class="badge ${curr.level}" data-toggle="tooltip" 
+                                          data-placement="top" data-html=true
+                                          title="${tooltipBadge}">${curr.level}</span>
 
-                                <span>${curr.ngram}</span>    
-                                <number>${curr.no}</number>
+                                    <span class="help-tip" data-toggle="tooltip" data-placement="top" 
+                                          data-html=true title="${tooltipHelp}"></span>
 
-                                <a href="#" class="small btn-sentence float-right" 
-                                   data-no="${curr.no}" data-index="${i}" data-ngram="${curr.ngram}">
-                                   Show</a>
-
-                                <ul id="ngram-${curr.no}-${i}" style="display: none;"
-                                        data-fetched="false" data-hide="true"></ul>
+                                    <span class="font-weight-bold align-middle">${curr.pattern}</span>
+                                    <span class="text-secondary align-middle">(${curr.ngram})</span> 
+                                </div>
                             </div>
+
+                            <ul id="ngrams-${i}" style="display: none;">${ngramsSec}</ul>
                         </div>`;
             });
     },
