@@ -7,7 +7,6 @@ from utils.config import level_table
 class EVP:
 
     def __init__(self):
-#         self.api = "http://140.114.89.224:7777/word_sense"
         self.vocab_level = {}
         self.vocab_pos = defaultdict(set)
 
@@ -34,13 +33,6 @@ class EVP:
             return None
 
         return self.vocab_level[vocab]
-
-
-#     import requests
-#     def lookup_by_sense(self, sentence, word):
-#         r = requests.post(self.api, json={ 'Sentence': sentence, 'MainWord': word })
-        
-#         return r.json()
 
     
 Evp = EVP()

@@ -1,9 +1,14 @@
-from gensim.models import KeyedVectors
 from utils.config import level_table
 from utils.EVP import Evp
 
-model = KeyedVectors.load_word2vec_format('data/GoogleNews-vectors-negative300.bin', binary=True)
+try: # bigger
+    from gensim.models import KeyedVectors
+    model = KeyedVectors.load_word2vec_format('data/GoogleNews-vectors-negative300.bin', binary=True)
+except: # slimmer
+    from gensim.models.keyedvectors import KeyedVectors
+    model = KeyedVectors.load_word2vec_format("data/gensim_glove_vectors.txt", binary=False)
 
+    
 def level_vocab(sent):
     annotate = [{'token': tk.text, 'level': Evp.get_level(tk.lemma_), 'recs': recommend_vocabs(tk.lemma_)} for tk in sent]
     return annotate

@@ -15,6 +15,9 @@ def custom_tokenizer(nlp):
                                 token_match=None)
 
 
-# nlp = en_core_web_lg.load()
-nlp = spacy.load('en_core_web_lg') 
+try:
+    nlp = spacy.load('en_core_web_lg') 
+except:
+    nlp = en_core_web_lg.load()
+    
 nlp.tokenizer = custom_tokenizer(nlp)
