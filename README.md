@@ -8,7 +8,7 @@ We introduce a method for generating suggestions on a given sentence for improvi
 
 
 
-### Downloads (If you run the project with limited memory, please utilize slim version files.)
+### [Deprecated] Downloads (If you run the project with limited memory, please utilize slim version files.)
 
 ##### Word Embeddings
 * [Google News Word2vec](https://drive.google.com/open?id=1u6CdVyRsbCxekSuJfLPK0QIcgt03Loc-) (3 GB)
