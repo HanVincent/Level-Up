@@ -5,65 +5,65 @@ const SuggestTable = {
     overlay: $('#overlay-suggest'),
     panel: $('#main-suggest'),
 
-    init: function() {
-        $('#content-block').on('input', debounce(function() {
-            const content = this.innerText.replace(/(\s+)|(&nbsp;)/g," ").trim();
+    init: function () {
+        $('#content-block').on('input', debounce(function () {
+            const content = this.innerText.replace(/(\s+)|(&nbsp;)/g, " ").trim();
             SuggestTable.getSuggestions(content);
 
         }, 500));
-        
+
         // TODO: remove
-        const content = $('#content-block')[0].innerText.replace(/(\s+)|(&nbsp;)/g," ").trim();
+        const content = $('#content-block')[0].innerText.replace(/(\s+)|(&nbsp;)/g, " ").trim();
         SuggestTable.getSuggestions(content);
     },
-    getSuggestions: function(content, url=SuggestTable.API){
+    getSuggestions: function (content, url = SuggestTable.API) {
         $.ajax({
             url: url,
             type: 'POST',
-            data: JSON.stringify({content: content}),
+            data: JSON.stringify({ content }),
             contentType: "application/json",
             dataType: 'json',
-            beforeSend: () => { 
+            beforeSend: () => {
                 $('#nav-suggest-tab').tab('show');
-                SuggestTable.overlay.removeClass('d-none'); 
+                SuggestTable.overlay.removeClass('d-none');
             }
-        }).done(function(response) {
-            if (response.suggestions.length == 0) { 
-                SuggestTable.panel.text(''); 
-            } else { 
-                SuggestTable.panel.html(SuggestTable.render(response.get, response.suggestions)); 
+        }).done(function (response) {
+            if (response.suggestions.length == 0) {
+                SuggestTable.panel.text('');
+            } else {
+                SuggestTable.panel.html(SuggestTable.render(response.match, response.suggestions));
             }
-        }).always(function() {
+        }).always(function () {
             initVisible();
             $(() => { $('[data-toggle="tooltip"]').tooltip() }); // initiate
-            
-            $('.btn-ngrams').on('click', function(){
+
+            $('.btn-ngrams').on('click', function () {
                 const ngramsBtn = $(this);
                 const index = ngramsBtn.data('index');
                 const ngramsRow = $('#ngrams-' + index);
 
                 ngramsRow.toggle();
-              });
-            Example.initExampleBtns();
+            });
+            Sentences.initSentenceBtns();
             SuggestTable.overlay.addClass('d-none');
         })
     },
-    buildDetect: function(get) {
-        if (!get) {return '<span class="align-middle">NO rules detected.</span>'}
+    buildDetect: function (match) {
+        if (!match) { return '<span class="align-middle">NO rules detected.</span>' }
 
-        const tooltip = `<h6 class='m-0'>${get.category}</h6>
-                         <p class='m-0'> ${get.subcategory}</p>`
-        return `<span class="badge ${get.level}" title="${tooltip}"
+        const tooltip = `<h6 class='m-0'>${match.category}</h6>
+                         <p class='m-0'> ${match.subcategory}</p>`
+        return `<span class="badge ${match.level}" title="${tooltip}"
                       data-toggle="tooltip" data-placement="top" data-html=true>
-                      ${get.level}
+                      ${match.level}
                 </span>
                 <span class="help-tip" data-toggle="tooltip" data-placement="top" 
-                      data-html=true title="<p class='m-0'>${get.statement}</p>">
+                      data-html=true title="<p class='m-0'>${match.statement}</p>">
                 </span>
-                <span class="align-middle">${get.pattern}</span>
-                <small>(${get.ngram})</small>` 
+                <span class="align-middle">${match.pattern}</span>
+                <small>(${match.ngram})</small>`
     },
-    buildSuggestions: function(suggestions) {
+    buildSuggestions: function (suggestions) {
         return suggestions.patterns.concat(suggestions.collocations)
             .map((curr, i) => {
                 const tooltipBadge = `<h6 class='m-0'>${curr.category}</h6>
@@ -74,18 +74,18 @@ const SuggestTable = {
                     <li>
                         <span>${ngram}</span>
                         <a href="#" class="small btn-sentence float-right" 
-                           data-no="${curr.no}" data-index="${j}" data-ngram="${ngram}">
+                           data-no="${curr.rule_num}" data-index="${j}" data-ngram="${ngram}">
                            Show</a>
                     </li>
 
-                    <ul id="ngram-${curr.no}-${j}" style="display: none;" 
+                    <ul id="ngram-${curr.rule_num}-${j}" style="display: none;" 
                         class="px-4 py-1 my-2 bg-light"
                         data-fetched="false" data-hide="true"></ul>
                 `).join('');
-            
+
                 return `<div class="${getLevelCategory(curr.level)}-visible">
                             <div class="row btn-ngrams hoverable" 
-                                 data-index="${i}" data-no="${curr.no}">
+                                 data-index="${i}" data-no="${curr.rule_num}">
                                 <div class="col mb-1">
                                     <span class="badge ${curr.level}" data-toggle="tooltip" 
                                           data-placement="top" data-html=true
@@ -103,10 +103,10 @@ const SuggestTable = {
                         </div>`;
             });
     },
-    render: function(get, suggestions) {
+    render: function (match, suggestions) {
         return `<h5 class="font-weight-bold p-2 mb-3 text-dark" style="background-color: #e3f2fd;">
                     <span class="align-middle mr-1">Detected:</span>
-                    ${ SuggestTable.buildDetect(get) }
+                    ${SuggestTable.buildDetect(match)}
                 </h5>` + SuggestTable.buildSuggestions(suggestions).join('');
     },
 };
