@@ -10,7 +10,7 @@ from Models.PatternRecommend import PatternRecommend
 from utils.stringUtils import extract_main_content
 
 from flask import Flask, render_template, request, jsonify
-from flask_cors import CORS, cross_origin
+from flask_cors import CORS
 
 app = Flask(__name__)
 

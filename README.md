@@ -7,17 +7,13 @@
 We introduce a method for generating suggestions on a given sentence for improving the proficiency level. In our approach, the sentence is transformed into a sequence of grammatical elements aimed at providing suggestions of more advanced grammar elements based on originals. The method involves parsing the sentence, identifying grammatical elements, and ranking related elements to recommend a higher level of grammatical element. We present a prototype coaching system, Level-Up, that applies the method to English learners’ essays in order to assist them in writing and reading. Evaluation on a set of essays shows that our method does assist user in writing.
 
 
-
-### [Deprecated] Downloads (If you run the project with limited memory, please utilize slim version files.)
-
-##### Word Embeddings
-* [Google News Word2vec](https://drive.google.com/open?id=1u6CdVyRsbCxekSuJfLPK0QIcgt03Loc-) (3 GB)
+### Downloads 
 * [Small version](https://drive.google.com/file/d/1PpOf7IrhNNQZLGB-8WTXfXcsJ-irKutq/view?usp=sharing) (163 MB)
 
 ##### Data
-* [COCA full version](https://drive.google.com/open?id=1sbPS1MDt4VqoV1IFC7S5KVuIpxzkze5O) (3 GB)
-* [COCA prune version](https://drive.google.com/open?id=1qkevcQTo-lymmSdXNDzSBSPEO6x5ri36) (1 GB)
-* [Light version](https://drive.google.com/open?id=1wtu8HIeTN_YG9l1pYWTFh1yDN0j3iULH) (352 MB)
+* [sims.json](https://drive.google.com/open?id=1wtu8HIeTN_YG9l1pYWTFh1yDN0j3iULH) (352 MB) Top 50 similar words dictionary from trained word2vec model, Google News Word2vec slim version
+* [lm.bin]() Trained language model
+* [bnc.parse.txt.gz]() Parsed corpus
 
 
 ### Citation

@@ -24,12 +24,13 @@ class VocabRecommend(Recommend):
         if vocab in self.evp.vocab_level:
             level, pos = self.evp.get_level(vocab), self.evp.get_pos(vocab)
 
-            if vocab in self.evp.w2v:
-                sims = self.evp.w2v.similar_by_word(vocab, topn=100)
+            if vocab in self.evp.sims:
+                sims = self.evp.sims[vocab]
                 recs = [{
                     'vocab': sim,
                     'level': self.evp.get_level(sim)
-                } for sim, score in sims if sim in self.evp.vocab_level
+                } for sim in sims if sim in self.evp.vocab_level
+                    and self.evp.get_higher_levels(level)
                     and self.evp.level_mapping[self.evp.get_level(sim)] > self.evp.level_mapping[level]
                     and len(self.evp.get_pos(sim) & pos) > 0]
                 recs = sorted(
