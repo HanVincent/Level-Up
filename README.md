@@ -8,12 +8,12 @@ We introduce a method for generating suggestions on a given sentence for improvi
 
 
 ### Downloads 
-* [Small version](https://drive.google.com/file/d/1PpOf7IrhNNQZLGB-8WTXfXcsJ-irKutq/view?usp=sharing) (163 MB)
 
 ##### Data
-* [sims.json](https://drive.google.com/open?id=1wtu8HIeTN_YG9l1pYWTFh1yDN0j3iULH) (352 MB) Top 50 similar words dictionary from trained word2vec model, Google News Word2vec slim version
-* [lm.bin]() Trained language model
-* [bnc.parse.txt.gz]() Parsed corpus
+* [sims.json](https://drive.google.com/file/d/1E9AqC94V3oiJuHLOBidQavHA0ro37fU0/view?usp=sharing) (226 MB) Top 50 similar words dictionary from trained word2vec model, Google News Word2vec slim version
+* [Word2vec slim version](https://drive.google.com/file/d/1PpOf7IrhNNQZLGB-8WTXfXcsJ-irKutq/view?usp=sharing) (163 MB)
+* [lm.bin]() (762 MB) (Not released) Trained language model
+* [bnc.parse.txt.gz]() (Not released) Parsed BNC corpus, not using all data
 
 
 ### Citation
