@@ -1,7 +1,8 @@
 import os
+import json
 from Models.BaseRule import BaseRule
 from collections import defaultdict
-from gensim.models import KeyedVectors
+
 
 class EVP(BaseRule):
 
@@ -21,12 +22,8 @@ class EVP(BaseRule):
                 if (vocab not in self.vocab_level or self.level_mapping[level] < self.level_mapping[self.vocab_level[vocab]]):
                     self.vocab_level[vocab] = level
 
-        try:  # bigger
-            self.w2v = KeyedVectors.load_word2vec_format(
-                os.path.join(data_directory, 'GoogleNews-vectors-negative300.bin'), binary=True)
-        except:  # slimmer
-            self.w2v = KeyedVectors.load_word2vec_format(
-                os.path.join(data_directory, 'gensim_glove_vectors.txt'), binary=False)
+        with open(os.path.join(data_directory, 'sims.json'), 'r', encoding='utf8') as fs:
+            self.sims = json.load(fs)
 
     def get_pos(self, vocab):
         return self.vocab_pos[vocab]

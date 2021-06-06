@@ -1,16 +1,16 @@
 import spacy
-import en_core_web_lg
+import en_core_web_md
 from spacy.tokenizer import Tokenizer
 from spacy.util import compile_prefix_regex, compile_suffix_regex
 
 
 class Parser:
 
-    def __init__(self, model_size='en_core_web_lg'):
+    def __init__(self, model_size='en_core_web_md'):
         try:
             self.nlp = spacy.load(model_size)
         except:
-            self.nlp = en_core_web_lg.load()
+            self.nlp = en_core_web_md.load()
         finally:
             self.nlp.tokenizer = self.custom_tokenizer(self.nlp)
 
