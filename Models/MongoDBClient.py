@@ -49,14 +49,14 @@ class MongoDBClient:
         }, sort=[('rule_num', ASCENDING)])
 
     def get_ngrams(self, rule_num, tokens):
-        return self.ngram_collection.find({
+        return map(lambda entry: entry['ngram'], self.ngram_collection.find({
             'rule_num': rule_num,
             'tokens': {
                 '$elemMatch': {
                     '$in': tokens
                 }
             }
-        }, {'ngram': 1})
+        }, {'ngram': 1}))
 
     def get_sentences(self, ngram, count=0):
-        return self.sentence_collection.find({'ngram': ngram}).limit(count)
+        return map(lambda entry: entry['sentence'], self.sentence_collection.find({'ngram': ngram}, {'sentence': 1}).limit(count))

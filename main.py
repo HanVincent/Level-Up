@@ -43,7 +43,7 @@ def sentences():
         return jsonify({'result': 'Should not be empty'})
 
     ngram = request_data['ngram']
-    sentences = profileRecommend.get_ngram_sentences(ngram, 1)
+    sentences = list(profileRecommend.get_ngram_sentences(ngram, 1))
 
     return jsonify({'sentences': sentences})
 

@@ -10,7 +10,7 @@ We introduce a method for generating suggestions on a given sentence for improvi
 ### Downloads 
 
 ##### Data
-* [sims.json](https://drive.google.com/file/d/1E9AqC94V3oiJuHLOBidQavHA0ro37fU0/view?usp=sharing) (226 MB) Top 50 similar words dictionary from trained word2vec model, Google News Word2vec slim version
+* [sims.json](636 KB) (226 MB) Words retrieved dictionary at higher level and calculated from word2vec models
 * [Word2vec slim version](https://drive.google.com/file/d/1PpOf7IrhNNQZLGB-8WTXfXcsJ-irKutq/view?usp=sharing) (163 MB)
 * [lm.bin]() (762 MB) (Not released) Trained language model
 * [bnc.parse.txt.gz]() (Not released) Parsed BNC corpus, not using all data

@@ -33,3 +33,13 @@ class EVP(BaseRule):
             return None
 
         return self.vocab_level[vocab]
+
+    def get_higher_sims(self, vocab, candidates):
+        pos = self.get_pos(vocab)
+        level = self.get_level(vocab)
+        candidates = filter(lambda entry: entry[1] > 0.3, candidates)
+        candidates = map(lambda entry: entry[0], candidates)
+        candidates = filter(lambda can: can in self.vocab_level, candidates)
+        candidates = filter(lambda can: self.level_mapping[self.get_level(can)] > self.level_mapping[level], candidates)
+        candidates = filter(lambda can: len(self.get_pos(can) & pos) > 0, candidates)
+        return list(candidates)
