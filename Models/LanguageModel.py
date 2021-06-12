@@ -4,7 +4,7 @@ import os
 
 class LanguageModel:
     def __init__(self, data_directory):
-        self.model = kenlm.Model(os.path.join(data_directory, 'lm.slim.bin'))
+        self.model = kenlm.Model(os.path.join(data_directory, 'lm.bin'))
 
     def score(self, pre_sent, ngram):
         sentence = pre_sent + ' ' + ngram
