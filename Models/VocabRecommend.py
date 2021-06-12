@@ -22,20 +22,12 @@ class VocabRecommend(Recommend):
 
     def _recommend_vocabs(self, vocab):
         if vocab in self.evp.vocab_level:
-            level, pos = self.evp.get_level(vocab), self.evp.get_pos(vocab)
+            sims = self.evp.sims[vocab]
+            recs = [
+                {'vocab': sim, 'level': self.evp.get_level(sim)} for sim in sims]
+            recs = sorted(
+                recs[:10], key=lambda rec: self.evp.level_mapping[rec['level']], reverse=True)
 
-            if vocab in self.evp.sims:
-                sims = self.evp.sims[vocab]
-                recs = [{
-                    'vocab': sim,
-                    'level': self.evp.get_level(sim)
-                } for sim in sims if sim in self.evp.vocab_level
-                    and self.evp.get_higher_levels(level)
-                    and self.evp.level_mapping[self.evp.get_level(sim)] > self.evp.level_mapping[level]
-                    and len(self.evp.get_pos(sim) & pos) > 0]
-                recs = sorted(
-                    recs[:10], key=lambda rec: self.evp.level_mapping[rec['level']], reverse=True)
-
-                return recs
+            return recs
 
         return []
