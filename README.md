@@ -10,9 +10,9 @@ We introduce a method for generating suggestions on a given sentence for improvi
 ### Downloads 
 
 ##### Data
-* [sims.json](636 KB) (226 MB) Words retrieved dictionary at higher level and calculated from word2vec models
+* [sims.json]() (636 KB) Words retrieved dictionary at higher level and calculated from word2vec models
 * [Word2vec slim version](https://drive.google.com/file/d/1PpOf7IrhNNQZLGB-8WTXfXcsJ-irKutq/view?usp=sharing) (163 MB)
-* [lm.bin]() (762 MB) (Not released) Trained language model
+* [lm.bin]() (87 MB) (Not released) Trained language model
 * [bnc.parse.txt.gz]() (Not released) Parsed BNC corpus, not using all data
 
 
