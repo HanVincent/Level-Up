@@ -80,7 +80,10 @@ def vocabulary():
     return jsonify({'vocabs': vocabs})
 
 
-if __name__ == "__main__":
+@app.before_first_request
+def init():
+    global vocabRecommend, patternRecommend, profileRecommend
+
     data_directory = './data'
 
     parser = Parser()
@@ -92,4 +95,6 @@ if __name__ == "__main__":
     profileRecommend = ProfileRecommend(parser, egp, evp)
     vocabRecommend = VocabRecommend(parser, egp, evp)
 
+
+if __name__ == "__main__":
     app.run(host='127.0.0.1', port=8888)
